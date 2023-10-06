@@ -1,14 +1,14 @@
 package service
 
 import (
+	
 	"fmt"
-	json "github.com/json-iterator/go"
-    log "github.com/sirupsen/logrus"
+	//json "github.com/json-iterator/go"
 	bookingClient "UCC-as2-final/client/booking"
 	// userClient "UCC-as2-final/client/user"
 	"UCC-as2-final/dto"
 	"UCC-as2-final/model"
-	cache "UCC-as2-final/utils"
+	//cache "UCC-as2-final/utils"
 	// "time"
 	e "UCC-as2-final/utils/errors"
 )
@@ -72,7 +72,7 @@ func (s *bookingService) GetBookings() (dto.BookingsDetailDto, e.ApiError) {
 // devuelve un responseDto el cual me dice si esta okey o no (disponible o no)
 func (s *bookingService) GetBookingByHotelIdAndDate(request dto.CheckRoomDto, idHotel int) (dto.Availability, e.ApiError) {
 	
-	var cacheDTO dto.Availability
+	// var cacheDTO dto.Availability
 	
 
 	var IsAvailable bool 
@@ -90,17 +90,17 @@ func (s *bookingService) GetBookingByHotelIdAndDate(request dto.CheckRoomDto, id
 	// } 
 
 	for i := startDate; i < endDate; i = i + 1 { // i va a ser cada dia de los q vamos a chequear 
-		cacheBytes := cache.Get(idHotel, i)
+		//cacheBytes := cache.Get(idHotel, i)
 
-		if cacheBytes != nil { // does a hit 
-			fmt.Println("hit de cache!")
+		//if cacheBytes != nil { // does a hit 
+		//	fmt.Println("hit de cache!")
 			// creo q si lo encuentra ya quiere decir q no esta disponible 
-			 cacheDTO.OkToBook = false 
-			 return responseDto, nil
-		}
+		//	 cacheDTO.OkToBook = false 
+		//	 return responseDto, nil
+		//}
 
 		// es un miss --> mem principal 
-		fmt.Println("miss de cache!")
+		//fmt.Println("miss de cache!")
 		IsAvailable = bookingClient.GetAvailabilityByIdAndDate(idHotel, i) // me devuelve si existe reserva en ese hotel en ese dia 
 		if IsAvailable == true {
 			responseDto.OkToBook = false 
@@ -108,11 +108,12 @@ func (s *bookingService) GetBookingByHotelIdAndDate(request dto.CheckRoomDto, id
 		}
 
 		// save in cache 
-		availabilityBytes, _ := json.Marshal(responseDto)
-		cache.Set(idHotel, i, availabilityBytes)
-		fmt.Println("Saved in cache!")
+		//availabilityBytes, _ := json.Marshal(responseDto)
+		//cache.Set(idHotel, i, availabilityBytes)
+		//fmt.Println("Saved in cache!")
 		// mucho x ver --> como x ej si se cancela reserva! 
 		if IsAvailable == true {
+			fmt.Println("Esta disponible!")
 			responseDto.OkToBook = false 
 			return responseDto, nil
 		}
