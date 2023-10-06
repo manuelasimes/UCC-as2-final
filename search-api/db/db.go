@@ -1,50 +1,22 @@
 package db
 
 import (
-	
-	userClient "UCC-as2-final/client/user"
-	bookingClient "UCC-as2-final/client/user"
-	"UCC-as2-final/model"
-
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
-	log "github.com/sirupsen/logrus"
+	"fmt"
+	logger "github.com/sirupsen/logrus"
+	"github.com/stevenferrer/solr-go"
 )
 
-var (
-	db  *gorm.DB
-	err error
-)
+type SolrClient struct {
+	Client     *solr.JSONClient
+	Collection string
+}
 
-func init() {
-	// DB Connections Paramters
-	DBName := "UCC_as2_final"
-	DBUser := "root"
-	DBPass := "Manuela10Simes"
-	//DBPass := os.Getenv("MVC_DB_PASS")
-	DBHost := "localhost"
-	// ------------------------
-
-	db, err = gorm.Open("mysql", DBUser+":"+DBPass+"@tcp("+DBHost+":3306)/"+DBName+"?charset=utf8&parseTime=True")
-
-	if err != nil {
-		log.Info("Connection Failed to Open")
-		log.Fatal(err)
-	} else {
-		log.Info("Connection Established")
+func NewSolrClient(host string, port int, collection string) *SolrClient {
+	logger.Debug(fmt.Sprintf("%s:%d", host, port))
+	Client := solr.NewJSONClient(fmt.Sprintf("http://%s:%d", host, port))
+	return &SolrClient{
+		Client:     Client,
+		Collection: collection,
 	}
-
-	// We need to add all Clients that we build
-	userClient.Db = db
-	bookingClient.Db = db
-	
-
 }
 
-func StartDbEngine() {
-	// We need to migrate all classes model.
-	db.AutoMigrate(&model.User{})
-	db.AutoMigrate(&model.Booking{})
-	
-	log.Info("Finishing Migration Database Tables")
-}

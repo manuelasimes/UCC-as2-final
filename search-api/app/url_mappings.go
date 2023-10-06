@@ -3,21 +3,20 @@ package app
 import (
 
 	log "github.com/sirupsen/logrus"
-	
-	userController "UCC-as2-final/controller/user"
+	solrController "UCC-as2-final/controller"
 	
 )
 
 func mapUrls() {
 
-	// Users Mapping
-	router.GET("/user/:id", userController.GetUserById)
-	router.GET("/user", userController.GetUsers)
-	router.POST("/user", userController.UserInsert) // Sign In
+	// Search mappings
 
-	
-	// Login
-	// router.POST("/login", userController.Login)
+	router.GET("/search=:searchQuery", solrController.GetQuery)
+	router.GET("/searchAll=:searchQuery", solrController.GetQueryAllFields)
+	router.GET("/hotel/:id", solrController.AddFromId)
+
+	router.DELETE("/hotel/:id", solrController.Delete)
+
 
 	log.Info("Finishing mappings configurations")
 }
