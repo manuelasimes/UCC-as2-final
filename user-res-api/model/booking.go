@@ -10,8 +10,8 @@ type Booking struct {
 	User   User `gorm:"foreignkey:UserId"`
 	UserId int
 
-	// Hotel   Hotel `gorm:"foreignkey:HotelId"`
-	// HotelId int
+	// como conecto el id del hotel de mongo con este--> ver! 
+	HotelId int
 }
 
 type Bookings []Booking
