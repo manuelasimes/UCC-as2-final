@@ -1,4 +1,76 @@
-// El micro devuelve disp con caché distribuido → guardo reservas en caché por 10 segs después de calcular disp.
-//  El memcache tiene como parámetro el TTL (cantidad de tiempo que guardo info en caché). 
-// Conectamos con Amadeus que nos permite confirmar reserva en hotel usando un proveedor externo. 
-// Amadeus solo para reserva → válida la API la disponibilidad.
+package booking
+
+import (
+	"fmt"
+	"UCC-as2-final/model"
+
+	"github.com/jinzhu/gorm"
+	log "github.com/sirupsen/logrus"
+    
+)
+
+var Db *gorm.DB
+
+// GetBookingById sirve para el caso de lista de
+// reservas por user
+func GetBookingById(id int) model.Booking {
+
+	var booking model.Booking
+
+	if Db == nil {
+		log.Debug("aca puto")
+		return booking
+	}
+
+	Db.Where("id = ?", id).Preload("User").First(&booking)
+	log.Debug("Booking: ", booking)
+
+	
+	return booking
+}
+
+// todas las reservas con su informacion
+func GetBookings() model.Bookings {
+	var bookings model.Bookings
+	Db.Find(&bookings)
+
+	log.Debug("Bookings: ", bookings)
+
+	return bookings
+}
+
+// Cargar una reserva a la DB --> ACA VIENE AMADEUS! 
+// func InsertBooking(booking model.Booking) model.Booking {
+// 	result := Db.Create(&booking)
+
+// 	if result.Error != nil {
+// 		//TODO Manage Errors
+// 		log.Error("")
+// 	}
+// 	log.Debug("Booking Created: ", booking.Id)
+// 	return booking
+// }
+
+func GetAvailabilityByIdAndDate(id_hotel int, startDate int) bool {
+
+
+	var booking model.Booking
+	fmt.Println("Antes de la consulta a la base de datos")
+	result := Db.Where("hotel_id = ? AND start_date <= ? AND end_date > ?", id_hotel, startDate, startDate).First(&booking) // hay reserva ahi! 
+	fmt.Println("Despues  de la consulta a la base de datos")
+	if result.Error != nil {
+		return false 
+	}
+	
+	return true // La reserva está presente
+}
+
+func GetBookingByUserId(id int) model.Booking {
+	var booking model.Booking
+
+	Db.Where("user_id = ?", id).Preload("User").First(&booking)
+	log.Debug("Booking: ", booking)
+
+	return booking
+
+}

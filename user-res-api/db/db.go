@@ -3,7 +3,7 @@ package db
 import (
 	
 	userClient "UCC-as2-final/client/user"
-	bookingClient "UCC-as2-final/client/user"
+	bookingClient "UCC-as2-final/client/booking"
 	"UCC-as2-final/model"
 
 	"github.com/jinzhu/gorm"
@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	db  *gorm.DB
+	db *gorm.DB
 	err error
 )
 
