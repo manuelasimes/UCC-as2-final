@@ -3,14 +3,15 @@ package service
 import (
 	
 	"fmt"
-	//json "github.com/json-iterator/go"
-	bookingClient "UCC-as2-final/client/booking"
-	// userClient "UCC-as2-final/client/user"
-	"UCC-as2-final/dto"
-	"UCC-as2-final/model"
-	//cache "UCC-as2-final/utils"
+	json "github.com/json-iterator/go"
+	bookingClient "user-res-api/client/booking"
+	// userClient "user-res-api/client/user"
+	"user-res-api/dto"
+	"user-res-api/model"
+	cache "user-res-api/cache"
 	// "time"
-	e "UCC-as2-final/utils/errors"
+	e "user-res-api/utils/errors"
+	"strconv"
 )
 
 type bookingService struct{}
@@ -90,34 +91,34 @@ func (s *bookingService) GetBookingByHotelIdAndDate(request dto.CheckRoomDto, id
 	// } 
 
 	for i := startDate; i < endDate; i = i + 1 { // i va a ser cada dia de los q vamos a chequear 
-		//cacheBytes := cache.Get(idHotel, i)
+		key := strconv.Itoa(idHotel) + strconv.Itoa(startDate)
+		cacheDTO, err := cache.Get(key)
 
-		//if cacheBytes != nil { // does a hit 
-		//	fmt.Println("hit de cache!")
+		if err == nil { // does a hit 
+			fmt.Println("hit de cache!")
 			// creo q si lo encuentra ya quiere decir q no esta disponible 
-		//	 cacheDTO.OkToBook = false 
-		//	 return responseDto, nil
-		//}
+			
+			return cacheDTO, nil 
+		
+		}
 
 		// es un miss --> mem principal 
-		//fmt.Println("miss de cache!")
+		fmt.Println("miss de cache!")
 		IsAvailable = bookingClient.GetAvailabilityByIdAndDate(idHotel, i) // me devuelve si existe reserva en ese hotel en ese dia 
 		if IsAvailable == true {
 			responseDto.OkToBook = false 
-			return responseDto, nil
+		} else if IsAvailable == false {
+			responseDto.OkToBook = true 
 		}
+
 
 		// save in cache 
-		//availabilityBytes, _ := json.Marshal(responseDto)
-		//cache.Set(idHotel, i, availabilityBytes)
-		//fmt.Println("Saved in cache!")
+		availability, _ := json.Marshal(responseDto)
+		cache.Set(key, availability)
+		fmt.Println("Saved in cache!")
+		return responseDto, nil
 		// mucho x ver --> como x ej si se cancela reserva! 
-		if IsAvailable == true {
-			fmt.Println("Esta disponible!")
-			responseDto.OkToBook = false 
-			return responseDto, nil
-		}
-
+		
 		
 
 	}

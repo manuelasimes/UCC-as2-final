@@ -2,7 +2,7 @@ package booking
 
 import (
 	"fmt"
-	"UCC-as2-final/model"
+	"user-res-api/model"
 
 	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"

@@ -4,8 +4,8 @@ import (
 
 	log "github.com/sirupsen/logrus"
 	
-	userController "UCC-as2-final/controller/user"
-	bookingController "UCC-as2-final/controller/booking"
+	userController "user-res-api/controller/user"
+	bookingController "user-res-api/controller/booking"
 	
 )
 

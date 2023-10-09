@@ -3,8 +3,8 @@ package booking
 import (
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
-	"UCC-as2-final/dto"
-	service "UCC-as2-final/service"
+	"user-res-api/dto"
+	service "user-res-api/service"
 	"net/http"
 	"strconv"
 )
