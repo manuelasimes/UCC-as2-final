@@ -1,7 +1,7 @@
 package dto
 
 type HotelDto struct {
-	Id int `json:"id"`
+	Id string `json:"id"`
 	Name string `json:"name"`
 	Description string `json:"description"`
 	Country string `json:"country"`
