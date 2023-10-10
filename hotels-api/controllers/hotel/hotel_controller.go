@@ -58,3 +58,25 @@ func Insert(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, hotelDto)
 }
+
+func Update(c *gin.Context) {
+    // Obtener el ID del hotel a actualizar desde los parámetros de la URL
+    id := c.Param("id")
+
+    // Parsear el objeto JSON del cuerpo de la solicitud
+    var hotelDto dtos.HotelDto
+    if err := c.BindJSON(&hotelDto); err != nil {
+        c.JSON(http.StatusBadRequest, err.Error())
+        return
+    }
+
+    // Llamar al servicio para actualizar el hotel
+    updatedHotelDto, err := service.HotelService.UpdateHotel(id, hotelDto)
+
+    if err != nil {
+        c.JSON(err.Status(), err)
+        return
+    }
+
+    c.JSON(http.StatusOK, updatedHotelDto)
+}

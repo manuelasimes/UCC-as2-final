@@ -39,3 +39,29 @@ func Insert(hotel model.Hotel) model.Hotel {
 	hotel.Id = insertHotel.Id
 	return hotel
 }
+
+func Update(id string, updatedHotel model.Hotel) error {
+    db := db.MongoDb
+    objID, err := primitive.ObjectIDFromHex(id)
+    if err != nil {
+        return err
+    }
+
+    // Define las actualizaciones que deseas realizar en el documento
+    update := bson.D{
+        {"$set", bson.D{
+            {"name", updatedHotel.Name},
+            {"description", updatedHotel.Description},
+            {"country", updatedHotel.Country},
+            {"city", updatedHotel.City},
+            {"address", updatedHotel.Adress},
+            {"images", updatedHotel.Images},
+            {"amenities", updatedHotel.Amenities},
+            // Puedes agregar más campos aquí según tus necesidades
+        }},
+    }
+
+    _, err = db.Collection("hotels").UpdateOne(context.TODO(), bson.D{{"_id", objID}}, update)
+    return err
+}
+
