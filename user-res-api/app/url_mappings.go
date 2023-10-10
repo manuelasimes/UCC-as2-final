@@ -20,7 +20,7 @@ func mapUrls() {
 	// Bookings Mapping
 	router.GET("/booking/:id", bookingController.GetBookingById)
 	router.GET("/booking", bookingController.GetBookings)
-	// router.POST("/booking", bookingController.InsertBooking)
+	router.POST("/booking", bookingController.InsertBooking)
 	router.GET("/booking/user/:user_id", bookingController.GetBookingsByUserId)
 	router.GET("/hotel/availability/:id/:start_date/:end_date", bookingController.GetAvailabilityByIdAndDate)
 

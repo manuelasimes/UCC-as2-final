@@ -39,17 +39,17 @@ func GetBookings() model.Bookings {
 	return bookings
 }
 
-// Cargar una reserva a la DB --> ACA VIENE AMADEUS! 
-// func InsertBooking(booking model.Booking) model.Booking {
-// 	result := Db.Create(&booking)
 
-// 	if result.Error != nil {
-// 		//TODO Manage Errors
-// 		log.Error("")
-// 	}
-// 	log.Debug("Booking Created: ", booking.Id)
-// 	return booking
-// }
+func InsertBooking(booking model.Booking) model.Booking {
+	result := Db.Create(&booking)
+
+	if result.Error != nil {
+		//TODO Manage Errors
+		log.Error("")
+	}
+	log.Debug("Booking Created: ", booking.Id)
+	return booking
+}
 
 func GetAvailabilityByIdAndDate(id_hotel int, startDate int) bool {
 

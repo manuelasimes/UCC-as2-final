@@ -5,7 +5,7 @@ import (
 	"fmt"
 	json "github.com/json-iterator/go"
 	bookingClient "user-res-api/client/booking"
-	// userClient "user-res-api/client/user"
+	userClient "user-res-api/client/user"
 	"user-res-api/dto"
 	"user-res-api/model"
 	cache "user-res-api/cache"
@@ -19,7 +19,7 @@ type bookingService struct{}
 type bookingServiceInterface interface {
 	GetBookingById(id int) (dto.BookingDetailDto, e.ApiError)
 	GetBookings() (dto.BookingsDetailDto, e.ApiError)
-	// InsertBooking(bookingDto dto.BookingDto) (dto.BookingDto, e.ApiError)
+	InsertBooking(bookingDto dto.BookingDto) (dto.BookingDto, e.ApiError)
 	GetBookingByHotelIdAndDate(request dto.CheckRoomDto, idHotel int) (dto.Availability, e.ApiError)
 	GetBookingsByUserId(id int) (dto.BookingsDetailDto, e.ApiError)
 	GetBookingByUserId(id int) (dto.BookingDetailDto, e.ApiError)
@@ -172,7 +172,44 @@ func (s *bookingService) GetBookingsByUserId(id int) (dto.BookingsDetailDto, e.A
 
 	return bookingsDto, nil
 }
-// func (s *bookingService) InsertBooking(bookingDto dto.BookingDto) (dto.BookingDto, e.ApiError) {
+
+
+
+func (s *bookingService) InsertBooking(bookingDto dto.BookingDto) (dto.BookingDto, e.ApiError) {
+	var booking model.Booking
+	
+	if userClient.CheckUserById(bookingDto.UserId) == false {
+		return bookingDto, e.NewBadRequestApiError("El usuario no esta registrado en el sistema")
+	}
+
+	// ver como checkear q exista hotel en mongo 
+	
+	var checkAvailabilityDto dto.CheckRoomDto
+
+	checkAvailabilityDto.StartDate = bookingDto.StartDate
+	checkAvailabilityDto.EndDate = bookingDto.EndDate
+
+	var responseAvailabilityDto dto.Availability
+
+	responseAvailabilityDto, _ = s.GetBookingByHotelIdAndDate(checkAvailabilityDto, bookingDto.HotelId)
+
+	if responseAvailabilityDto.OkToBook == false {
+		return bookingDto, e.NewBadRequestApiError("El hotel no tiene disponibilidad en esas fechas")
+	}
+
+	// si continua quiere decir q si esta disponible...
+
+	booking.StartDate = bookingDto.StartDate
+	booking.EndDate = bookingDto.EndDate
+	booking.UserId = bookingDto.UserId
+	booking.HotelId = bookingDto.HotelId
+
+	booking = bookingClient.InsertBooking(booking)
+	
+	bookingDto.Id = booking.Id
+
+	return bookingDto, nil
+
 
 	
-// }
+}
