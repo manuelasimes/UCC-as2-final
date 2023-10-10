@@ -2,9 +2,9 @@ package db
 
 import (
 	
-	userClient "UCC-as2-final/client/user"
-	bookingClient "UCC-as2-final/client/user"
-	"UCC-as2-final/model"
+	userClient "user-res-api/client/user"
+	bookingClient "user-res-api/client/booking"
+	"user-res-api/model"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	db  *gorm.DB
+	db *gorm.DB
 	err error
 )
 

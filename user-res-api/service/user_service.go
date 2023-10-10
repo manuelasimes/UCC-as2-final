@@ -5,11 +5,11 @@ import (
 	// "github.com/golang-jwt/jwt"
 	// log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
-	userClient "UCC-as2-final/client/user"
+	userClient "user-res-api/client/user"
 
-	"UCC-as2-final/dto"
-	"UCC-as2-final/model"
-	e "UCC-as2-final/utils/errors"
+	"user-res-api/dto"
+	"user-res-api/model"
+	e "user-res-api/utils/errors"
 )
 
 type userService struct{}
