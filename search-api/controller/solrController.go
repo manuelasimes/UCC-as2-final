@@ -29,7 +29,6 @@ func GetQuery(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, hotelsDto)
-
 }
 
 func GetQueryAllFields(c *gin.Context) {
