@@ -13,10 +13,6 @@ func mapUrls() {
 
 	router.GET("/search=:searchQuery", solrController.GetQuery)
 	router.GET("/searchAll=:searchQuery", solrController.GetQueryAllFields)
-	router.GET("/hotel/:id", solrController.AddFromId)
-
-	router.DELETE("/hotel/:id", solrController.Delete)
-
 
 	log.Info("Finishing mappings configurations")
 }

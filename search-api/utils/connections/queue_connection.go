@@ -4,17 +4,14 @@ import (
 
 	"log" 
 	"UCC-as2-final/config"
-	"strconv"
 	"os"
 	"UCC-as2-final/dto"
 	"encoding/json"
 
 
 	"github.com/streadway/amqp"
-	service "UCC-as2-final/service"
+	controller "UCC-as2-final/controller"
 )
-
-var s *service.SolrService
 
 var QueueConn *amqp.Connection
 
@@ -77,9 +74,18 @@ func QueueConnection() {
 			}
 
 			if ( queueDto.Action == "INSERT" || queueDto.Action == "UPDATE" ) {
-				s.AddFromId(strconv.Itoa(queueDto.Id))
+				err := controller.AddFromId(queueDto.Id)
+
+				if err != nil {
+					handleError(err, "Error inserting or deleting from Solr")
+				}
+
 			} else if queueDto.Action == "DELETE" {
-				s.Delete(strconv.Itoa(queueDto.Id))
+				err := controller.Delete(queueDto.Id)
+
+				if err != nil {
+					handleError(err, "Error inserting or deleting from Solr")
+				}
 			}
 
 		}
