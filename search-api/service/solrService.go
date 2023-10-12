@@ -38,7 +38,7 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 	if err != nil {
 		return hotelsDto, e.NewBadRequestApiError("Solr failed")
 	}
-
+	
 	startdate, enddate := queryParams[2], queryParams[3]
 
 	sDate, _ := strconv.Atoi(startdate)
@@ -57,6 +57,7 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 		go func(hotel dto.HotelDto) {
 			defer wg.Done() // Decrement the WaitGroup counter when Goroutine is done
 
+			log.Debug("hola")
 			// Make API call for each hotel and send the hotel ID
 			result, err := s.GetHotelInfo(hotel.Id, sDate, eDate) // Assuming you have a function to get hotel info
 			if err != nil {
@@ -73,6 +74,8 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 		}(hotel)
 	}
 
+
+	log.Debug("hola3")
 	// Create a slice to store the results
 	var hotelResults dto.HotelsDto
 
@@ -86,6 +89,8 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 	for response := range resultsChan {
 			hotelResults = append(hotelResults, response)
 	}
+
+	log.Debug("hola2")
 
 	return hotelResults, nil
 }
@@ -110,6 +115,8 @@ func (s *SolrService) GetHotelInfo(id int, startdate int, enddate int) (bool, er
 		}
 
 		status := responseDto.Status
+
+		log.Debug("llego aca", status)
 
 		return status, nil
 }
