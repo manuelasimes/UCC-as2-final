@@ -6,6 +6,7 @@ import (
 	
 	userController "user-res-api/controller/user"
 	bookingController "user-res-api/controller/booking"
+	hotelController "user-res-api/controller/hotel"
 	
 )
 
@@ -23,6 +24,13 @@ func mapUrls() {
 	router.POST("/booking", bookingController.InsertBooking)
 	router.GET("/booking/user/:user_id", bookingController.GetBookingsByUserId)
 	router.GET("/hotel/availability/:id/:start_date/:end_date", bookingController.GetAvailabilityByIdAndDate)
+
+	// Hotels Mapping
+	router.GET("/hotel/:id", hotelController.GetHotelById)
+	router.GET("/hotel", hotelController.GetHotels)
+	router.POST("/hotel", hotelController.InsertHotel)
+	//router.PUT("/hotel/update", hotelController.UpdateHotel)
+	//router.DELETE("/hotel/delete/:hotel_id/:user_id", hotelController.DeleteHotel)
 
 	
 	// Login

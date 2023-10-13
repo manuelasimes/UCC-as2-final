@@ -114,7 +114,7 @@ func (s *bookingService) GetBookingByHotelIdAndDate(request dto.CheckRoomDto, id
 
 		// save in cache 
 		availability, _ := json.Marshal(responseDto)
-		cache.Set(key, availability)
+		cache.Set(key, availability, 10)
 		fmt.Println("Saved in cache!")
 		return responseDto, nil
 		// mucho x ver --> como x ej si se cancela reserva! 

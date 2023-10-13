@@ -18,7 +18,7 @@ func GetBookingById(id int) model.Booking {
 	var booking model.Booking
 
 	if Db == nil {
-		log.Debug("aca puto")
+		
 		return booking
 	}
 

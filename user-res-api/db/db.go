@@ -4,6 +4,7 @@ import (
 	
 	userClient "user-res-api/client/user"
 	bookingClient "user-res-api/client/booking"
+	hotelClient "user-res-api/client/hotel"
 	"user-res-api/model"
 
 	"github.com/jinzhu/gorm"
@@ -37,6 +38,7 @@ func init() {
 	// We need to add all Clients that we build
 	userClient.Db = db
 	bookingClient.Db = db
+	hotelClient.Db = db 
 	
 
 }
@@ -45,6 +47,7 @@ func StartDbEngine() {
 	// We need to migrate all classes model.
 	db.AutoMigrate(&model.User{})
 	db.AutoMigrate(&model.Booking{})
+	db.AutoMigrate(&model.Hotel{})
 	
 	log.Info("Finishing Migration Database Tables")
 }

@@ -3,6 +3,7 @@ package cache
 import (
 	"github.com/bradfitz/gomemcache/memcache"
 	"fmt"
+   
     e "user-res-api/utils/errors"
     json "github.com/json-iterator/go"
     "user-res-api/dto"
@@ -20,13 +21,14 @@ func Init_cache() {
     log.Info("Initialized cache")
 }
 
-func Set(key string, value []byte) {
+func Set(key string, value []byte, ttlSeconds int ) {
 
     //key := createCacheKey(id, startDate)
     //key := strconv.Itoa(id) + strconv.Itoa(startDate)
     if err := cacheClient.Set(&memcache.Item{
         Key: key, 
         Value: value,
+        Expiration: int32(ttlSeconds), // Tiempo en segundos antes de que el elemento expire
     }); err != nil {
         fmt.Println("Error setting item in cache", err)
     }
