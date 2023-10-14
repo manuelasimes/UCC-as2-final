@@ -64,7 +64,7 @@ func InsertHotel(c *gin.Context) {
 	   return
 	}
 	// Agregar el encabezado de autorización Bearer con tu token
-	token := "hhnM5AKpY9Eo4WjiIR1rx6CueBmJ" // Reemplaza con tu token real
+	token := "RX1VGkRbdQ5S0ej6401ZOINHNKYV" // Reemplaza con tu token real
 	solicitud.Header.Set("Authorization", "Bearer " + token)
 	// Realiza la solicitud HTTP
 	cliente := &http.Client{}

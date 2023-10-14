@@ -11,9 +11,46 @@ import (
 	"encoding/json"
 	"strconv"
 	"net/url"
+	"strings"
 )
 
+// funcion para generar un token de amadeus cada vez que voy a hacer la consulta 
+func GetAmadeustoken () (string) {
 
+	fmt.Printf("entro al f d token")
+	 // Define los datos que deseas enviar en el cuerpo de la solicitud.
+	 data := url.Values{}
+	 data.Set("grant_type", "client_credentials")
+	 data.Set("client_id", "sCkSnG1piA4ApGUWTfWsYhj1MDGQZ8Ob")
+	 data.Set("client_secret", "2Jrxf1ZBL46bfj6c")
+ 
+	 // Realiza la solicitud POST a la API externa.
+	 resp, err := http.Post("https://test.api.amadeus.com/v1/security/oauth2/token", "application/x-www-form-urlencoded", strings.NewReader(data.Encode()))
+	 if err != nil {
+		 fmt.Println("Error al hacer la solicitud:", err)
+		 return ""
+	 }
+	 defer resp.Body.Close()
+	  // Lee la respuesta de la API.
+	  body, err := ioutil.ReadAll(resp.Body)
+	  if err != nil {
+		  fmt.Println("Error al leer la respuesta:", err)
+		  return ""
+	  }
+	  // Parsea la respuesta JSON para obtener el token (asumiendo que la respuesta es JSON).
+    // Si la respuesta es en otro formato, ajusta esto en consecuencia.
+    var response map[string]interface{}
+    if err := json.Unmarshal(body, &response); err != nil {
+        return ""
+    }
+	token, ok := response["token"].(string)
+    if !ok {
+        return ""
+    }
+	fmt.Println("token:", token)
+    return token
+
+}
 
 
 func GetBookingById(c *gin.Context) {
@@ -136,9 +173,10 @@ func InsertBooking(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	 }
- 
+	 
 	// Agregar el encabezado de autorización Bearer con tu token
-	token := "hhnM5AKpY9Eo4WjiIR1rx6CueBmJ" // Reemplaza con tu token real
+	token := GetAmadeustoken() // Reemplaza con tu token real
+
 	solicitud.Header.Set("Authorization", "Bearer " + token)
 	// solicitud.Header.Set("Content-Type", "application/json") // Especifica el tipo de contenido si es necesario
  
