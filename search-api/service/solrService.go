@@ -22,9 +22,7 @@ type SolrService struct {
 	solr *client.SolrClient
 }
 
-func NewSolrServiceImpl(
-	solr *client.SolrClient,
-) *SolrService {
+func NewSolrServiceImpl(solr *client.SolrClient) *SolrService {
 	return &SolrService{
 		solr: solr,
 	}
@@ -33,11 +31,19 @@ func NewSolrServiceImpl(
 func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 	var hotelsDto dto.HotelsDto
 	queryParams := strings.Split(query, "_")
+
+	numParams := len(queryParams)
+
 	field, query := queryParams[0], queryParams[1] 
+
+	log.Printf("%s and %s", field, query)
+
 	hotelsDto, err := s.solr.GetQuery(query, field)
 	if err != nil {
 		return hotelsDto, e.NewBadRequestApiError("Solr failed")
 	}
+
+	if numParams == 4 {
 
 	startdate, enddate := queryParams[2], queryParams[3]
 
@@ -57,8 +63,12 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 		go func(hotel dto.HotelDto) {
 			defer wg.Done() // Decrement the WaitGroup counter when Goroutine is done
 
+			log.Debug("hola")
+
+			id, _ := strconv.Atoi(hotel.Id)
+
 			// Make API call for each hotel and send the hotel ID
-			result, err := s.GetHotelInfo(hotel.Id, sDate, eDate) // Assuming you have a function to get hotel info
+			result, err := s.GetHotelInfo(id, sDate, eDate) // Assuming you have a function to get hotel info
 			if err != nil {
 				result = false
 			}
@@ -73,6 +83,8 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 		}(hotel)
 	}
 
+
+	log.Debug("hola3")
 	// Create a slice to store the results
 	var hotelResults dto.HotelsDto
 
@@ -87,7 +99,13 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 			hotelResults = append(hotelResults, response)
 	}
 
+	log.Debug("hola2") 
+
 	return hotelResults, nil
+
+	}
+
+	return hotelsDto, nil
 }
 
 func (s *SolrService) GetHotelInfo(id int, startdate int, enddate int) (bool, error) {
@@ -111,6 +129,8 @@ func (s *SolrService) GetHotelInfo(id int, startdate int, enddate int) (bool, er
 
 		status := responseDto.Status
 
+		log.Debug("llego aca", status)
+
 		return status, nil
 }
 	
@@ -125,7 +145,8 @@ func (s *SolrService) GetQueryAllFields(query string) (dto.HotelsDto, e.ApiError
 
 func (s *SolrService) AddFromId(id string) e.ApiError {
 	var hotelDto dto.HotelDto
-	resp, err := http.Get(fmt.Sprintf("http://%s:%d/hotels/%s", config.HOTELSHOST, config.HOTELSPORT, id))
+	// resp, err := http.Get(fmt.Sprintf("http://%s:%d/hotels/%s", config.HOTELSHOST, config.HOTELSPORT, id))
+	resp, err := http.Get(fmt.Sprintf("http://localhost:8070/hotel/%s", id))
 	if err != nil {
 		log.Debugf("error getting item %s", id)
 		return e.NewBadRequestApiError("error getting hotel " + id)

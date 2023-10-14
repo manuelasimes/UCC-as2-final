@@ -9,6 +9,8 @@ import (
 	"UCC-as2-final/service"
 	client "UCC-as2-final/client/solr"
 	con "UCC-as2-final/db"
+	"strconv"
+	e "UCC-as2-final/utils/errors"
 )
 
 var (
@@ -46,23 +48,28 @@ func GetQueryAllFields(c *gin.Context) {
 
 }
 
-func AddFromId(c *gin.Context) {
-	id := c.Param("id")
-	err := Solr.AddFromId(id)
+func AddFromId(id int) error {   // agregar e.NewBadResquest para manejar el error
+	err := Solr.AddFromId(strconv.Itoa(id))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
-		return
+		e.NewBadRequestApiError("Error adding hotel to Solr")
+		return err
 	}
 
-	c.JSON(http.StatusCreated, err)
+	var w http.ResponseWriter
+	
+	w.WriteHeader(http.StatusOK)
+	return nil
 }
 
-func Delete(c *gin.Context) {
-	id := c.Param("id")
-	err := Solr.Delete(id)
+func Delete(id int) error {
+	err := Solr.Delete(strconv.Itoa(id))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
-		return
+		e.NewBadRequestApiError("Error deleting hotel from Solr")
+		return err
 	}
-	c.JSON(http.StatusCreated, err)
+
+	var w http.ResponseWriter
+	
+	w.WriteHeader(http.StatusOK)
+	return nil
 }

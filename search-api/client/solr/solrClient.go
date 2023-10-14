@@ -12,6 +12,7 @@ import (
 	"UCC-as2-final/config"
 	"UCC-as2-final/dto"
 	e "UCC-as2-final/utils/errors"
+	"log"
 )
 
 type SolrClient struct {
@@ -31,9 +32,14 @@ func (sc *SolrClient) GetQuery(query string, field string) (dto.HotelsDto, e.Api
 	defer q.Body.Close()
 	err = json.NewDecoder(q.Body).Decode(&response)
 	if err != nil {
+		log.Printf("Response Body: %s", q.Body) // Add this line
+		log.Printf("Error: %s", err.Error())
 		return hotelsDto, e.NewBadRequestApiError("error in unmarshal")
 	}
 	hotelsDto = response.Response.Docs
+
+	log.Printf("hotels:", hotelsDto)
+
 	return hotelsDto, nil
 }
 
@@ -62,9 +68,9 @@ func (sc *SolrClient) GetQueryAllFields(query string) (dto.HotelsDto, e.ApiError
 }
 
 func (sc *SolrClient) Add(hotelDto dto.HotelDto) e.ApiError {
-	var addItemDto dto.AddDto
-	addItemDto.Add = dto.DocDto{Doc: hotelDto}
-	data, err := json.Marshal(addItemDto)
+	var addHotelDto dto.AddDto
+	addHotelDto.Add = dto.DocDto{Doc: hotelDto}
+	data, err := json.Marshal(addHotelDto)
 
 	reader := bytes.NewReader(data)
 	if err != nil {
