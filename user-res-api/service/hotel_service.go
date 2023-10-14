@@ -3,7 +3,7 @@ package service
 import (
 	// log "github.com/sirupsen/logrus"
 	hotelClient "user-res-api/client/hotel"
-	userClient "user-res-api/client/user"
+	// userClient "user-res-api/client/user"
 
 	"fmt"
 	"user-res-api/dto"
@@ -77,14 +77,14 @@ func (s *hotelService) GetHotels() (dto.HotelsDto, e.ApiError) {
 func (s *hotelService) InsertHotel(hotelDto dto.HotelPostDto, idAmadeus string) (dto.HotelDto, e.ApiError) {
 	fmt.Println("entro al service")
 	var hotel model.Hotel
-	var user model.User
+	// var user model.User
 	var response dto.HotelDto
 
-	user = userClient.GetUserById(hotelDto.Id)
+	// user = userClient.GetUserById(hotelDto.Id)
 
-	if user.Type == false {
-		return response, e.NewBadRequestApiError("El usuario no es administrador")
-	}
+	// if user.Type == false {
+	// 	return response, e.NewBadRequestApiError("El usuario no es administrador")
+	// }
 
 	hotel.HotelName = hotelDto.HotelName
 	hotel.IdAmadeus = idAmadeus

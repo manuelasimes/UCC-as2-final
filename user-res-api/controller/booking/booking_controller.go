@@ -43,7 +43,7 @@ func GetAmadeustoken () (string) {
     if err := json.Unmarshal(body, &response); err != nil {
         return ""
     }
-	token, ok := response["token"].(string)
+	token, ok := response["access_token"].(string)
     if !ok {
         return ""
     }

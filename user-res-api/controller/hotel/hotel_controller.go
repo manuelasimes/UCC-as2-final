@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"fmt"
 	"encoding/json"
+	bookingController "user-res-api/controller/booking"
 
 )
 
@@ -64,7 +65,8 @@ func InsertHotel(c *gin.Context) {
 	   return
 	}
 	// Agregar el encabezado de autorización Bearer con tu token
-	token := "RX1VGkRbdQ5S0ej6401ZOINHNKYV" // Reemplaza con tu token real
+	token := bookingController.GetAmadeustoken()
+	// token := "RX1VGkRbdQ5S0ej6401ZOINHNKYV" // Reemplaza con tu token real
 	solicitud.Header.Set("Authorization", "Bearer " + token)
 	// Realiza la solicitud HTTP
 	cliente := &http.Client{}
