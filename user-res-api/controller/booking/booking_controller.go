@@ -155,19 +155,27 @@ func InsertBooking(c *gin.Context) {
 	// antes de llamar la funcion insert del service deberiamos hacer el llamado a amadeus 
 	// URL de la API externa
 	
-	 apiUrl := "https://test.api.amadeus.com/v3/shopping/hotel-offers"
+	// apiUrl := "https://test.api.amadeus.com/v3/shopping/hotel-offers"
 
-	 // Agrega los parámetros a la URL
-	 queryParams := make(url.Values)
-	 queryParams.Add("hotelIds", idAm ) // Reemplaza con el valor deseado
-	 queryParams.Add("checkInDate", startdateconguiones) // Reemplaza con la fecha deseada
-	 queryParams.Add("checkOutDate", enddateconguiones) // Reemplaza con la fecha deseada
+	//  // Agrega los parámetros a la URL
+	//  queryParams := make(url.Values)
+	//  queryParams.Add("hotelIds", idAm ) // Reemplaza con el valor deseado
+	//  queryParams.Add("checkInDate", startdateconguiones) // Reemplaza con la fecha deseada
+	//  queryParams.Add("checkOutDate", enddateconguiones) // Reemplaza con la fecha deseada
  
-	 apiUrl += "?" + queryParams.Encode()
+	//  apiUrl += "?" + queryParams.Encode()
+
+	// Construye la URL manualmente
+apiUrl := "https://test.api.amadeus.com/v3/shopping/hotel-offers"
+apiUrl += "?hotelIds=" + idAm
+apiUrl += "&checkInDate=" + startdateconguiones
+apiUrl += "&checkOutDate=" + enddateconguiones
+
+	fmt.Println(apiUrl)
 
 
 	 // Crear una solicitud HTTP POST
-	 solicitud, err := http.NewRequest("POST", apiUrl, nil)
+	 solicitud, err := http.NewRequest("GET", apiUrl, nil)
 	 if err != nil {
 		fmt.Println("Error al crear la solicitud:", err)
 		c.JSON(http.StatusInternalServerError, err.Error())
@@ -180,6 +188,7 @@ func InsertBooking(c *gin.Context) {
 	solicitud.Header.Set("Authorization", "Bearer " + token)
 	// solicitud.Header.Set("Content-Type", "application/json") // Especifica el tipo de contenido si es necesario
  
+	fmt.Println(solicitud)
 	// Realiza la solicitud HTTP
 	cliente := &http.Client{}
 	respuesta, err := cliente.Do(solicitud)

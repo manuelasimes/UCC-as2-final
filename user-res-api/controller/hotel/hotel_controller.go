@@ -43,7 +43,6 @@ func GetHotels(c *gin.Context) {
 
 func InsertHotel(c *gin.Context) {
 	// esta funcion se llama cuando desde mongo se hace un post d eun hotel
-	// antes d einsertarlo debriamos hacer el mapeo con amadeus 
 	log.Println("entro al controller")
 	var insertHotelDto dto.HotelPostDto
 	err := c.BindJSON(&insertHotelDto)
@@ -64,9 +63,8 @@ func InsertHotel(c *gin.Context) {
 	   c.JSON(http.StatusInternalServerError, err.Error())
 	   return
 	}
-	// Agregar el encabezado de autorización Bearer con tu token
+
 	token := bookingController.GetAmadeustoken()
-	// token := "RX1VGkRbdQ5S0ej6401ZOINHNKYV" // Reemplaza con tu token real
 	solicitud.Header.Set("Authorization", "Bearer " + token)
 	// Realiza la solicitud HTTP
 	cliente := &http.Client{}
@@ -83,7 +81,6 @@ func InsertHotel(c *gin.Context) {
     var response struct {
         Data []struct {
             HotelID string `json:"hotelId"`
-            // Otros campos que puedas necesitar
         } `json:"data"`
     }
 
@@ -100,6 +97,7 @@ func InsertHotel(c *gin.Context) {
 		CanIUseID, err := service.HotelService.CheckHotelByIdAmadeus(hotel.HotelID)
 		if err != nil {
 			// manejo error 
+			fmt.Println("Ocurrio un error al verificar el uso de un id amadeus")
 		}
 		if CanIUseID == true {
 			hotelDto, er := service.HotelService.InsertHotel(insertHotelDto, hotel.HotelID)

@@ -12,7 +12,7 @@ type BookingDetailDto struct {
 
 	HotelId   int    `json:"booked_hotel_id"`
 	HotelName string `json:"hotel_name"`
-	Address   string `json:"hotel_address"`
+	
 }
 
 type BookingsDetailDto []BookingDetailDto

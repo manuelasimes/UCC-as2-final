@@ -48,8 +48,6 @@ func (s *hotelService) GetHotelById(id int) (dto.HotelDto, e.ApiError) {
 }
 func (s *hotelService) CheckHotelByIdAmadeus(id string) (bool, e.ApiError) {
 	
-	
-
 	if hotelClient.GetHotelByIdAmadeus(id) == true  {
 		return false, e.NewBadRequestApiError("Hotel ya en uso")
 	} 
@@ -77,14 +75,7 @@ func (s *hotelService) GetHotels() (dto.HotelsDto, e.ApiError) {
 func (s *hotelService) InsertHotel(hotelDto dto.HotelPostDto, idAmadeus string) (dto.HotelDto, e.ApiError) {
 	fmt.Println("entro al service")
 	var hotel model.Hotel
-	// var user model.User
 	var response dto.HotelDto
-
-	// user = userClient.GetUserById(hotelDto.Id)
-
-	// if user.Type == false {
-	// 	return response, e.NewBadRequestApiError("El usuario no es administrador")
-	// }
 
 	hotel.HotelName = hotelDto.HotelName
 	hotel.IdAmadeus = idAmadeus

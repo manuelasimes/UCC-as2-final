@@ -6,6 +6,7 @@ import (
 	json "github.com/json-iterator/go"
 	bookingClient "user-res-api/client/booking"
 	userClient "user-res-api/client/user"
+	hotelClient "user-res-api/client/hotel"
 	"user-res-api/dto"
 	"user-res-api/model"
 	cache "user-res-api/cache"
@@ -56,14 +57,23 @@ func (s *bookingService) GetBookings() (dto.BookingsDetailDto, e.ApiError) {
 	var bookings model.Bookings = bookingClient.GetBookings()
 	var bookingsDto dto.BookingsDetailDto
 
+
 	for _, booking := range bookings {
 		var bookingDto dto.BookingDetailDto
 		id := booking.Id
+		idHotel := booking.HotelId
+		
+		var hotel model.Hotel = hotelClient.GetHotelById(idHotel)
+		// ver en el caso q el id sea cero 
+	
 
 		bookingDto, _ = s.GetBookingById(id)
+		bookingDto.HotelName = hotel.HotelName
 
 		bookingsDto = append(bookingsDto, bookingDto)
+		
 	}
+
 
 	return bookingsDto, nil
 }
@@ -73,7 +83,6 @@ func (s *bookingService) GetBookings() (dto.BookingsDetailDto, e.ApiError) {
 // devuelve un responseDto el cual me dice si esta okey o no (disponible o no)
 func (s *bookingService) GetBookingByHotelIdAndDate(request dto.CheckRoomDto, idHotel int) (dto.Availability, e.ApiError) {
 	
-	// var cacheDTO dto.Availability
 	
 
 	var IsAvailable bool 
@@ -85,10 +94,11 @@ func (s *bookingService) GetBookingByHotelIdAndDate(request dto.CheckRoomDto, id
 	
 	var responseDto dto.Availability // la respuesta q vamos a devolver 
 
-	// debo encontrar la forma de chequear en MONGO com ver si este id existe --> por ahora sacamos 
-	// if hotel.Id == 0 {
-	// 	return responseDto, e.NewBadRequestApiError("El hotel no se encuentra en el sistema")
-	// } 
+	var hotel model.Hotel = hotelClient.GetHotelById(idHotel)
+	if hotel.Id == 0 {
+		return responseDto, e.NewBadRequestApiError("El hotel no se encuentra en el sistema")
+	}
+
 
 	for i := startDate; i < endDate; i = i + 1 { // i va a ser cada dia de los q vamos a chequear 
 		key := strconv.Itoa(idHotel) + strconv.Itoa(startDate)
@@ -137,11 +147,7 @@ func (s *bookingService) GetBookingByUserId(id int) (dto.BookingDetailDto, e.Api
 		return bookingDto, e.NewBadRequestApiError("Booking not found")
 	}
 
-	/*	bookingDto.StartDay = booking.StartDay
-		bookingDto.StartMonth = booking.StartMonth
-		bookingDto.StartYear = booking.StartYear
-		bookingDto.EndDay = booking.EndDay
-	*/
+
 	bookingDto.Id = booking.Id
 	bookingDto.StartDate = booking.StartDate
 	bookingDto.EndDate = booking.EndDate
@@ -155,7 +161,6 @@ func (s *bookingService) GetBookingByUserId(id int) (dto.BookingDetailDto, e.Api
 
 func (s *bookingService) GetBookingsByUserId(id int) (dto.BookingsDetailDto, e.ApiError) {
 
-	//var bookings model.Bookings = bookingClient.GetBookingsByUserId(id)
 	var bookings model.Bookings = bookingClient.GetBookings()
 	var bookingsDto dto.BookingsDetailDto
 
