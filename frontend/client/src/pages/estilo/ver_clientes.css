@@ -1,0 +1,92 @@
+body.bodyinicioC {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f8f8f8;
+    /* background-image: url(http://localhost:3000/static/media/fondoop1.cc88423….jpg); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    }
+    
+    :root {
+      --margendeArriba: 130px auto;
+    }
+    
+    .containerIniC {
+        margin: 4vh auto;
+        max-height: 90vh;
+        overflow: scroll;
+        overflow-x: hidden;
+        scrollbar-width: none;
+        width: 630px;
+    }
+    
+    .containerIniC::-webkit-scrollbar {
+      display: none; /* Ocultar la barra de desplazamiento */
+    }
+    
+    .hotels-containerC {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      grid-gap: 30px;
+      justify-items: left;
+    }
+    
+    .hotel-cardC {
+        display: flex;
+        align-items: center;
+        width: auto;
+        text-align: left;
+        border: 1px solid #ccc;
+        padding: 20px;
+        background-color: #ffffffdb;
+        margin-bottom: 20px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 5px 0px #b2b2b2;
+        transition-property: scale;
+        transition-duration: 200ms;
+        flex-wrap: wrap;
+    }
+    
+    .hotel-imageC {
+      max-width: 220px;
+      /* max-height: 120px; */
+      margin-right: 20px;
+      border-radius: 10px;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+    
+    .hotel-infoC {
+      flex-grow: 1; /* Permite que el contenido se expanda y ocupe todo el espacio disponible */
+      width: 200px;
+      max-width: 290px;
+    }
+    
+    .hotel-detailsC {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    
+    .hotel-cardC h4{
+      font-size: 2.28rem;
+      line-height: 110%;
+      font-weight: bold;
+      color: #7b7b7b;
+      margin: 0;
+    }
+  
+    .hotel-cardC p {
+      margin: 0;
+    }
+    
+    .hotel-descriptionC {
+        color: gray;
+        margin-top: 20px;
+        text-align: justify;
+        min-width: 350px;
+    }

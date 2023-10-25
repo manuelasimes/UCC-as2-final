@@ -1,0 +1,85 @@
+body.bodylogclient {
+ 
+  background-image: url(./imagenes/fondLogClien.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  }
+  /*body.bodyopciones {
+  background-image: url(./imagenes/fondo1.avif);
+  background-size: cover;
+    background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  
+}*/
+
+
+.contLogClien2 {
+  margin-right: 350px;
+  margin-bottom: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 20px;
+  height:350px ;
+  width:400px;
+  background: rgba(255, 255, 255);
+  box-shadow: 0 0 30px rgb(94, 76, 76);
+}
+  
+.title {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#inputLcli {
+  margin-bottom: 15px;
+  width: 70%;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 500;
+  color: #7b7b7b;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.buttonClient {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #013877bf;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-weight: bold;
+  transition-property: background-color;
+  transition-duration: 200ms;
+}
+
+.buttonClient:hover {
+  background-color: #334c70;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+}

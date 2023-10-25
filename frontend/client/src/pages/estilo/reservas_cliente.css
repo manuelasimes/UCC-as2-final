@@ -1,0 +1,30 @@
+.reservations-container1 {
+ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(./imagenes/fondoop1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover
+  }
+  
+  .reservations-container2 {
+    background-color: #e6f3ff;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .reservation-card {
+    text-align: center;
+    margin-bottom: 3vh;
+    margin: 2vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 5px 0px #b2b2b2;
+    background-color: #fdf4e7;
+  } 

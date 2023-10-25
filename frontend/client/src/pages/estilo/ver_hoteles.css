@@ -1,0 +1,92 @@
+body.bodyinicio {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f8f8f8;
+  /* background-image: url(http://localhost:3000/static/media/fondoop1.cc88423….jpg); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+  }
+  
+  :root {
+    --margendeArriba: 130px auto;
+  }
+  
+  .containerIni {
+    margin: 2vh auto;
+    padding: 10px;
+    max-height: 70vh; /* Ajusta este valor según sea necesario */
+    overflow: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    width: 600px;
+  }
+  
+  .containerIni::-webkit-scrollbar {
+    display: none; /* Ocultar la barra de desplazamiento */
+  }
+  
+  .hotels-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 30px;
+    justify-items: left;
+  }
+  
+  .hotel-card {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #ffffffdb;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 5px 0px #b2b2b2;
+    transition-property: scale;
+    transition-duration: 200ms;
+  }
+  
+  .hotel-image {
+    max-width: 220px;
+    /* max-height: 120px; */
+    margin-right: 20px;
+    border-radius: 10px;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+  }
+  
+  .hotel-info {
+    flex-grow: 1; /* Permite que el contenido se expanda y ocupe todo el espacio disponible */
+  }
+  
+  .hotel-details {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  
+  .hotel-card h4{
+    font-size: 2.28rem;
+    line-height: 110%;
+    font-weight: bold;
+    color: #7b7b7b;
+    margin: 0;
+  }
+
+  .hotel-card p {
+    margin: 0;
+  }
+  
+  .hotel-description {
+    color: gray;
+    margin-top: 5px; /* Ajusta el margen superior según sea necesario */
+  }  
+
+  .hotel-card:hover {
+    scale: 1.015;
+  }

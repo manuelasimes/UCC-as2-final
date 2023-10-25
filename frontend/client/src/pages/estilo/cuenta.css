@@ -1,0 +1,80 @@
+body.bodyCuenta{
+  /*background-image: ;*/
+ background-color: #ccc;
+
+}
+
+
+.containerCU {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f8f8;
+  }
+
+  .tituloDC {
+    font-size: 3.56rem;
+    line-height: 110%;
+    margin: 0 0 1.5rem 0;
+    font-weight: bold;
+    color: #7b7b7b;
+    text-align: center;
+  }
+  
+  .account-form {
+    max-width: 400px;
+    width: 100%;
+    padding: 2rem;
+    border: 8px solid #006ce4bf;
+    border-radius: 20px;
+    background-color: rgb(255 255 255);
+    box-shadow: 0px 4px 5px 0px #b2b2b2, inset 0 0 10px 0 #b2b2b2;
+  }
+  
+  .account-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+  }
+  
+  .logout-button,
+  .reservations-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition-property: scale, background-color;
+    transition-duration: 200ms;
+  }
+  
+  .logout-button {
+    background-color: #013877bf;
+    color: white;
+  }
+  
+  .reservations-button {
+    background-color: #013877bf;
+    color: white;
+  }
+
+.logout-button:hover,
+.reservations-button:hover {
+  background-color: #334c70;
+  scale: 1.02;
+}
+
+.password-toggle {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.password-toggle i {
+  color: #888;
+  transition: color 0.3s;
+}
+
+.password-toggle i:hover {
+  color: #333;
+}

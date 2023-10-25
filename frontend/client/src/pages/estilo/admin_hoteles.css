@@ -1,0 +1,44 @@
+.containerHotel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
+  height: 100vh;
+}
+
+.rectangulo {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.botones-container {
+  display: flex;
+  justify-content: center;
+}
+
+.botonAH {
+  background-color: #4c90af00;
+  color: #595959;
+  border: 2px solid #dfdfdf;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition-property: background-color;
+  transition-duration: 200ms;
+}
+
+.botonAH:hover {
+  background-color: rgb(214 214 214);
+}
