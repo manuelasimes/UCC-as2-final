@@ -3,8 +3,10 @@ package services
 import (
 	hotelDao "hotels-api/daos/hotel"
 	"hotels-api/dtos"
+	queue "hotels-api/utils/queue"
 	model "hotels-api/models"
 	e "hotels-api/utils/errors"
+	"strconv"
 )
 
 type hotelService struct{}
@@ -73,6 +75,18 @@ func (s *hotelService) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, e.ApiEr
 	}
 	hotelDto.Id = hotel.Id.Hex()
 
+	// Assuming hotel.Id is of type primitive.ObjectID
+	idHexString := hotel.Id.Hex()
+	idInt, err := strconv.Atoi(idHexString)
+	if err != nil {
+    // Handle the error
+	} else {
+    // Now you can pass idInt to the SendMessage function
+    queue.SendMessage(idInt, "INSERT")
+	}
+
+
+
 	return hotelDto, nil
 }
 
@@ -87,21 +101,29 @@ func (s *hotelService) UpdateHotel(id string, updatedHotelDto dto.HotelDto) (dto
 	}
 
 	// Actualiza los campos del hotel existente con los valores proporcionados en updatedHotelDto
-existingHotel.Name = updatedHotelDto.Name
+	existingHotel.Name = updatedHotelDto.Name
 
-// Realiza la actualización en la base de datos
-err := hotelDao.Update(id, existingHotel)
+	// Realiza la actualización en la base de datos
+	err := hotelDao.Update(id, existingHotel)
 
-if err != nil {
+	if err != nil {
     return dto.HotelDto{}, e.NewBadRequestApiError("Error in update")
-}
+	}
 
-// Construye un HotelDto actualizado para la respuesta
-updatedHotelDto.Id = existingHotel.Id.Hex()
-updatedHotelDto.Name = existingHotel.Name 
+	// Construye un HotelDto actualizado para la respuesta
+	updatedHotelDto.Name = existingHotel.Name 
 
+	// Assuming hotel.Id is of type primitive.ObjectID
+	idHexString := existingHotel.Id.Hex()
+	idInt, err := strconv.Atoi(idHexString)
+	if err != nil {
+    // Handle the error
+	} else {
+    // Now you can pass idInt to the SendMessage function
+    queue.SendMessage( idInt, "UPDATE")
+	}
 
-return updatedHotelDto, nil
+	return updatedHotelDto, nil
 
 }
 

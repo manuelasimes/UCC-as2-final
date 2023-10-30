@@ -3,13 +3,14 @@ package queue
 import (
 	"encoding/json"
 	"log"
-	"math/rand"
-	"time"
 	"hotels-api/dtos"
 	"hotels-api/config"
 
+
 	"github.com/streadway/amqp"
 )
+
+var amqpChannel *amqp.Channel
 
 func handleError(err error, msg string) {
 	if err != nil {
@@ -26,17 +27,19 @@ func QueueConnection() {
 	handleError(err, "Can't create an amqpChannel")
 	defer amqpChannel.Close()
 
-//separar funciones
+}
 
-	queue, err := amqpChannel.QueueDeclare("add", true, false, false, false, nil)
+// Function to create and send a message
+func SendMessage( id int, action string) {
+
+	addQueue, err := amqpChannel.QueueDeclare("add", true, false, false, false, nil)
 	handleError(err, "Could not declare `add` queue")
 
-	rand.Seed(time.Now().UnixNano())
 
 	// Prepare a message in the same format as the consumer expects
 	queueDto := dto.QueueDto{
-		Id:     rand.Int(),     // Generate a unique ID (modify this based on your use case)
-		Action: "INSERT",       // Define the action as needed
+		Id:     id,     // Generate a unique ID (modify this based on your use case)
+		Action: action,       // Define the action as needed
 		// Add any other fields as needed for your specific use case
 	}
 
@@ -45,7 +48,7 @@ func QueueConnection() {
 		handleError(err, "Error encoding JSON")
 	}
 
-	err = amqpChannel.Publish("", queue.Name, false, false, amqp.Publishing{
+	err = amqpChannel.Publish("", addQueue.Name, false, false, amqp.Publishing{
 		DeliveryMode: amqp.Persistent,
 		ContentType:  "application/json", // Change content type to JSON
 		Body:         body,
@@ -55,5 +58,5 @@ func QueueConnection() {
 		log.Fatalf("Error publishing message: %s", err)
 	}
 
-	log.Printf("Message published: ID %d, Action %s", queueDto.Id, queueDto.Action)
+	log.Printf("Message published: ID %d, Action %s", id, action)
 }
