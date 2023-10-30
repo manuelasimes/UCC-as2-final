@@ -51,12 +51,7 @@ func Update(id string, updatedHotel model.Hotel) error {
     update := bson.D{
         {"$set", bson.D{
             {"name", updatedHotel.Name},
-            {"description", updatedHotel.Description},
-            {"country", updatedHotel.Country},
-            {"city", updatedHotel.City},
-            {"address", updatedHotel.Adress},
-            {"images", updatedHotel.Images},
-            {"amenities", updatedHotel.Amenities},
+            
             // Puedes agregar más campos aquí según tus necesidades
         }},
     }
@@ -64,4 +59,5 @@ func Update(id string, updatedHotel model.Hotel) error {
     _, err = db.Collection("hotels").UpdateOne(context.TODO(), bson.D{{"_id", objID}}, update)
     return err
 }
+
 

@@ -76,7 +76,7 @@ func (s *hotelService) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, e.ApiEr
 	return hotelDto, nil
 }
 
-/* Error
+
 func (s *hotelService) UpdateHotel(id string, updatedHotelDto dto.HotelDto) (dto.HotelDto, e.ApiError) {
 	// Obtén el hotel existente por ID
 	existingHotel := hotelDao.GetById(id)
@@ -87,23 +87,21 @@ func (s *hotelService) UpdateHotel(id string, updatedHotelDto dto.HotelDto) (dto
 	}
 
 	// Actualiza los campos del hotel existente con los valores proporcionados en updatedHotelDto
-	existingHotel.Name = updatedHotelDto.Name
-	// Agrega más actualizaciones aquí según tus necesidades
+existingHotel.Name = updatedHotelDto.Name
 
-	// Realiza la actualización en la base de datos
-	updatedHotel := hotelDao.Update(id, existingHotel)
+// Realiza la actualización en la base de datos
+err := hotelDao.Update(id, existingHotel)
 
-	if updatedHotel.Id.Hex() == "000000000000000000000000" {
-		return dto.HotelDto{}, e.NewBadRequestApiError("Error in update")
-	}
-
-	// Construye un HotelDto actualizado para la respuesta
-	updatedHotelDto := dto.HotelDto{
-		Id:   updatedHotel.Id.Hex(),
-		Name: updatedHotel.Name,
-		// Agrega más campos aquí según tus necesidades
-	}
-
-	return updatedHotelDto, nil
+if err != nil {
+    return dto.HotelDto{}, e.NewBadRequestApiError("Error in update")
 }
-*/
+
+// Construye un HotelDto actualizado para la respuesta
+updatedHotelDto.Id = existingHotel.Id.Hex()
+updatedHotelDto.Name = existingHotel.Name 
+
+
+return updatedHotelDto, nil
+
+}
+
