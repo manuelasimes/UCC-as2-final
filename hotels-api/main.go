@@ -5,6 +5,7 @@ import (
 	"hotels-api/utils/db"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	q "hotels-api/utils/queue"
 )
 
 var (
@@ -16,6 +17,8 @@ func main() {
 	router.MapUrls(ginRouter)
 	err := db.InitDB()
 	defer db.DisconnectDB()
+	go q.QueueConnection()
+	
 
 	if err != nil {
 		fmt.Println("Cannot init db")
