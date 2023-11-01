@@ -5,14 +5,14 @@ import (
 )
 
 type Hotel struct {
-	Id primitive.ObjectID `json:"id"`
-	Name string `json:"name"`
-	Description string `json:"description"`
-	Country string `json:"country"`
-	City string `json:"city"`
-	Adress string `json:"address"`
-	Images []Image `json:"images"`
-	Amenities []Amenitie `json:"amenities"`
+	Id primitive.ObjectID `bson:"id"`
+	Name string `bson:"name"`
+	Description string `bson:"description"`
+	Country string `bson:"country"`
+	City string `bson:"city"`
+	Adress string `bson:"address"`
+	Images []Image `bson:"images"`
+	Amenities []Amenitie `bson:"amenities"`
 }
 
 type Hotels []Hotel
