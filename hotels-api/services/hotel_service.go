@@ -67,6 +67,27 @@ func (s *hotelService) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, e.ApiEr
 	var hotel model.Hotel
 
 	hotel.Name = hotelDto.Name
+	hotel.Description = hotelDto.Description
+	hotel.Country = hotelDto.Country
+	hotel.City = hotelDto.City
+	hotel.Adress = hotelDto.Adress
+
+	hotel.Images = make([]model.Image, len(hotelDto.Images))
+	hotel.Amenities = make([]model.Amenitie, len(hotelDto.Amenities))
+
+	for i, imgDto := range hotelDto.Images {
+		hotel.Images[i] = model.Image{
+			Url: imgDto.Url,
+		}
+	}
+
+	for i, amenityDto := range hotelDto.Amenities {
+		hotel.Amenities[i] = model.Amenitie{
+			Description: amenityDto.Description,
+			Image:      amenityDto.Image,
+		}
+	}
+
 
 	hotel = hotelDao.Insert(hotel)
 
