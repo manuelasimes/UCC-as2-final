@@ -14,7 +14,7 @@ type hotelService struct{}
 type hotelServiceInterface interface {
 	GetHotel(id string) (dto.HotelDto, e.ApiError)
 	InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, e.ApiError)
-	//UpdateHotel(id string, updatedHotelDto dto.HotelDto) (dto.HotelDto, e.ApiError)
+	UpdateHotel(id string, updatedHotelDto dto.HotelDto) (dto.HotelDto, e.ApiError)
 }
 
 var (
