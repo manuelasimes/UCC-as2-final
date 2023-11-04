@@ -43,12 +43,21 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 		return hotelsDto, e.NewBadRequestApiError("Solr failed")
 	}
 
+	return hotelsDto, nil
+
 	if numParams == 4 {
 
-	startdate, enddate := queryParams[2], queryParams[3]
+	startdateQuery, enddateQuery := queryParams[2], queryParams[3]
+	startdateSplit := strings.Split(startdateQuery, "-")
+	enddateSplit := strings.Split(enddateQuery, "-")
+	startdate := fmt.Sprintf("%s%s%s", startdateSplit[0], startdateSplit[1], startdateSplit[2])
+	enddate := fmt.Sprintf("%s%s%s", enddateSplit[0], enddateSplit[1], enddateSplit[2])
 
 	sDate, _ := strconv.Atoi(startdate)
 	eDate, _ := strconv.Atoi(enddate)
+
+	log.Debug(sDate)
+	log.Debug(eDate)
 
 	// Create a channel to collect results
 	resultsChan := make(chan dto.HotelDto, len(hotelsDto))
@@ -62,8 +71,6 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 		wg.Add(1) // Increment the WaitGroup counter for each Goroutine
 		go func(hotel dto.HotelDto) {
 			defer wg.Done() // Decrement the WaitGroup counter when Goroutine is done
-
-			log.Debug("hola")
 
 			id, _ := strconv.Atoi(hotel.Id)
 
@@ -79,12 +86,14 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 				response = hotel
 			}
 
+			log.Debug("Adentro")
+			log.Debug(result)
+			log.Debug(response)
+
 			resultsChan <- response
 		}(hotel)
 	}
 
-
-	log.Debug("hola3")
 	// Create a slice to store the results
 	var hotelResults dto.HotelsDto
 
@@ -98,8 +107,6 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 	for response := range resultsChan {
 			hotelResults = append(hotelResults, response)
 	}
-
-	log.Debug("hola2") 
 
 	return hotelResults, nil
 

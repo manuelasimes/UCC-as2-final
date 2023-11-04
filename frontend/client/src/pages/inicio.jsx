@@ -7,13 +7,19 @@ const HomePage = () => {
   const [hotels, setHotels] = useState([]);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [city, setCity] = useState('');
   const { isLoggedCliente } = useContext(AuthContext);
   const { isLoggedAdmin } = useContext(AuthContext);
   const { logout } = useContext(AuthContext);
 
+  function isEmpty(str) {
+    return !str.trim().length;
+}
+
   const getHotels = async () => {
     try {
-      const request = await fetch("http://localhost:8090/cliente/hoteles");
+      // const request = await fetch("http://localhost:8090/cliente/hoteles");
+      const request = await fetch("http://localhost:8090/searchAll=*:*");
       const response = await request.json();
       setHotels(response);
     } catch (error) {
@@ -55,13 +61,25 @@ const HomePage = () => {
     }
   };
 
+  const handleCityChange = (event) => {
+    setCity(event.target.value);
+  }
+
   const filterHotels = async () => {
-    for (let i = 0; i < hotels.length; i++) {
-      const request = await fetch(`http://localhost:8090/cliente/disponibilidad/${hotels[i].id}/${startDate}/${endDate}`);
+
+      if (isEmpty(city)) {
+        if (startDate !== null && endDate !== null){
+          alert("No esta permitido buscar solo por fecha, debe ingresar un destino!");
+        }
+        getHotels();
+      } else {
+      const request = await fetch(`http://localhost:8090/search=city_${city}_${startDate}_${endDate}`);
       const response = await request.json();
-      if (response === 0) {
-        setHotels((prevHotels) => prevHotels.filter((hotel) => hotel.id !== hotels[i].id));
-      }
+      const checkResponse = JSON.stringify(response)
+      console.log(checkResponse)
+      if (checkResponse !== null) {
+        setHotels(response);
+      } 
     }
   };
 
@@ -124,7 +142,7 @@ const HomePage = () => {
         <div className="contdeFechas">
         <div className="localidad">
             <label className="fecha">¿a dónde vas?</label>
-            <input type="text" id="destino" placeholder="Su destino"/>
+            <input type="text" id="destino" placeholder="Su destino" value={city} onChange={handleCityChange}/>
           </div>
           <div className="date-pickerINI1">
             <label htmlFor="start-date" className="fecha">Entrada</label>
@@ -141,10 +159,10 @@ const HomePage = () => {
             {hotels.length ? 
               ( hotels.map((hotel) => (
                 <div className='hotel-card' key={hotel.id}>
-                  <img src={hotel.image} alt={hotel.nombre} className="hotel-image" />
+                  <img src={hotel.image} alt={hotel.name} className="hotel-image" />
                   <div className="hotel-info">
-                    <h4>{hotel.nombre}</h4>
-                    <p>{hotel.email} </p>
+                    <h4>{hotel.name}</h4>
+                    <p>{hotel.description} </p>
                     <button onClick={() => Verificacion(hotel.id)}>
                       Reservar
                     </button>
@@ -159,5 +177,6 @@ const HomePage = () => {
     </body> 
   );
 };
+
 
 export default HomePage;
