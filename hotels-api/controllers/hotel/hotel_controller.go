@@ -1,4 +1,4 @@
-package hotel
+package controller
 
 import (
 	"hotels-api/dtos"
@@ -47,10 +47,11 @@ func Insert(c *gin.Context) {
 		c.JSON(er.Status(), er)
 		return
 	}
+	
 
 	c.JSON(http.StatusCreated, hotelDto)
 }
-/*
+
 func Update(c *gin.Context) {
     // Obtener el ID del hotel a actualizar desde los parámetros de la URL
     id := c.Param("id")
@@ -71,6 +72,6 @@ func Update(c *gin.Context) {
         return
     }
 
+	
     c.JSON(http.StatusOK, updatedHotelDto)
 }
-*/
