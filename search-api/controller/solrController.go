@@ -25,17 +25,21 @@ func GetQuery(c *gin.Context) {
 
 	hotelsDto, err := Solr.GetQuery(query)
 	if err != nil {
-		log.Debug(hotelsDto)
 		c.JSON(http.StatusBadRequest, hotelsDto)
 		return
 	}
+
+	log.Debug(hotelsDto)
+	log.Debug("HOLA ACA")
 
 	c.JSON(http.StatusOK, hotelsDto)
 }
 
 func GetQueryAllFields(c *gin.Context) {
 	var hotelsDto dto.HotelsDto
-	query := c.Param("searchQuery")
+	// query := c.Param("searchQuery")
+
+	query := "*:*"
 
 	hotelsDto, err := Solr.GetQueryAllFields(query)
 	if err != nil {
