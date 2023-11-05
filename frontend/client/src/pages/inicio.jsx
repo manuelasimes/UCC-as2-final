@@ -188,7 +188,7 @@ const HomePage = () => {
             {hotels.length ? 
               ( hotels.map((hotel) => (
                 <div className='hotel-card' key={hotel.id}>
-                  <img src={hotel.image} alt={hotel.name} className="hotel-image" />
+                  <img src={hotel.images[1]} alt={hotel.name} className="hotel-image" />
                   <div className="hotel-info">
                     <h4>{hotel.name}</h4>
                     <p>{hotel.description} </p>

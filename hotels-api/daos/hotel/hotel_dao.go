@@ -17,7 +17,7 @@ func GetById(id string) model.Hotel {
 		fmt.Println(err)
 		return hotel
 	}
-	err = db.Collection("hotels").FindOne(context.TODO(), bson.D{{"_id", objID}}).Decode(&hotel)
+	err = db.Collection("hotels").FindOne(context.TODO(), bson.D{{Key: "_id", Value: objID}}).Decode(&hotel)
 	if err != nil {
 		fmt.Println(err)
 		return hotel
@@ -49,14 +49,19 @@ func Update(id string, updatedHotel model.Hotel) error {
 
     // Define las actualizaciones que deseas realizar en el documento
     update := bson.D{
-        {"$set", bson.D{
-            {"name", updatedHotel.Name},
-            
+        {Key: "$set", Value: bson.D{
+            {Key: "name", Value: updatedHotel.Name},
+			{Key: "description", Value: updatedHotel.Description},
+			{Key: "city", Value: updatedHotel.City},
+			{Key: "country", Value: updatedHotel.Country},
+			{Key: "address", Value: updatedHotel.Adress},
+			{Key: "images", Value: updatedHotel.Images},
+			{Key:"amenities", Value: updatedHotel.Amenities},
             // Puedes agregar más campos aquí según tus necesidades
         }},
     }
 
-    _, err = db.Collection("hotels").UpdateOne(context.TODO(), bson.D{{"_id", objID}}, update)
+    _, err = db.Collection("hotels").UpdateOne(context.TODO(), bson.D{{Key: "_id", Value: objID}}, update)
     return err
 }
 
