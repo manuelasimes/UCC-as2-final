@@ -10,7 +10,7 @@ var (
 	SOLRCOLLECTION = "hotelSearch"
 
 	HOTELSHOST = "localhost"
-	HOTELSPORT = 8090
+	HOTELSPORT = 8060
 
 	QUEUENAME = "worker_solr"
 	EXCHANGE  = "hotels"

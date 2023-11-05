@@ -12,10 +12,10 @@ import (
 	client "UCC-as2-final/client/solr"
 	e "UCC-as2-final/utils/errors"
 	"strconv"
-	"os"
+	// "os"
 	"sync"
 
-	"github.com/streadway/amqp"
+	// "github.com/streadway/amqp"
 )
 
 type SolrService struct {
@@ -42,8 +42,6 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 	if err != nil {
 		return hotelsDto, e.NewBadRequestApiError("Solr failed")
 	}
-
-	return hotelsDto, nil
 
 	if numParams == 4 {
 
@@ -72,10 +70,8 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 		go func(hotel dto.HotelDto) {
 			defer wg.Done() // Decrement the WaitGroup counter when Goroutine is done
 
-			id, _ := strconv.Atoi(hotel.Id)
-
 			// Make API call for each hotel and send the hotel ID
-			result, err := s.GetHotelInfo(id, sDate, eDate) // Assuming you have a function to get hotel info
+			result, err := s.GetHotelInfo(hotel.Id, sDate, eDate) // Assuming you have a function to get hotel info
 			if err != nil {
 				result = false
 			}
@@ -115,9 +111,9 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 	return hotelsDto, nil
 }
 
-func (s *SolrService) GetHotelInfo(id int, startdate int, enddate int) (bool, error) {
+func (s *SolrService) GetHotelInfo(id string, startdate int, enddate int) (bool, error) {
 
-		resp, err := http.Get(fmt.Sprintf("http:://%s:%d/hotel/availability/%d/%d/%d", config.USERAPIHOST, config.USERAPIPORT, id, startdate, enddate))
+		resp, err := http.Get(fmt.Sprintf("http://%s:%d/hotel/availability/%s/%d/%d", config.USERAPIHOST, config.USERAPIPORT, id, startdate, enddate))
 
 		if err != nil {
 			return false, e.NewBadRequestApiError("user-res-api failed")
@@ -135,9 +131,6 @@ func (s *SolrService) GetHotelInfo(id int, startdate int, enddate int) (bool, er
 		}
 
 		status := responseDto.Status
-
-		log.Debug("llego aca", status)
-
 		return status, nil
 }
 	
@@ -145,6 +138,7 @@ func (s *SolrService) GetQueryAllFields(query string) (dto.HotelsDto, e.ApiError
 	var hotelsDto dto.HotelsDto
 	hotelsDto, err := s.solr.GetQueryAllFields(query)
 	if err != nil {
+		log.Debug(err)
 		return hotelsDto, e.NewBadRequestApiError("Solr failed")
 	}
 	return hotelsDto, nil
@@ -152,8 +146,8 @@ func (s *SolrService) GetQueryAllFields(query string) (dto.HotelsDto, e.ApiError
 
 func (s *SolrService) AddFromId(id string) e.ApiError {
 	var hotelDto dto.HotelDto
-	// resp, err := http.Get(fmt.Sprintf("http://%s:%d/hotels/%s", config.HOTELSHOST, config.HOTELSPORT, id))
-	resp, err := http.Get(fmt.Sprintf("http://localhost:8070/hotel/%s", id))
+	resp, err := http.Get(fmt.Sprintf("http://%s:%d/hotels/%s", config.HOTELSHOST, config.HOTELSPORT, id))
+	// resp, err := http.Get(fmt.Sprintf("http://localhost:8070/hotel/%s", id))
 	if err != nil {
 		log.Debugf("error getting item %s", id)
 		return e.NewBadRequestApiError("error getting hotel " + id)
@@ -162,15 +156,18 @@ func (s *SolrService) AddFromId(id string) e.ApiError {
 	body, _ = io.ReadAll(resp.Body)
 	log.Debugf("%s", body)
 	err = json.Unmarshal(body, &hotelDto)
+	log.Debugf("Unmarshal result: %s", &hotelDto)
 	if err != nil {
 		log.Debugf("error in unmarshal of hotel %s", id)
 		return e.NewBadRequestApiError("error in unmarshal of hotel")
 	}
 	er := s.solr.Add(hotelDto)
+	log.Debug(hotelDto)
 	if er != nil {
 		log.Debugf("error adding to solr")
 		return e.NewInternalServerApiError("Adding to Solr error", err)
 	}
+
 	return nil
 }
 
@@ -182,7 +179,7 @@ func (s *SolrService) Delete(id string) e.ApiError {
 	return nil
 }
 
-var QueueConn *amqp.Connection
+/* var QueueConn *amqp.Connection
 
 func handleError(err error, msg string) {
 	if err != nil {
@@ -230,7 +227,7 @@ func (s *SolrService) QueueStart(){
 				log.Printf("Error decoding JSON: %s", err)
 			}
 
-			log.Printf("ID %d, Action %s", queueDto.Id, queueDto.Action)
+			log.Printf("ID %s, Action %s", queueDto.Id, queueDto.Action)
 
 			if err := d.Ack(false); err != nil {
 				log.Printf("Error acknowledging message : %s", err)
@@ -239,9 +236,9 @@ func (s *SolrService) QueueStart(){
 			}
 
 			if ( queueDto.Action == "INSERT" || queueDto.Action == "UPDATE" ) {
-			s.AddFromId(strconv.Itoa(queueDto.Id))
+			s.AddFromId(queueDto.Id)
 			} else if queueDto.Action == "DELETE" {
-				s.Delete(strconv.Itoa(queueDto.Id))
+				s.Delete(queueDto.Id)
 			}
 
 		}
@@ -250,4 +247,4 @@ func (s *SolrService) QueueStart(){
 	// Stop for program termination
 	<-stopChan
 
-}
+} */

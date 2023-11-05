@@ -7,8 +7,8 @@ type HotelDto struct {
 	Country string `json:"country"`
 	City string `json:"city"`
 	Adress string `json:"address"`
-	Images []*ImageDto `json:"images"`
-	Amenities []*AmenitieDto `json:"amenities"`
+	Images []string `json:"images"`
+	Amenities []string `json:"amenities"`
 }
 
 type HotelsDto []HotelDto

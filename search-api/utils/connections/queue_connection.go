@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 
 
+
 	"github.com/streadway/amqp"
 	controller "UCC-as2-final/controller"
 )
@@ -65,7 +66,7 @@ func QueueConnection() {
 				log.Printf("Error decoding JSON: %s", err)
 			}
 
-			log.Printf("ID %d, Action %s", queueDto.Id, queueDto.Action)
+			log.Printf("ID %s, Action %s", queueDto.Id, queueDto.Action)
 
 			if err := d.Ack(false); err != nil {
 				log.Printf("Error acknowledging message : %s", err)
@@ -74,6 +75,17 @@ func QueueConnection() {
 			}
 
 			if ( queueDto.Action == "INSERT" || queueDto.Action == "UPDATE" ) {
+
+				if (queueDto.Action == "UPDATE"){
+
+					err := controller.Delete(queueDto.Id) // Me evito repetidos en Solr
+
+					if err != nil {
+						handleError(err, "Error deleting from Solr")
+					}
+
+				}
+
 				err := controller.AddFromId(queueDto.Id)
 
 				if err != nil {

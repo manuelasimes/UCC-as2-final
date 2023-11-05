@@ -18,7 +18,7 @@ func handleError(err error, msg string) {
 	}
 }
 
-func QueueConnection() {
+func SendMessage( id string, action string)  {
 	conn, err := amqp.Dial(config.AMPQConnectionURL) // Use the same connection URL as the consumer
 	handleError(err, "Can't connect to AMQP")
 	defer conn.Close()
@@ -26,11 +26,6 @@ func QueueConnection() {
 	amqpChannel, err := conn.Channel()
 	handleError(err, "Can't create an amqpChannel")
 	defer amqpChannel.Close()
-
-}
-
-// Function to create and send a message
-func SendMessage( id int, action string) {
 
 	addQueue, err := amqpChannel.QueueDeclare("add", true, false, false, false, nil)
 	handleError(err, "Could not declare `add` queue")

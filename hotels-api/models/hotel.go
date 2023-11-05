@@ -11,8 +11,8 @@ type Hotel struct {
 	Country 	string 			`bson:"country"`
 	City 		string			`bson:"city"`
 	Adress 		string 			`bson:"address"`
-	Images 		[]Image 		`bson:"images"`
-	Amenities 	[]Amenitie 		`bson:"amenities"`
+	Images 		[]string 		`bson:"images"`
+	Amenities 	[]string 		`bson:"amenities"`
 }
 
 type Hotels []Hotel
