@@ -1,11 +1,12 @@
-package service 
+package service
 
 import (
 	"fmt"
+	userClient "user-res-api/client/user"
+
 	"github.com/golang-jwt/jwt"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
-	userClient "user-res-api/client/user"
 
 	"user-res-api/dto"
 	"user-res-api/model"
@@ -19,7 +20,6 @@ type userServiceInterface interface {
 	InsertUser(userDto dto.UserDto) (dto.UserDto, e.ApiError)
 	GetUserById(id int) (dto.UserDto, e.ApiError)
 	Login(loginDto dto.LoginDto) (dto.LoginResponseDto, e.ApiError)
-	
 }
 
 var (
@@ -136,7 +136,7 @@ func (s *userService) Login(loginDto dto.LoginDto) (dto.LoginResponseDto, e.ApiE
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"username": loginDto.Username,
-		"pass":     loginDto.Password,
+		"password": loginDto.Password,
 	})
 	var jwtKey = []byte("secret_key")
 	tokenString, _ := token.SignedString(jwtKey)
