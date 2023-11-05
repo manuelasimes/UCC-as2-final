@@ -3,6 +3,29 @@ import { AuthContext } from './login/auth';
 import { useParams } from 'react-router-dom';
 import './estilo/reservar.css';
 
+
+
+function convertirFecha(fecha) {
+  let fechaString = fecha.toString()
+  
+
+  let year = fechaString.substring(0,4)
+  
+  let month = fechaString.substring(5,7)
+  
+  let day = fechaString.substring(8,10)
+
+  let yearPlusMonth = year.concat("",month)
+  let fechaStringFinal = yearPlusMonth.concat("",day)
+
+  
+
+  var fechaEntero = Number(fechaStringFinal)
+
+  return fechaEntero
+}
+
+
 const ReservaPage = () => {
   const { hotelId } = useParams();
   const [hotelData, setHotelData] = useState('');
@@ -22,18 +45,20 @@ const ReservaPage = () => {
     const endDateObj = new Date(endDate);
     const Dias = Math.round((endDateObj - startDateObj) / (1000 * 60 * 60 * 24));
     const formData = {
-      hotel_id: parseInt(hotelId),
-      cliente_id: parseInt(accountId),
-      anio_inicio: startDateObj.getFullYear(),
-      anio_final: endDateObj.getFullYear(),
-      mes_inicio: startDateObj.getMonth() + 1, 
-      mes_final: endDateObj.getMonth() + 1, 
-      dia_inicio: startDateObj.getDate() + 1,
-      dia_final: endDateObj.getDate() + 1,
-      dias: Dias
+      booked_hotel_id: parseInt(hotelId),
+      user_booked_id: parseInt(accountId),
+      start_date: convertirFecha(startDateObj),
+      end_date: convertirFecha(endDateObj)
+      // anio_inicio: startDateObj.getFullYear(),
+      // anio_final: endDateObj.getFullYear(),
+      // mes_inicio: startDateObj.getMonth() + 1, 
+      // mes_final: endDateObj.getMonth() + 1, 
+      // dia_inicio: startDateObj.getDate() + 1,
+      // dia_final: endDateObj.getDate() + 1,
+      // dias: Dias
     };
 
-    fetch('http://localhost:8090/cliente/reserva', {
+    fetch('http://localhost:8070/booking', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -52,19 +77,19 @@ const ReservaPage = () => {
       });
   };
 
-  useEffect(() => {
-    setHotelData('');
-    if (hotelId) {
-      fetch(`http://localhost:8090/cliente/hotel/${hotelId}`)
-        .then(response => response.json())
-        .then(data => {
-          setHotelData(data);
-        })
-        .catch(error => {
-          console.error('Error al obtener los datos del cliente:', error);
-        });
-    }
-  }, [hotelId]);
+  // useEffect(() => {
+  //   setHotelData('');
+  //   if (hotelId) {
+  //     fetch(`http://localhost:8090/cliente/hotel/${hotelId}`)
+  //       .then(response => response.json())
+  //       .then(data => {
+  //         setHotelData(data);
+  //       })
+  //       .catch(error => {
+  //         console.error('Error al obtener los datos del cliente:', error);
+  //       });
+  //   }
+  // }, [hotelId]);
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
@@ -93,7 +118,9 @@ const ReservaPage = () => {
   };
 
   const filterHotels = async () => {
-    const request = await fetch(`http://localhost:8090/cliente/disponibilidad/${hotelId}/${startDate}/${endDate}`);
+    const request = await fetch(`http://localhost:8070/hotel/availability/${hotelId}/${startDate}/${endDate}`);
+    // /hotel/availability/:id/:start_date/:end_date"
+
     const response = await request.json();
     if (response === 0) {
       setEndDate('');

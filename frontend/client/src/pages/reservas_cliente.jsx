@@ -12,7 +12,7 @@ const HomePage = () => {
       const hotelesArray = [];
       for (let i = 0; i < reservations.length; i++) {
         const reserva = reservations[i];
-        const request = await fetch(`http://localhost:8090/cliente/hotel/${reserva.hotel_id}`);
+        const request = await fetch(`http://localhost:8070/cliente/hotel/${reserva.hotel_id}`);
         const response = await request.json();
         hotelesArray.push(response);
       }
@@ -26,7 +26,7 @@ const HomePage = () => {
     if (isLoggedCliente) {
       const accountId = localStorage.getItem("id_cliente");
       try {
-        const request = await fetch(`http://localhost:8090/cliente/reservas/${accountId}`);
+        const request = await fetch(`http://localhost:8070/booking/user/${accountId}`);
         const response = await request.json();
         setReservations(response);
       } catch (error) {

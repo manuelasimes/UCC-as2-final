@@ -7,11 +7,13 @@ import (
 	service "user-res-api/service"
 	"net/http"
 	"fmt" 
+	"user-res-api/model"
 	"io/ioutil"
 	"encoding/json"
 	"strconv"
 	"net/url"
 	"strings"
+	hotelClient "user-res-api/client/hotel"
 )
 
 // funcion para generar un token de amadeus cada vez que voy a hacer la consulta 
@@ -70,7 +72,7 @@ func GetBookingById(c *gin.Context) {
 
 func GetAvailabilityByIdAndDate(c *gin.Context) {
 	log.Debug("Hotel id to load: " + c.Param("id"))
-	id, _ := strconv.Atoi(c.Param("id"))
+	id := c.Param("id")
 	
 	log.Debug("Booking startDate to load: " + c.Param("start_date"))
 
@@ -80,10 +82,13 @@ func GetAvailabilityByIdAndDate(c *gin.Context) {
 
 	endDate, _ := strconv.Atoi(c.Param("end_date"))
 	
+	var hotel model.Hotel = hotelClient.GetHotelByIdMongo(id)
+	id_ := hotel.Id
+
 	var request dto.CheckRoomDto
 	request.StartDate = startDate
 	request.EndDate = endDate
-	IsAvailable, err := service.BookingService.GetBookingByHotelIdAndDate(request,id)
+	IsAvailable, err := service.BookingService.GetBookingByHotelIdAndDate(request,id_)
 
 	if err != nil {
 		c.JSON(err.Status(), err)
@@ -107,30 +112,35 @@ func GetBookings(c *gin.Context) {
 
 func InsertBooking(c *gin.Context) {
 
-	var bookingDto dto.BookingDto
+	var bookingPDto dto.BookingPostDto
 
-	err := c.BindJSON(&bookingDto)
+	err := c.BindJSON(&bookingPDto)
+	
 	// Error Parsing json param
- 	if err != nil {
-		log.Error(err.Error())
-		c.JSON(http.StatusBadRequest, err.Error())
-		return
+	if err != nil {
+			log.Error(err.Error())
+			c.JSON(http.StatusBadRequest, err.Error())
+			return
 	}
-	// ahora con los datos del booking dto rellenamos una nueva estructura para la requesta  amadeus 
-	// Serializa el objeto BookingDto a formato JSON
-	id := bookingDto.HotelId
+
+	id := bookingPDto.HotelId
 	fmt.Println("El id mysql del hotel es:", id)
 	// necesito llmara a una funcion que me traiga el id amadeus del hotel con el id que ya tengo (tengo el id mysql) 
 	// GetHotelById(id int) (dto.HotelDto, e.ApiError)
-	hotelDto, err := service.HotelService.GetHotelById(id)
+	
+	var hotel model.Hotel = hotelClient.GetHotelByIdMongo(id)
+	idAm := hotel.IdAmadeus 
+	idMySQL := hotel.Id 
 
-	if err != nil {
-		// c.JSON(err.Status(), err)
-		fmt.Println("No se encontro un hotel con ese id")
-		return
-	}
+	var bookingDto dto.BookingDto
 
-	idAm := hotelDto.IdAmadeus 
+	bookingDto.Id = bookingPDto.Id
+	bookingDto.UserId = bookingPDto.UserId
+	bookingDto.HotelId = idMySQL
+	bookingDto.StartDate = bookingPDto.StartDate
+	bookingDto.EndDate = bookingPDto.EndDate
+	
+
 	
 	startdatebooking := strconv.Itoa(bookingDto.StartDate)
 	fechaConGuiones := startdatebooking
@@ -237,7 +247,7 @@ apiUrl += "&checkOutDate=" + enddateconguiones
 		} 
 	c.JSON(http.StatusCreated, bookingDto)
 	} else {
-		fmt.Println("No hay disponibilidad en esas fechas")
+		fmt.Println("No hay disponibilidad en esas fechas, controller")
 	}
 
 	defer respuesta.Body.Close()

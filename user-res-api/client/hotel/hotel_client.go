@@ -19,6 +19,15 @@ func GetHotelById(id int) model.Hotel {
 	return hotel
 }
 
+func GetHotelByIdMongo(id string) model.Hotel {
+	var hotel model.Hotel
+
+	Db.Where("id_mongo = ?", id).First(&hotel)
+	log.Debug("Hotel: ", hotel)
+
+	return hotel
+}
+
 // creo funcio que me permita ver si hay algun hotel en la bd con ese id de amadeus 
 func GetHotelByIdAmadeus(idam string) bool {
 	var hotel model.Hotel

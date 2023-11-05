@@ -34,7 +34,7 @@ func mapUrls() {
 
 	
 	// Login
-	// router.POST("/login", userController.Login)
+	router.POST("/login", userController.Login)
 
 	log.Info("Finishing mappings configurations")
 }

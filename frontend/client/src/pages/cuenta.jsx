@@ -19,7 +19,7 @@ function AccountDetails() {
     const getUser = () => {
       if (isLoggedCliente) {
         const accountId = localStorage.getItem("id_cliente");
-        fetch(`http://localhost:8090/cliente/${accountId}`)
+        fetch(`http://localhost:8070/user/${accountId}`)
           .then(response => response.json())
           .then(data => {
             setAccountDetails({

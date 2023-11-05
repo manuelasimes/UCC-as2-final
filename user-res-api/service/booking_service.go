@@ -184,6 +184,7 @@ func (s *bookingService) InsertBooking(bookingDto dto.BookingDto) (dto.BookingDt
 	var booking model.Booking
 	
 	if userClient.CheckUserById(bookingDto.UserId) == false {
+		fmt.Println("El usuario no esta registrado en el sistema")
 		return bookingDto, e.NewBadRequestApiError("El usuario no esta registrado en el sistema")
 	}
 
@@ -199,6 +200,7 @@ func (s *bookingService) InsertBooking(bookingDto dto.BookingDto) (dto.BookingDt
 	responseAvailabilityDto, _ = s.GetBookingByHotelIdAndDate(checkAvailabilityDto, bookingDto.HotelId)
 
 	if responseAvailabilityDto.OkToBook == false {
+		fmt.Println("No hay disponibilidad en esas fechas")
 		return bookingDto, e.NewBadRequestApiError("El hotel no tiene disponibilidad en esas fechas")
 	}
 
