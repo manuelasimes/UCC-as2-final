@@ -21,7 +21,7 @@ function RegistrationPage() {
     setEmail('');
   
     if (formData.email) {
-      fetch(`http://localhost:8090/cliente/email/${formData.email}`)
+      fetch(`http://localhost:8070/cliente/email/${formData.email}`)
         .then(response => response.json())
         .then(data => {
           setEmail(data);
@@ -36,7 +36,7 @@ function RegistrationPage() {
     setUsername('');
   
     if (formData.username) {
-      fetch(`http://localhost:8090/cliente/username/${formData.username}`)
+      fetch(`http://localhost:8070/cliente/username/${formData.username}`)
         .then(response => response.json())
         .then(data => {
           setUsername(data);
@@ -56,7 +56,7 @@ function RegistrationPage() {
     }
     else
     {
-      fetch('http://localhost:8090/cliente', {
+      fetch('http://localhost:8070/user', {
       method: 'POST',
       headers: {
       'Content-Type': 'application/json'

@@ -25,6 +25,11 @@ func Get(c *gin.Context) {
 		return
 	}
 
+	origin := c.Request.Header.Get("Origin")
+
+	if origin == "http://localhost:3000" {
+		c.Header("Access-Control-Allow-Origin", "http://localhost:3000")
+	}
 	c.JSON(http.StatusOK, hotelDto)
 }
 

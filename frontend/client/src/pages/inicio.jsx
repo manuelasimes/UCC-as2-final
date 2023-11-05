@@ -2,6 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './login/auth';
 import './estilo/inicio.css';
 import swal from 'sweetalert2';
+import Cookies from "universal-cookie";
+
+const Cookie = new Cookies();
 
 const HomePage = () => {
   const [hotels, setHotels] = useState([]);
@@ -11,6 +14,8 @@ const HomePage = () => {
   const { isLoggedCliente } = useContext(AuthContext);
   const { isLoggedAdmin } = useContext(AuthContext);
   const { logout } = useContext(AuthContext);
+
+  console.log(Cookie.get("user_id"))
 
   function isEmpty(str) {
     return !str.trim().length;
@@ -37,12 +42,12 @@ const HomePage = () => {
   }, []);
 
   const Verificacion = (hotelId) => {
-    if (!isLoggedCliente) {
-      window.location.href = '/login-cliente';
+    if (Cookie.get("user_id") !== -1) {
+      window.location.href = `/reservar/${hotelId}`;
     }
     else
     {
-      window.location.href = `/reservar/${hotelId}`;
+      window.location.href = '/login-cliente';
     }
   };
 

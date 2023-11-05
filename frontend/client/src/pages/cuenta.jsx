@@ -36,7 +36,7 @@ function AccountDetails() {
       }
       else if (isLoggedAdmin) {
         const accountId = localStorage.getItem("id_admin");
-        fetch(`http://localhost:8090/admin/${accountId}`)
+        fetch(`http://localhost:8070/admin/${accountId}`)
           .then(response => response.json())
           .then(data => {
             setAccountDetails({

@@ -1,0 +1,550 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2708
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier-Bold;\f1\fmodern\fcharset0 Courier;\f2\fmodern\fcharset0 Courier-Oblique;
+}
+{\colortbl;\red255\green255\blue255;\red135\green135\blue135;\red0\green0\blue0;\red135\green136\blue117;
+\red0\green0\blue109;\red14\green110\blue109;\red210\green0\blue53;}
+{\*\expandedcolortbl;;\cssrgb\c60000\c60000\c60000;\cssrgb\c0\c0\c0;\cssrgb\c60000\c60000\c53333;
+\cssrgb\c0\c0\c50196;\cssrgb\c0\c50196\c50196;\cssrgb\c86667\c6667\c26667;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\b\fs24 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 <?xml version="1.0" encoding="UTF-8"?>
+\f1\b0 \cf0 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\i \cf4 \strokec4 <!-- Solr managed schema - automatically generated - DO NOT EDIT -->
+\f1\i0 \cf0 \strokec3 \
+\pard\pardeftab720\partightenfactor0
+\cf5 \strokec5 <schema \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "default-config"\cf5 \strokec5  \cf6 \strokec6 version\cf5 \strokec5 =\cf7 \strokec7 "1.6"\cf5 \strokec5 >\cf0 \strokec3 \
+  \cf5 \strokec5 <uniqueKey>\cf0 \strokec3 id\cf5 \strokec5 </uniqueKey>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "_nest_path_"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.NestPathField"\cf5 \strokec5  \cf6 \strokec6 maxCharsForDocValues\cf5 \strokec5 =\cf7 \strokec7 "-1"\cf5 \strokec5  \cf6 \strokec6 omitNorms\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 omitTermFreqAndPositions\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "ancestor_path"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "index"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "keyword"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "query"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 delimiter\cf5 \strokec5 =\cf7 \strokec7 "/"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "pathHierarchy"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "binary"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.BinaryField"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "boolean"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.BoolField"\cf5 \strokec5  \cf6 \strokec6 sortMissingLast\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "booleans"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.BoolField"\cf5 \strokec5  \cf6 \strokec6 sortMissingLast\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "delimited_payloads_float"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "whitespace"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "delimitedPayload"\cf5 \strokec5  \cf6 \strokec6 encoder\cf5 \strokec5 =\cf7 \strokec7 "float"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "delimited_payloads_int"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "whitespace"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "delimitedPayload"\cf5 \strokec5  \cf6 \strokec6 encoder\cf5 \strokec5 =\cf7 \strokec7 "integer"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "delimited_payloads_string"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "whitespace"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "delimitedPayload"\cf5 \strokec5  \cf6 \strokec6 encoder\cf5 \strokec5 =\cf7 \strokec7 "identity"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "descendent_path"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "index"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 delimiter\cf5 \strokec5 =\cf7 \strokec7 "/"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "pathHierarchy"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "query"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "keyword"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "ignored"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.StrField"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "location"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.LatLonPointSpatialField"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "location_rpt"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.SpatialRecursivePrefixTreeFieldType"\cf5 \strokec5  \cf6 \strokec6 geo\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 maxDistErr\cf5 \strokec5 =\cf7 \strokec7 "0.001"\cf5 \strokec5  \cf6 \strokec6 distErrPct\cf5 \strokec5 =\cf7 \strokec7 "0.025"\cf5 \strokec5  \cf6 \strokec6 distanceUnits\cf5 \strokec5 =\cf7 \strokec7 "kilometers"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "keyword"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "pdate"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.DatePointField"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "pdates"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.DatePointField"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "pdouble"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.DoublePointField"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "pdoubles"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.DoublePointField"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "pfloat"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.FloatPointField"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "pfloats"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.FloatPointField"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "phonetic_en"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "doubleMetaphone"\cf5 \strokec5  \cf6 \strokec6 inject\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "pint"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.IntPointField"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "pints"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.IntPointField"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "plong"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.LongPointField"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "plongs"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.LongPointField"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "point"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.PointType"\cf5 \strokec5  \cf6 \strokec6 subFieldSuffix\cf5 \strokec5 =\cf7 \strokec7 "_d"\cf5 \strokec5  \cf6 \strokec6 dimension\cf5 \strokec5 =\cf7 \strokec7 "2"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "random"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.RandomSortField"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "rank"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.RankField"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "string"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.StrField"\cf5 \strokec5  \cf6 \strokec6 sortMissingLast\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "strings"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.StrField"\cf5 \strokec5  \cf6 \strokec6 sortMissingLast\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_ar"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_ar.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "arabicNormalization"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "arabicStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_bg"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_bg.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "bulgarianStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_ca"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "elision"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 articles\cf5 \strokec5 =\cf7 \strokec7 "lang/contractions_ca.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_ca.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "snowballPorter"\cf5 \strokec5  \cf6 \strokec6 language\cf5 \strokec5 =\cf7 \strokec7 "Catalan"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_cjk"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "CJKWidth"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "CJKBigram"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_cz"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_cz.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "czechStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_da"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 format\cf5 \strokec5 =\cf7 \strokec7 "snowball"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_da.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "snowballPorter"\cf5 \strokec5  \cf6 \strokec6 language\cf5 \strokec5 =\cf7 \strokec7 "Danish"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_de"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 format\cf5 \strokec5 =\cf7 \strokec7 "snowball"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_de.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "germanNormalization"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "germanLightStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_el"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "greekLowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_el.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "greekStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_en"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "index"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_en.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "englishPossessive"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "keywordMarker"\cf5 \strokec5  \cf6 \strokec6 protected\cf5 \strokec5 =\cf7 \strokec7 "protwords.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "porterStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "query"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 expand\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 synonyms\cf5 \strokec5 =\cf7 \strokec7 "synonyms.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "synonymGraph"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_en.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "englishPossessive"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "keywordMarker"\cf5 \strokec5  \cf6 \strokec6 protected\cf5 \strokec5 =\cf7 \strokec7 "protwords.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "porterStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_en_splitting"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 autoGeneratePhraseQueries\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "index"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "whitespace"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_en.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "wordDelimiterGraph"\cf5 \strokec5  \cf6 \strokec6 splitOnCaseChange\cf5 \strokec5 =\cf7 \strokec7 "1"\cf5 \strokec5  \cf6 \strokec6 catenateNumbers\cf5 \strokec5 =\cf7 \strokec7 "1"\cf5 \strokec5  \cf6 \strokec6 catenateWords\cf5 \strokec5 =\cf7 \strokec7 "1"\cf5 \strokec5  \cf6 \strokec6 generateNumberParts\cf5 \strokec5 =\cf7 \strokec7 "1"\cf5 \strokec5  \cf6 \strokec6 generateWordParts\cf5 \strokec5 =\cf7 \strokec7 "1"\cf5 \strokec5  \cf6 \strokec6 catenateAll\cf5 \strokec5 =\cf7 \strokec7 "0"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "keywordMarker"\cf5 \strokec5  \cf6 \strokec6 protected\cf5 \strokec5 =\cf7 \strokec7 "protwords.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "porterStem"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "flattenGraph"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "query"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "whitespace"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 expand\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 synonyms\cf5 \strokec5 =\cf7 \strokec7 "synonyms.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "synonymGraph"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_en.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "wordDelimiterGraph"\cf5 \strokec5  \cf6 \strokec6 splitOnCaseChange\cf5 \strokec5 =\cf7 \strokec7 "1"\cf5 \strokec5  \cf6 \strokec6 catenateNumbers\cf5 \strokec5 =\cf7 \strokec7 "0"\cf5 \strokec5  \cf6 \strokec6 catenateWords\cf5 \strokec5 =\cf7 \strokec7 "0"\cf5 \strokec5  \cf6 \strokec6 generateNumberParts\cf5 \strokec5 =\cf7 \strokec7 "1"\cf5 \strokec5  \cf6 \strokec6 generateWordParts\cf5 \strokec5 =\cf7 \strokec7 "1"\cf5 \strokec5  \cf6 \strokec6 catenateAll\cf5 \strokec5 =\cf7 \strokec7 "0"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "keywordMarker"\cf5 \strokec5  \cf6 \strokec6 protected\cf5 \strokec5 =\cf7 \strokec7 "protwords.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "porterStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_en_splitting_tight"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 autoGeneratePhraseQueries\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "index"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "whitespace"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 expand\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 synonyms\cf5 \strokec5 =\cf7 \strokec7 "synonyms.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "synonymGraph"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_en.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 generateWordParts\cf5 \strokec5 =\cf7 \strokec7 "0"\cf5 \strokec5  \cf6 \strokec6 catenateNumbers\cf5 \strokec5 =\cf7 \strokec7 "1"\cf5 \strokec5  \cf6 \strokec6 catenateWords\cf5 \strokec5 =\cf7 \strokec7 "1"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "wordDelimiterGraph"\cf5 \strokec5  \cf6 \strokec6 generateNumberParts\cf5 \strokec5 =\cf7 \strokec7 "0"\cf5 \strokec5  \cf6 \strokec6 catenateAll\cf5 \strokec5 =\cf7 \strokec7 "0"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "keywordMarker"\cf5 \strokec5  \cf6 \strokec6 protected\cf5 \strokec5 =\cf7 \strokec7 "protwords.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "englishMinimalStem"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "removeDuplicates"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "flattenGraph"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "query"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "whitespace"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 expand\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 synonyms\cf5 \strokec5 =\cf7 \strokec7 "synonyms.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "synonymGraph"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_en.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 generateWordParts\cf5 \strokec5 =\cf7 \strokec7 "0"\cf5 \strokec5  \cf6 \strokec6 catenateNumbers\cf5 \strokec5 =\cf7 \strokec7 "1"\cf5 \strokec5  \cf6 \strokec6 catenateWords\cf5 \strokec5 =\cf7 \strokec7 "1"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "wordDelimiterGraph"\cf5 \strokec5  \cf6 \strokec6 generateNumberParts\cf5 \strokec5 =\cf7 \strokec7 "0"\cf5 \strokec5  \cf6 \strokec6 catenateAll\cf5 \strokec5 =\cf7 \strokec7 "0"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "keywordMarker"\cf5 \strokec5  \cf6 \strokec6 protected\cf5 \strokec5 =\cf7 \strokec7 "protwords.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "englishMinimalStem"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "removeDuplicates"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_es"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 format\cf5 \strokec5 =\cf7 \strokec7 "snowball"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_es.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "spanishLightStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_et"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_et.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "snowballPorter"\cf5 \strokec5  \cf6 \strokec6 language\cf5 \strokec5 =\cf7 \strokec7 "Estonian"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_eu"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_eu.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "snowballPorter"\cf5 \strokec5  \cf6 \strokec6 language\cf5 \strokec5 =\cf7 \strokec7 "Basque"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_fa"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <charFilter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "persian"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "arabicNormalization"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "persianNormalization"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_fa.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_fi"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 format\cf5 \strokec5 =\cf7 \strokec7 "snowball"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_fi.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "snowballPorter"\cf5 \strokec5  \cf6 \strokec6 language\cf5 \strokec5 =\cf7 \strokec7 "Finnish"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_fr"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "elision"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 articles\cf5 \strokec5 =\cf7 \strokec7 "lang/contractions_fr.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 format\cf5 \strokec5 =\cf7 \strokec7 "snowball"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_fr.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "frenchLightStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_ga"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "elision"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 articles\cf5 \strokec5 =\cf7 \strokec7 "lang/contractions_ga.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/hyphenations_ga.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "irishLowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_ga.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "snowballPorter"\cf5 \strokec5  \cf6 \strokec6 language\cf5 \strokec5 =\cf7 \strokec7 "Irish"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_gen_sort"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.SortableTextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "index"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "stopwords.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "query"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "stopwords.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 expand\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 synonyms\cf5 \strokec5 =\cf7 \strokec7 "synonyms.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "synonymGraph"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_general"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "index"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "stopwords.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "query"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "stopwords.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 expand\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 synonyms\cf5 \strokec5 =\cf7 \strokec7 "synonyms.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "synonymGraph"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_general_rev"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "index"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "stopwords.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 withOriginal\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 maxPosAsterisk\cf5 \strokec5 =\cf7 \strokec7 "3"\cf5 \strokec5  \cf6 \strokec6 maxFractionAsterisk\cf5 \strokec5 =\cf7 \strokec7 "0.33"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "reversedWildcard"\cf5 \strokec5  \cf6 \strokec6 maxPosQuestion\cf5 \strokec5 =\cf7 \strokec7 "2"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "query"\cf5 \strokec5 >\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 expand\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 synonyms\cf5 \strokec5 =\cf7 \strokec7 "synonyms.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "synonymGraph"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "stopwords.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_gl"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_gl.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "galicianStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_hi"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "indicNormalization"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "hindiNormalization"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_hi.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "hindiStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_hu"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 format\cf5 \strokec5 =\cf7 \strokec7 "snowball"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_hu.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "snowballPorter"\cf5 \strokec5  \cf6 \strokec6 language\cf5 \strokec5 =\cf7 \strokec7 "Hungarian"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_hy"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_hy.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "snowballPorter"\cf5 \strokec5  \cf6 \strokec6 language\cf5 \strokec5 =\cf7 \strokec7 "Armenian"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_id"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_id.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "indonesianStem"\cf5 \strokec5  \cf6 \strokec6 stemDerivational\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_it"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "elision"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 articles\cf5 \strokec5 =\cf7 \strokec7 "lang/contractions_it.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 format\cf5 \strokec5 =\cf7 \strokec7 "snowball"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_it.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "italianLightStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_ja"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 autoGeneratePhraseQueries\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "japanese"\cf5 \strokec5  \cf6 \strokec6 mode\cf5 \strokec5 =\cf7 \strokec7 "search"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "japaneseBaseForm"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "japanesePartOfSpeechStop"\cf5 \strokec5  \cf6 \strokec6 tags\cf5 \strokec5 =\cf7 \strokec7 "lang/stoptags_ja.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "cjkWidth"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_ja.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "japaneseKatakanaStem"\cf5 \strokec5  \cf6 \strokec6 minimumLength\cf5 \strokec5 =\cf7 \strokec7 "4"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_ko"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "korean"\cf5 \strokec5  \cf6 \strokec6 decompoundMode\cf5 \strokec5 =\cf7 \strokec7 "discard"\cf5 \strokec5  \cf6 \strokec6 outputUnknownUnigrams\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "koreanPartOfSpeechStop"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "koreanReadingForm"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_lv"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_lv.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "latvianStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_nl"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 format\cf5 \strokec5 =\cf7 \strokec7 "snowball"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_nl.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stemmerOverride"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 dictionary\cf5 \strokec5 =\cf7 \strokec7 "lang/stemdict_nl.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "snowballPorter"\cf5 \strokec5  \cf6 \strokec6 language\cf5 \strokec5 =\cf7 \strokec7 "Dutch"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_no"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 format\cf5 \strokec5 =\cf7 \strokec7 "snowball"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_no.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "snowballPorter"\cf5 \strokec5  \cf6 \strokec6 language\cf5 \strokec5 =\cf7 \strokec7 "Norwegian"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_pt"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 format\cf5 \strokec5 =\cf7 \strokec7 "snowball"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_pt.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "portugueseLightStem"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_ro"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_ro.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "snowballPorter"\cf5 \strokec5  \cf6 \strokec6 language\cf5 \strokec5 =\cf7 \strokec7 "Romanian"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_ru"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 format\cf5 \strokec5 =\cf7 \strokec7 "snowball"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_ru.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "snowballPorter"\cf5 \strokec5  \cf6 \strokec6 language\cf5 \strokec5 =\cf7 \strokec7 "Russian"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_sv"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 format\cf5 \strokec5 =\cf7 \strokec7 "snowball"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_sv.txt"\cf5 \strokec5  \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "snowballPorter"\cf5 \strokec5  \cf6 \strokec6 language\cf5 \strokec5 =\cf7 \strokec7 "Swedish"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_th"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "thai"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_th.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_tr"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "standard"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "turkishLowercase"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "stop"\cf5 \strokec5  \cf6 \strokec6 ignoreCase\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 words\cf5 \strokec5 =\cf7 \strokec7 "lang/stopwords_tr.txt"\cf5 \strokec5 />\cf0 \strokec3 \
+      \cf5 \strokec5 <filter \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "snowballPorter"\cf5 \strokec5  \cf6 \strokec6 language\cf5 \strokec5 =\cf7 \strokec7 "Turkish"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <fieldType \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "text_ws"\cf5 \strokec5  \cf6 \strokec6 class\cf5 \strokec5 =\cf7 \strokec7 "solr.TextField"\cf5 \strokec5  \cf6 \strokec6 positionIncrementGap\cf5 \strokec5 =\cf7 \strokec7 "100"\cf5 \strokec5 >\cf0 \strokec3 \
+    \cf5 \strokec5 <analyzer>\cf0 \strokec3 \
+      \cf5 \strokec5 <tokenizer \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "whitespace"\cf5 \strokec5 />\cf0 \strokec3 \
+    \cf5 \strokec5 </analyzer>\cf0 \strokec3 \
+  \cf5 \strokec5 </fieldType>\cf0 \strokec3 \
+  \cf5 \strokec5 <field \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "_nest_path_"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "_nest_path_"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <field \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "_root_"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "string"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <field \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "_text_"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_general"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <field \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "_version_"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "plong"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <field \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "address"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "string"\cf5 \strokec5  \cf6 \strokec6 uninvertible\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <field \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "amenities"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "string"\cf5 \strokec5  \cf6 \strokec6 uninvertible\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <field \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "city"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "string"\cf5 \strokec5  \cf6 \strokec6 uninvertible\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <field \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "country"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "string"\cf5 \strokec5  \cf6 \strokec6 uninvertible\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <field \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "delete"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_general"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <field \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "description"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "string"\cf5 \strokec5  \cf6 \strokec6 uninvertible\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <field \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "id"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "string"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 required\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <field \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "images"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "string"\cf5 \strokec5  \cf6 \strokec6 uninvertible\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <field \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "name"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "string"\cf5 \strokec5  \cf6 \strokec6 uninvertible\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_en_split_tight"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_en_splitting_tight"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_descendent_path"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "descendent_path"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_ancestor_path"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "ancestor_path"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_en_split"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_en_splitting"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_sort"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_gen_sort"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "ignored_*"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "ignored"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_rev"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_general_rev"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_phon_en"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "phonetic_en"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_s_lower"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "lowercase"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_cjk"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_cjk"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "random_*"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "random"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_t_sort"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_gen_sort"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_en"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_en"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_ar"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_ar"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_bg"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_bg"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_ca"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_ca"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_cz"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_cz"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_da"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_da"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_de"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_de"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_el"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_el"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_es"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_es"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_et"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_et"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_eu"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_eu"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_fa"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_fa"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_fi"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_fi"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_fr"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_fr"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_ga"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_ga"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_gl"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_gl"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_hi"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_hi"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_hu"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_hu"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_hy"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_hy"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_id"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_id"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_it"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_it"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_ja"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_ja"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_ko"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_ko"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_lv"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_lv"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_nl"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_nl"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_no"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_no"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_pt"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_pt"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_ro"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_ro"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_ru"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_ru"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_sv"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_sv"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_th"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_th"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt_tr"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_tr"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_point"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "point"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_srpt"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "location_rpt"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "attr_*"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_general"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_dts"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "pdates"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_txt"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_general"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_str"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "strings"\cf5 \strokec5  \cf6 \strokec6 docValues\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 useDocValuesAsStored\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_dpf"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "delimited_payloads_float"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_dpi"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "delimited_payloads_int"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_dps"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "delimited_payloads_string"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_is"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "pints"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_ss"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "strings"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_ls"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "plongs"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_bs"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "booleans"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_fs"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "pfloats"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_ds"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "pdoubles"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_dt"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "pdate"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_ws"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_ws"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_i"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "pint"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_s"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "string"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_l"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "plong"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_b"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "boolean"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_f"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "pfloat"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_d"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "pdouble"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_t"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "text_general"\cf5 \strokec5  \cf6 \strokec6 multiValued\cf5 \strokec5 =\cf7 \strokec7 "false"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <dynamicField \cf6 \strokec6 name\cf5 \strokec5 =\cf7 \strokec7 "*_p"\cf5 \strokec5  \cf6 \strokec6 type\cf5 \strokec5 =\cf7 \strokec7 "location"\cf5 \strokec5  \cf6 \strokec6 indexed\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5  \cf6 \strokec6 stored\cf5 \strokec5 =\cf7 \strokec7 "true"\cf5 \strokec5 />\cf0 \strokec3 \
+  \cf5 \strokec5 <copyField \cf6 \strokec6 source\cf5 \strokec5 =\cf7 \strokec7 "delete"\cf5 \strokec5  \cf6 \strokec6 dest\cf5 \strokec5 =\cf7 \strokec7 "delete_str"\cf5 \strokec5  \cf6 \strokec6 maxChars\cf5 \strokec5 =\cf7 \strokec7 "256"\cf5 \strokec5 />\cf0 \strokec3 \
+\cf5 \strokec5 </schema>}

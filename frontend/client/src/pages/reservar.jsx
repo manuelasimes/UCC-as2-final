@@ -77,6 +77,35 @@ const ReservaPage = () => {
       });
   };
 
+  const idHotel = hotelId;
+
+  useEffect(() => {
+
+    setHotelData('');
+    if (hotelId){
+      fetch(`http://localhost:8060/hotels/${idHotel}`)
+      .then(response => response.json())
+      .then(data => {
+        setHotelData(data);
+      })
+      .catch(error => {
+        console.error('Error al obtener datos del hotel: ', error)
+      })
+
+    }
+
+  }, []);
+
+ /*  const getHotel = async () => {
+    try {
+      const request = await fetch(`http://localhost:8060/hotels/${id}`);  // Traigo el hotel de mongo
+      const response = await request.json();
+      setHotelData(response);
+    } catch (error) {
+      console.log("No se pudieron obtener los hoteles:", error);
+    }
+  }; */
+
   // useEffect(() => {
   //   setHotelData('');
   //   if (hotelId) {
@@ -89,7 +118,7 @@ const ReservaPage = () => {
   //         console.error('Error al obtener los datos del cliente:', error);
   //       });
   //   }
-  // }, [hotelId]);
+ // }, [hotelId]);
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
@@ -140,8 +169,8 @@ const ReservaPage = () => {
         ) : (
           <div className="container45" onLoad={Verificacion}>
             <div className="informacion">
-              <div className="cuadroImag"><img src={hotelData.image} alt={hotelData.nombre} className="tamanoImag" /></div>
-              <div className="descripcion">{hotelData["descripcion"]}</div>
+              <div className="cuadroImag"><img src={hotelData.images} alt={hotelData.name} className="tamanoImag" /></div>
+              <div className="descripcion">{hotelData.description}</div>
             </div>
             <div className="reserva-form">
               <h6>Realice reserva del Hotel</h6>

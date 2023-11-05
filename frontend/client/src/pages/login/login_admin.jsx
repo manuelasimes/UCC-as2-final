@@ -8,7 +8,7 @@ const AdminLogin = () => {
   const { loginAdmin } = useContext(AuthContext);
 
   const handleLoginAdmin = () => {
-    fetch(`http://localhost:8090/admin/email/${email}`)
+    fetch(`http://localhost:8070/admin/email/${email}`)
     .then(response => response.json())
     .then(data => {
       if (email === data.email && password === data.password) {

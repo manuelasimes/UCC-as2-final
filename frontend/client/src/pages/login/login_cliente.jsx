@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from './auth';
 import { Link } from 'react-router-dom';
 import '../estilo/login_cliente.css';
+import Cookies from "universal-cookie";
+import { ToastContainer, toast } from "react-toastify";
 
 
 // probamos del front del sem pasado 
@@ -27,9 +29,13 @@ import '../estilo/login_cliente.css';
       })
 }*/
 
+function goTo(path){
+  setTimeout(() => {
+      window.location = window.location.origin + path;
+  }, 3000)
+}
 
-
-
+const Cookie = new Cookies();
 
 const ClienteLogin = () => {
   const [username, setUsername] = useState('');
@@ -53,8 +59,12 @@ const ClienteLogin = () => {
       {
         return {"user_id": -1, "user_type": "false"}
       }
-      window.location.href = '/';
       return response.json()
+    }).then(response => {
+      Cookie.set("user_id", response.user_id, {path: '/'})
+      Cookie.set("username", username, {path: '/login'})
+      Cookie.set("user_type", response.type, {path: '/'})
+      goTo('/')
     })
     /*.then(response => response.json())
     .then(data => {
@@ -71,12 +81,31 @@ const ClienteLogin = () => {
     });
   };
 
+  function logout(){
+    Cookie.set("user_id", -1, {path: "/"})
+    Cookie.set("user_type", false, {path:"/"})
+    document.location.reload()
+  }
+
+  const renderGreetings = (
+    <body className="bodylogclient">
+    <div className="contLogClie1">
+    <div className="contLogClien2">
+      <h1 className="title">Bienvenido</h1>
+      {Cookie.get("username")}
+      </div>
+    </div>
+    <button className='buttonClient' onClick={logout}>Log Out</button>
+    </body>
+  )
+
   return (
- <body className="bodylogclient">
+  Cookie.get("user_id") > -1 ? renderGreetings : 
+    <body className="bodylogclient">
     <div className="contLogClie1">
     <div className="contLogClien2">
       <h1 className="title">Bienvenido Cliente</h1>
-       <div className="form-container">
+      <div className="form-container">
         <input
           type="text"
           placeholder="Nombre de usuario"
@@ -102,8 +131,8 @@ const ClienteLogin = () => {
       </div>
     </div>
     </div>
-  </body>
-  );
-};
+    </body> 
+  )
+  };
 
 export default ClienteLogin;
