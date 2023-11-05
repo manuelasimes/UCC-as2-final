@@ -14,13 +14,17 @@ const HomePage = () => {
 
   function isEmpty(str) {
     return !str.trim().length;
-}
+  }
+
+  function isJSONEmpty(obj){
+    return Object.keys(obj).length === 0;
+  }
 
   const getHotels = async () => {
     try {
       // const request = await fetch("http://localhost:8090/cliente/hoteles");
-      //const request = await fetch("http://localhost:8090/searchAll=*:*");
-      const request = await fetch("http://localhost:8070/hotel");
+      const request = await fetch("http://localhost:8090/searchAll=*:*");
+      // const request = await fetch("http://localhost:8070/hotel");
       const response = await request.json();
       setHotels(response);
     } catch (error) {
@@ -68,21 +72,45 @@ const HomePage = () => {
 
   const filterHotels = async () => {
 
+      var endDateValue = document.getElementById('end-date').value;
+      var startDateValue = document.getElementById('start-date').value;
+
       if (isEmpty(city)) {
-        if (startDate !== null && endDate !== null){
-          alert("No esta permitido buscar solo por fecha, debe ingresar un destino!");
-        }
+        alert("No esta permitido buscar solo por fecha, debe ingresar un destino!")
         getHotels();
       } else {
-      const request = await fetch(`http://localhost:8090/search=city_${city}_${startDate}_${endDate}`);
-      const response = await request.json();
-      const checkResponse = JSON.stringify(response)
-      console.log(checkResponse)
-      if (checkResponse !== null) {
-        setHotels(response);
-      } 
-    }
-  };
+        if (!endDateValue || !startDateValue ){
+          const request = await fetch(`http://localhost:8090/search=city_${city}`);
+          const response = await request.json();
+          if (response !== null) {
+            const checkResponse = JSON.stringify(response)
+            console.log(checkResponse)
+          if (isJSONEmpty(response)) {
+            alert("No se encontraron hoteles en esa ubicacion")
+            getHotels();
+          } else {
+            setHotels(response);
+          }
+          } 
+        } else {
+        const request = await fetch(`http://localhost:8090/search=city_${city}_${startDate}_${endDate}`);
+        const response = await request.json();
+        if (response !== null) {
+          const checkResponse = JSON.stringify(response)
+          console.log(checkResponse)
+          if (isJSONEmpty(response)) {
+            alert("No se encontraron hoteles en esa ubicacion disponibles en esa fecha")
+            getHotels();
+          } else {
+            setHotels(response);
+          }
+          } else {
+          alert("No se encontraron hoteles en esa ubicacion disponibles en esa fecha")
+          getHotels();
+          }
+        }
+      }
+    };
 
   const Admin = () => {
     if (isLoggedCliente){

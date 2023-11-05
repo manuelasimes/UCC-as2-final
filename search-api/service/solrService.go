@@ -34,6 +34,8 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 
 	numParams := len(queryParams)
 
+	log.Printf("Params: %d", numParams)
+
 	field, query := queryParams[0], queryParams[1] 
 
 	log.Printf("%s and %s", field, query)
