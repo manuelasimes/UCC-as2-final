@@ -1,0 +1,129 @@
+version: '3'
+
+networks:
+  front:
+
+services:
+  mysql:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: UCC_as2_final
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_ROOT_HOST: '%' 
+    ports:
+      - "3307:3306"
+    volumes:
+      - "./db_data:/var/lib/mysql"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root" ]
+      timeout: 20s
+      retries: 10
+    
+  mongo:  
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: hotels_list
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: ["CMD", "mongo", "localhost:27017", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 30s
+      timeout: 10s
+      retries: 30
+
+  memcached:
+    container_name: cache
+    image: memcached:1.6.16
+
+    ports:
+      - "11211:11211"
+    healthcheck:
+      test: ["CMD", "memcached-tool", "127.0.0.1:11211", "stats"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  rabbit:
+    container_name: rabbit
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    ports:
+      - "5671:5671"
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 1s
+      timeout: 5s
+      retries: 30
+
+  solr:
+    container_name: solr
+    image: solr
+    ports:
+      - "8983:8983"
+    volumes:
+      - ./configs/solr/managed-schema:/opt/solr/server/solr/configsets/_default/conf/managed-schema
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr-precreate
+      - hotelSearch
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8983/solr/healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  user-res-api:
+    build: user-res-api
+    depends_on:
+      memcached:
+        condition: service_started
+      mysql:
+        condition: service_healthy
+    command: sh -c sleep 60
+    ports:
+      - "8070:8070"
+    
+  hotels-api:
+    build: hotels-api
+    depends_on:
+      rabbit:
+        condition: service_healthy
+      mongo:
+        condition: service_started
+    ports:
+      - "8060:8060"
+
+  search-api:
+    build: search-api
+    depends_on:
+      solr:
+        condition: service_started
+      rabbit:
+        condition: service_healthy
+    command: sh -c sleep 60
+    ports:
+      - "8090:8090"
+
+  frontend:
+    networks:
+      - front
+    container_name: frontendCompose
+    build: ./frontend/client
+    depends_on:
+      search-api:
+        condition: service_started
+      hotels-api:
+        condition: service_started
+      user-res-api:
+        condition: service_started
+    ports:
+      - "3000:3000"
+  

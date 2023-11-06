@@ -18,7 +18,7 @@ func DisconnectDB() {
 
 func InitDB() error {
 
-	clientOpts := options.Client().ApplyURI("mongodb://localhost:27017").
+	clientOpts := options.Client().ApplyURI("mongodb://mongo:27017").
     SetAuth(options.Credential{
         AuthSource:   "admin", // Reemplaza "admin" con el nombre de la base de datos de autenticación que desees utilizar.
         AuthMechanism: "SCRAM-SHA-256", // Reemplaza con el mecanismo de autenticación adecuado si no es el predeterminado.

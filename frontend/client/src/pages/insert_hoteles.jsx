@@ -1,6 +1,28 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './login/auth';
 import './estilo/insert_hoteles.css'
+import { ToastContainer, toast } from "react-toastify";
+
+function goTo(path){
+  setTimeout(() => {
+      window.location = window.location.origin + path;
+  }, 3000)
+}
+
+const notifyRegistered = () => {
+  toast.success("Actualizado!", {
+      pauseOnHover: false,
+      autoClose: 2000,
+  })
+}
+
+const notifyError = () => {
+  toast.error("Error al actualizar!", {
+      pauseOnHover: false,
+      autoClose: 2000,
+  })
+}
+
 
 function RegistrationHotel() {
   const [Email, setEmail] = useState({});
@@ -24,12 +46,24 @@ function RegistrationHotel() {
   });
 
   const handleChange = (event) => {
+    event.preventDefault();
     const { name, value } = event.target;
   
+    // Handle images and amenities input fields separately
+    if (name === 'images' || name === 'amenities') {
+    // Split the comma-separated values into an array
+      const valueArray = value.split(',');
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [name]: value
+        [name]: valueArray,
       }));
+    } else {
+    // Handle other input fields as usual
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
     }
 
   const RegisterHotel = () => {
@@ -44,15 +78,25 @@ function RegistrationHotel() {
     },
     body: jsonData
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Registro exitoso:', data);
-      window.location.href = '/ver-hoteles';
-    })
-    .catch(error => {
-      console.error('Error en el registro:', error);
-      alert('Hotel no registrado');
-    });
+    .then(response => {
+      if (response.status === 400 || response.status === 401 || response.status === 403) {
+          console.log("Error al actualizar hotel"); 
+
+          notifyError();
+
+          return response.json();
+
+      } else {
+          console.log("Hotel updated"); 
+
+          notifyRegistered();
+
+          goTo("/");
+
+          return response.json();
+      }
+
+  })
   }
 
 return (
@@ -138,6 +182,7 @@ return (
       <br />
       <button type="submit">Registrar Hotel</button>
     </form>
+    <ToastContainer />
   </div>
 );
 }

@@ -56,7 +56,8 @@ func Insert(c *gin.Context) {
 	}
 
 	
-	c.Header("Access-Control-Allow-Origin", "http://localhost:3000")
+	// c.Header("Access-Control-Allow-Origin", "http://localhost:3000")
+	c.Header("Access-Control-Allow-Origin", "*")
 	c.Header("Access-Control-Allow-Methods", "GET, OPTIONS, POST, PUT")
 	
 
@@ -83,7 +84,8 @@ func Update(c *gin.Context) {
         return
     }
 
-	c.Header("Access-Control-Allow-Origin", "http://localhost:3000")
+	// c.Header("Access-Control-Allow-Origin", "http://localhost:3000")
+	c.Header("Access-Control-Allow-Origin", "*")
 	c.Header("Access-Control-Allow-Methods", "GET, OPTIONS, POST, PUT")
 	
     c.JSON(http.StatusOK, updatedHotelDto)
