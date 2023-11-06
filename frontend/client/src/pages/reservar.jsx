@@ -45,7 +45,8 @@ const ReservaPage = () => {
     const endDateObj = new Date(endDate);
     const Dias = Math.round((endDateObj - startDateObj) / (1000 * 60 * 60 * 24));
     const formData = {
-      booked_hotel_id: parseInt(hotelId),
+      //booked_hotel_id: parseInt(hotelId),
+      booked_hotel_id: hotelId,
       user_booked_id: parseInt(accountId),
       start_date: convertirFecha(startDateObj),
       end_date: convertirFecha(endDateObj)

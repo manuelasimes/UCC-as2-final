@@ -29,7 +29,7 @@ const HomePage = () => {
     try {
       // const request = await fetch("http://localhost:8090/cliente/hoteles");
       const request = await fetch("http://localhost:8090/searchAll=*:*");
-      // const request = await fetch("http://localhost:8070/hotel");
+      //const request = await fetch("http://localhost:8070/hotel");
       const response = await request.json();
       setHotels(response);
     } catch (error) {
