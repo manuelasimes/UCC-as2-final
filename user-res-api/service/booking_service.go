@@ -3,16 +3,12 @@ package service
 import (
 	
 	"fmt"
-	//json "github.com/json-iterator/go"
 	bookingClient "user-res-api/client/booking"
 	userClient "user-res-api/client/user"
 	hotelClient "user-res-api/client/hotel"
 	"user-res-api/dto"
 	"user-res-api/model"
-	//cache "user-res-api/cache"
-	// "time"
 	e "user-res-api/utils/errors"
-	//"strconv"
 	cache "user-res-api/cache"
 	"strconv"
 	"net/url"
@@ -29,7 +25,6 @@ type bookingServiceInterface interface {
 	GetBookingById(id int) (dto.BookingDetailDto, e.ApiError)
 	GetBookings() (dto.BookingsDetailDto, e.ApiError)
 	InsertBooking(bookingPDto dto.BookingPostDto) (dto.BookingDto, e.ApiError)
-	//GetBookingByHotelIdAndDate(request dto.CheckRoomDto, idHotel int) (dto.Availability, e.ApiError)
 	GetBookingsByUserId(id int) (dto.BookingsDetailDto, e.ApiError)
 	GetBookingByUserId(id int) (dto.BookingDetailDto, e.ApiError)
 	GetAmadeustoken() (string)
@@ -75,7 +70,6 @@ func (s *bookingService) GetBookings() (dto.BookingsDetailDto, e.ApiError) {
 		idHotel := booking.HotelId
 		
 		var hotel model.Hotel = hotelClient.GetHotelById(idHotel)
-		// ver en el caso q el id sea cero 
 	
 
 		bookingDto, _ = s.GetBookingById(id)
@@ -90,65 +84,7 @@ func (s *bookingService) GetBookings() (dto.BookingsDetailDto, e.ApiError) {
 }
 
 
-// recibe un request del tipo CheckRoomDto que trae start date y end date y el id del hotel
-// devuelve un responseDto el cual me dice si esta okey o no (disponible o no)
-// func (s *bookingService) GetBookingByHotelIdAndDate(request dto.CheckRoomDto, idHotel int) (dto.Availability, e.ApiError) {
-	
-	
 
-// 	var IsAvailable bool 
-	
-
-// 	startDate := request.StartDate //del dto de parametro saca el start y end date 
-// 	endDate := request.EndDate
-
-	
-// 	var responseDto dto.Availability // la respuesta q vamos a devolver 
-
-// 	var hotel model.Hotel = hotelClient.GetHotelById(idHotel)
-// 	if hotel.Id == 0 {
-// 		return responseDto, e.NewBadRequestApiError("El hotel no se encuentra en el sistema")
-// 	}
-
-
-// 	for i := startDate; i < endDate; i = i + 1 { // i va a ser cada dia de los q vamos a chequear 
-// 		key := strconv.Itoa(idHotel) + strconv.Itoa(startDate)
-// 		cacheDTO, err := cache.Get(key)
-
-// 		if err == nil { // does a hit 
-// 			fmt.Println("hit de cache!")
-// 			// creo q si lo encuentra ya quiere decir q no esta disponible 
-			
-// 			return cacheDTO, nil 
-		
-// 		}
-
-// 		// es un miss --> mem principal 
-// 		fmt.Println("miss de cache!")
-// 		IsAvailable = bookingClient.GetAvailabilityByIdAndDate(idHotel, i) // me devuelve si existe reserva en ese hotel en ese dia 
-// 		if IsAvailable == true {
-// 			responseDto.OkToBook = false 
-// 		} else if IsAvailable == false {
-// 			responseDto.OkToBook = true 
-// 		}
-
-
-// 		// save in cache 
-// 		availability, _ := json.Marshal(responseDto)
-// 		cache.Set(key, availability, 10)
-// 		fmt.Println("Saved in cache!")
-// 		return responseDto, nil
-		
-		
-		
-
-// 	}
-
-// 	responseDto.OkToBook = true
-
-// 	return responseDto, nil
-
-// }
 
 func (s *bookingService) GetBookingByUserId(id int) (dto.BookingDetailDto, e.ApiError) {
 	var booking model.Booking = bookingClient.GetBookingByUserId(id)
@@ -206,7 +142,6 @@ func (s *bookingService) InsertBooking(bookingPDto dto.BookingPostDto) (dto.Book
 	bookingDto.StartDate = bookingPDto.StartDate
 	bookingDto.EndDate = bookingPDto.EndDate
 	if userClient.CheckUserById(bookingPDto.UserId) == false {
-		fmt.Println("El usuario no esta registrado en el sistema")
 		return bookingDto, e.NewBadRequestApiError("El usuario no esta registrado en el sistema")
 	}
 
@@ -221,6 +156,7 @@ func (s *bookingService) InsertBooking(bookingPDto dto.BookingPostDto) (dto.Book
 	responseDto, err := s.GetAvailabilityByIdAndDate(idAm, startDate, endDate)
 
 	if err != nil {
+		return bookingDto, e.NewBadRequestApiError("ERROR VIENDO DISPONIBILIDAD")
 	}
 
 	
@@ -302,8 +238,7 @@ apiUrl += "&checkOutDate=" + enddateconguiones
 	 // Crear una solicitud HTTP POST
 	 solicitud, err := http.NewRequest("GET", apiUrl, nil)
 	 if err != nil {
-		fmt.Println("Error al crear la solicitud:", err)
-		//c.JSON(http.StatusInternalServerError, err.Error())
+		fmt.Println("ERROR CREANDO SOLICITUD")
 		return false
 	 }
 	 
@@ -311,7 +246,7 @@ apiUrl += "&checkOutDate=" + enddateconguiones
 	token := s.GetAmadeustoken() // Reemplaza con tu token real
 
 	solicitud.Header.Set("Authorization", "Bearer " + token)
-	// solicitud.Header.Set("Content-Type", "application/json") // Especifica el tipo de contenido si es necesario
+	
  
 	fmt.Println(solicitud)
 	// Realiza la solicitud HTTP
@@ -319,21 +254,19 @@ apiUrl += "&checkOutDate=" + enddateconguiones
 	respuesta, err := cliente.Do(solicitud)
 	if err != nil {
 		fmt.Println("Error al realizar la solicitud:", err)
-		//c.JSON(http.StatusInternalServerError, err.Error())
 		return false
+	
 	} 
 	fmt.Println("La solicitud de la api fue exitosa ")
 	// Verifica el código de estado de la respuesta
 	if respuesta.StatusCode != http.StatusOK {
     	fmt.Printf("La solicitud a la API de Amadeus no fue exitosa. Código de estado: %d\n", respuesta.StatusCode)
-    	//c.JSON(http.StatusInternalServerError, "La solicitud a la API de Amadeus no fue exitosa.")
    		return false
 	}
 		// Lee el cuerpo de la respuesta
 		responseBody, err := ioutil.ReadAll(respuesta.Body)
 		if err != nil {
 		fmt.Println("Error al leer la respuesta:", err)
-		//c.JSON(http.StatusInternalServerError, err.Error())
 		return false
 	}
 	   // Crear una estructura para deserializar el JSON de la respuesta
@@ -348,22 +281,16 @@ apiUrl += "&checkOutDate=" + enddateconguiones
     // Decodificar el JSON y extraer el campo "id"
     if err := json.Unmarshal(responseBody, &responseStruct); err != nil {
         fmt.Println("Error al decodificar el JSON de la respuesta:", err)
-        //c.JSON(http.StatusInternalServerError, err.Error())
         return false
     }
 		// Obtén el ID del hotel del primer elemento en "data"
 		if len(responseStruct.Data) > 0 {
-			// si el largo de la respuesta es mayor q cero es pq hay disponibilidad --> llamo al service 
-    	fmt.Println("Segun amadeus hay disp")
+		// si el largo de la respuesta es mayor q cero es pq hay disponibilidad --> llamo al service 
+    	fmt.Println("Amadeus nos dice que hay disponibilidad")
 		return true
-	 	// Error del Insert
-		// if err != nil {
-		// 	// c.JSON(err.Status(), err)
-		// return false
-		// } 
-	//c.JSON(http.StatusCreated, bookingDto)
+	 	
 	} 
-		fmt.Println("No hay disponibilidad en esas fechas, controller")
+		fmt.Println("No hay disponibilidad en esas fechas")
 		defer respuesta.Body.Close()
 		return false 
 	
