@@ -23,8 +23,6 @@ func Init_cache() {
 
 func Set(key string, value []byte, ttlSeconds int ) {
 
-    //key := createCacheKey(id, startDate)
-    //key := strconv.Itoa(id) + strconv.Itoa(startDate)
     if err := cacheClient.Set(&memcache.Item{
         Key: key, 
         Value: value,
@@ -37,11 +35,11 @@ func Set(key string, value []byte, ttlSeconds int ) {
 
 
 func Get(key string)  (dto.Availability, e.ApiError){
-    fmt.Println("entro")
+    //fmt.Println("entro")
   
-    fmt.Println("paso la linea 34")
+    //fmt.Println("paso la linea 34")
     response, err := cacheClient.Get(key)
-    fmt.Println("paso la linea 36")
+    //fmt.Println("paso la linea 36")
     if err != nil {
         if err == memcache.ErrCacheMiss {
             return dto.Availability{}, e.NewNotFoundApiError(fmt.Sprintf("item %s not found", key))
@@ -58,13 +56,3 @@ func Get(key string)  (dto.Availability, e.ApiError){
     return responseDto, nil
 }
 
-// func createCacheKey(id int, startDate int) string {
-//     return fmt.Sprintf("reservation:%d:%d", id, startDate)
-// }
-// func main() {
-//     Init_cache()
-//     value := []byte("some data")
-//     Set(1, 20231009, value)
-//     result := Get(1, 20231009)
-//     fmt.Printf("Result: %s\n", string(result))
-// }
