@@ -164,7 +164,7 @@ const HomePage = () => {
 
   //console.log(Cookie.get("user_type"))
 
-  const editHotel = (id) => {
+  /*const editHotel = (id) => {
     window.location.href = `/hotel/edit/${id}`
   }
 
@@ -172,7 +172,7 @@ const HomePage = () => {
     <>
     <button onClick={ () => editHotel(id) }>Editar</button>
     </>
-  )
+  )*/
 
   const Admin = () => {
     if (isLoggedCliente){
@@ -244,7 +244,7 @@ const HomePage = () => {
                     <h4>{hotel.name}</h4>
                     <p>{hotel.description} </p>
                     {console.log(hotel.images[0])}
-                    { Cookie.get("user_type") === true ? renderButton(hotel.id) : null } 
+                    {/* { Cookie.get("user_type") === true ? renderButton(hotel.id) : null }  */}
                     <button onClick={() => Verificacion(hotel.id)}>
                       Reservar
                     </button>

@@ -12,7 +12,7 @@ const VerReservas = () => {
       const hotelesArray = [];
       for (let i = 0; i < reservations.length; i++) {
         const reserva = reservations[i];
-        const request = await fetch(`http://localhost:8090/cliente/hotel/${reserva.hotel_id}`);
+        const request = await fetch(`http://localhost:8060/hotels`);
         const response = await request.json();
         hotelesArray.push(response);
       }
@@ -25,7 +25,7 @@ const VerReservas = () => {
   const getReservations = useCallback(async () => {
     if (isLoggedAdmin) {
       try {
-        const request = await fetch(`http://localhost:8090/admin/reservas`);
+        const request = await fetch(`http://localhost:8070/booking`);
         const response = await request.json();
         setReservations(response);
       } catch (error) {

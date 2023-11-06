@@ -199,7 +199,7 @@ const ReservaPage = () => {
             </div>
             <div className="reserva-form">
               <h6>Realice reserva del Hotel</h6>
-              <h6>{hotelData["nombre"]}</h6>
+              <h6>{hotelData.name}</h6>
               <form onSubmit={handleReserva}>
                 <div className="form-group">
                   <label htmlFor="fechaInicio">Fecha de inicio:</label>
