@@ -3,15 +3,13 @@ package connections
 import (
 
 	"log" 
-	"UCC-as2-final/config"
+	"search-api/config"
 	"os"
-	"UCC-as2-final/dto"
+	"search-api/dto"
 	"encoding/json"
 
-
-
 	"github.com/streadway/amqp"
-	controller "UCC-as2-final/controller"
+	controller "search-api/controller"
 )
 
 var QueueConn *amqp.Connection

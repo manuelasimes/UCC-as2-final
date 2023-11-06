@@ -35,6 +35,7 @@ const HomePage = () => {
       const request = await fetch("http://localhost:8090/searchAll=*:*");
       //const request = await fetch("http://localhost:8070/hotel");
       const response = await request.json();
+      console.log(response)
       setHotels(response);
     } catch (error) {
       console.log("No se pudieron obtener los hoteles:", error);

@@ -7,10 +7,10 @@ import (
 	"io"
 	"net/http"
 	"strings"
-	"UCC-as2-final/config"
-	"UCC-as2-final/dto"
-	client "UCC-as2-final/client/solr"
-	e "UCC-as2-final/utils/errors"
+	"search-api/config"
+	"search-api/dto"
+	client "search-api/client/solr"
+	e "search-api/utils/errors"
 	"strconv"
 	// "os"
 	"sync"
@@ -80,15 +80,14 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 
 			var response dto.HotelDto
 
-			if result == true {
-				response = hotel
-			}
-
 			log.Debug("Adentro")
 			log.Debug(result)
 			log.Debug(response)
 
-			resultsChan <- response
+			if result == true {
+				response = hotel
+				resultsChan <- response
+			}
 		}(hotel)
 	}
 

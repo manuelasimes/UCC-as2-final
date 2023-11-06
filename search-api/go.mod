@@ -1,6 +1,6 @@
-module UCC-as2-final
+module search-api
 
-go 1.20
+go 1.21.1
 
 require (
 	github.com/gin-contrib/cors v1.4.0

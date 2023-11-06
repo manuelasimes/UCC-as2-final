@@ -3,7 +3,7 @@ package app
 import (
 
 	log "github.com/sirupsen/logrus"
-	solrController "UCC-as2-final/controller"
+	solrController "search-api/controller"
 	
 )
 

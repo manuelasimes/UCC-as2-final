@@ -2,25 +2,20 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './login/auth';
 import { useParams } from 'react-router-dom';
 import './estilo/reservar.css';
+import Cookies from "universal-cookie";
 
-
+const Cookie = new Cookies();
 
 function convertirFecha(fecha) {
   let fechaString = fecha.toString()
-  
-
   let year = fechaString.substring(0,4)
-  
   let month = fechaString.substring(5,7)
-  
   let day = fechaString.substring(8,10)
-
   let yearPlusMonth = year.concat("",month)
   let fechaStringFinal = yearPlusMonth.concat("",day)
-
-  
-
   var fechaEntero = Number(fechaStringFinal)
+
+  console.log(fechaEntero)
 
   return fechaEntero
 }
@@ -32,7 +27,8 @@ const ReservaPage = () => {
   const { isLoggedCliente } = useContext(AuthContext);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const accountId = localStorage.getItem("id_cliente");
+  // const accountId = localStorage.getItem("id_cliente");
+  const accountId = Cookie.get("user_id");
 
   const Verificacion = () => {
     if (!isLoggedCliente) {
@@ -41,15 +37,15 @@ const ReservaPage = () => {
   };
 
   const handleReserva = () => {
-    const startDateObj = new Date(startDate);
-    const endDateObj = new Date(endDate);
-    const Dias = Math.round((endDateObj - startDateObj) / (1000 * 60 * 60 * 24));
+    // const startDateObj = new Date(startDate);
+    // const endDateObj = new Date(endDate);
+    // const Dias = Math.round((endDateObj - startDateObj) / (1000 * 60 * 60 * 24));
     const formData = {
       //booked_hotel_id: parseInt(hotelId),
       booked_hotel_id: hotelId,
       user_booked_id: parseInt(accountId),
-      start_date: convertirFecha(startDateObj),
-      end_date: convertirFecha(endDateObj)
+      start_date: convertirFecha(startDate),
+      end_date: convertirFecha(endDate)
       // anio_inicio: startDateObj.getFullYear(),
       // anio_final: endDateObj.getFullYear(),
       // mes_inicio: startDateObj.getMonth() + 1, 
@@ -58,6 +54,8 @@ const ReservaPage = () => {
       // dia_final: endDateObj.getDate() + 1,
       // dias: Dias
     };
+
+    console.log(formData)
 
     fetch('http://localhost:8070/booking', {
       method: 'POST',

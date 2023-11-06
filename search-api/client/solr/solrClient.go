@@ -9,9 +9,9 @@ import (
 	"github.com/stevenferrer/solr-go"
 	"io"
 	"net/http"
-	"UCC-as2-final/config"
-	"UCC-as2-final/dto"
-	e "UCC-as2-final/utils/errors"
+	"search-api/config"
+	"search-api/dto"
+	e "search-api/utils/errors"
 	"log"
 )
 

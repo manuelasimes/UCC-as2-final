@@ -1,8 +1,8 @@
 package main
 
 import (
-	"UCC-as2-final/app"
-	q "UCC-as2-final/utils/connections"
+	"search-api/app"
+	q "search-api/utils/connections"
 )
 
 func main() {
