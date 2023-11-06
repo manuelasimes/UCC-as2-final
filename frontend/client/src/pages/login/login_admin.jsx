@@ -1,11 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from './auth';
 import '../estilo/login_admin.css';
+import Cookies from "universal-cookie";
+
+const Cookie = new Cookies()
 
 function goTo(path){
   setTimeout(() => {
       window.location = window.location.origin + path;
-  }, 200)
+  }, 0,1)
 }
 
 const AdminLogin = () => {
@@ -39,11 +42,10 @@ const AdminLogin = () => {
         const token = 'TOKEN_Admin';
         loginAdmin(token, data.user_id);
 
+        Cookie.set("user_id", data.user_id, { path: '/' });
+        Cookie.set("user_type", data.type, { path: '/' });
+
         console.log("Data del usuario:", data);
-        // Corrige el nombre de la instancia de Cookies a "Cookie" y utiliza "Cookie" en lugar de "Cookies"
-        /*Cookie.set("user_id", data.user_id, { path: '/' });
-        Cookie.set("username", username, { path: '/login' });
-        Cookie.set("user_type", data.type, { path: '/' });*/
         goTo('/');
       }else if (data.type === false){
         alert("No eres un administrador");

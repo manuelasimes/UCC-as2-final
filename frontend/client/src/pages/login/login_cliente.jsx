@@ -32,7 +32,7 @@ import { ToastContainer, toast } from "react-toastify";
 function goTo(path){
   setTimeout(() => {
       window.location = window.location.origin + path;
-  }, 50000)
+  }, 400)
 }
 
 const Cookie = new Cookies();
@@ -42,6 +42,7 @@ const ClienteLogin = () => {
   const [password, setPassword] = useState('');
   const {loginCliente } = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
+
 
   const handleLoginCliente = () => {
 
@@ -70,9 +71,9 @@ const ClienteLogin = () => {
 
         console.log("Data del usuario:", data);
         // Corrige el nombre de la instancia de Cookies a "Cookie" y utiliza "Cookie" en lugar de "Cookies"
-        /*Cookie.set("user_id", data.user_id, { path: '/' });
+        Cookie.set("user_id", data.user_id, { path: '/' });
         Cookie.set("username", username, { path: '/login' });
-        Cookie.set("user_type", data.type, { path: '/' });*/
+        Cookie.set("user_type", data.type, { path: '/' });
         goTo('/');
       }
     })
@@ -111,6 +112,7 @@ const ClienteLogin = () => {
 
   return (
   //Cookie.get("user_id") > -1 ? renderGreetings : 
+   <>
     <body className="bodylogclient">
     <div className="contLogClie1">
     <div className="contLogClien2">
@@ -142,6 +144,8 @@ const ClienteLogin = () => {
     </div>
     </div>
     </body> 
+    <ToastContainer/>
+    </>
   )
   };
 

@@ -3,6 +3,9 @@ import { AuthContext } from './login/auth';
 import { useParams } from 'react-router-dom';
 import './estilo/reservar.css';
 import { ToastContainer, toast } from "react-toastify";
+import Cookies from "universal-cookie";
+
+const Cookie = new Cookies()
 
 const notifyBooked = () => {
   toast.success("Reservado!", {
@@ -48,7 +51,9 @@ const ReservaPage = () => {
     }
   };
 
-  const handleReserva = () => {
+  const handleReserva = async (e) => {
+    e.preventDefault();
+
     // const startDateObj = new Date(startDate);
     // const endDateObj = new Date(endDate);
     // const Dias = Math.round((endDateObj - startDateObj) / (1000 * 60 * 60 * 24));
@@ -75,20 +80,27 @@ const ReservaPage = () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(formData)
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Registro exitoso:', data);
-        // aca agregar noticiacion 
-        alert(JSON.stringify(formData));
-        /*window.location.href = '/';*/
-      })
-      .catch(error => {
-        console.error('Error en el registro:', error);
-        alert('Credenciales incorrectas');
-      });
-  };
+    }).then(response => {
 
+      if (response.status === 400 || response.status === 401 || response.status === 403) {
+        console.log("Error al reservar");
+
+            notifyError();
+
+        return response.json();
+
+    } else {
+        console.log("Booking added");
+
+        notifyBooked();
+
+        return response.json();
+    }
+
+
+
+      });
+  }
   const idHotel = hotelId;
 
   useEffect(() => {
@@ -218,8 +230,10 @@ const ReservaPage = () => {
           </div>
         )}
       </div>
+      <ToastContainer/>
     </div>
   );
-};
+}
+
 
 export default ReservaPage;
