@@ -53,3 +53,14 @@
     background-color: #334c70;
     scale: 1.02;
   }
+
+  .claseBoton {
+    padding: 10px 20px;
+    background-color: #013877bf;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition-duration: 200ms;
+    font-weight: bold;
+  }

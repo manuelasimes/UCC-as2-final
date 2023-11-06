@@ -37,6 +37,8 @@ func Insert(c *gin.Context) {
 	var hotelDto dto.HotelDto
 	err := c.BindJSON(&hotelDto)
 
+	fmt.Println(hotelDto)
+
 	// Error Parsing json param
 	if err != nil {
 
@@ -52,6 +54,10 @@ func Insert(c *gin.Context) {
 		c.JSON(er.Status(), er)
 		return
 	}
+
+	
+	c.Header("Access-Control-Allow-Origin", "http://localhost:3000")
+	c.Header("Access-Control-Allow-Methods", "GET, OPTIONS, POST, PUT")
 	
 
 	c.JSON(http.StatusCreated, hotelDto)
@@ -77,6 +83,8 @@ func Update(c *gin.Context) {
         return
     }
 
+	c.Header("Access-Control-Allow-Origin", "http://localhost:3000")
+	c.Header("Access-Control-Allow-Methods", "GET, OPTIONS, POST, PUT")
 	
     c.JSON(http.StatusOK, updatedHotelDto)
 }

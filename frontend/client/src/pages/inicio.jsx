@@ -3,6 +3,7 @@ import { AuthContext } from './login/auth';
 import './estilo/inicio.css';
 import swal from 'sweetalert2';
 import Cookies from "universal-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Cookie = new Cookies();
 
@@ -11,9 +12,12 @@ const HomePage = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [city, setCity] = useState('');
+  const [idHotelEdit, setIdHotelEdit] = useState('1');
   const { isLoggedCliente } = useContext(AuthContext);
   const { isLoggedAdmin } = useContext(AuthContext);
   const { logout } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   console.log(Cookie.get("user_id"))
 
@@ -158,6 +162,20 @@ const HomePage = () => {
     }
   }
 
+  console.log(Cookie.get("user_type"))
+
+  const editHotel = (id) => {
+    window.location.href = `/hotel/edit/${id}`
+  }
+
+  const renderButton= (id) => (
+    <>
+    <button onClick={ () => editHotel(id) }>Editar</button>
+    </>
+  )
+  
+  
+
   return (
     <body className= "bodyinicio">
       <div className="header-content">
@@ -166,13 +184,7 @@ const HomePage = () => {
             Tu Cuenta
           </button>
         </div>
-        <div className="admin-button-container">
-          <button className="admin-button" onClick={Admin}>
-            Admin
-          </button>
-        </div>
       </div>
-        
         <div className="contdeFechas">
         <div className="localidad">
             <label className="fecha">¿a dónde vas?</label>
@@ -197,6 +209,7 @@ const HomePage = () => {
                   <div className="hotel-info">
                     <h4>{hotel.name}</h4>
                     <p>{hotel.description} </p>
+                    { Cookie.get("user_type") === true ? renderButton(hotel.id) : null } 
                     <button onClick={() => Verificacion(hotel.id)}>
                       Reservar
                     </button>

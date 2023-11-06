@@ -14,6 +14,9 @@ func MapUrls(router *gin.Engine) {
 	router.GET("/hotels/:id", hotelController.Get)
 	router.POST("/hotels", hotelController.Insert)
 	router.PUT("/hotels/:id", hotelController.Update)
+	router.OPTIONS("/hotels", hotelController.Insert)
+	router.OPTIONS("/hotels/:id", hotelController.Update)
+
 
 	fmt.Println("Finishing mappings configurations")
 }
