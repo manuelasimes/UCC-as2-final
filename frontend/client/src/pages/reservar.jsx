@@ -2,8 +2,21 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './login/auth';
 import { useParams } from 'react-router-dom';
 import './estilo/reservar.css';
+import { ToastContainer, toast } from "react-toastify";
 
+const notifyBooked = () => {
+  toast.success("Reservado!", {
+      pauseOnHover: false,
+      autoClose: 2000,
+  })
+}
 
+const notifyError = () => {
+  toast.error("Hotel no disponible para reserva en fecha seleccionada!", {
+      pauseOnHover: false,
+      autoClose: 2000,
+  })
+}
 
 function convertirFecha(fecha) {
   let fechaString = fecha.toString()
@@ -69,6 +82,7 @@ const ReservaPage = () => {
       .then(response => response.json())
       .then(data => {
         console.log('Registro exitoso:', data);
+        // aca agregar noticiacion 
         alert(JSON.stringify(formData));
         /*window.location.href = '/';*/
       })
@@ -128,6 +142,7 @@ const ReservaPage = () => {
     if (startDateObj > endDateObj) {
       setEndDate('');
       alert("Fechas no válidas");
+      notifyError();
     }
     if (startDate && endDate) {
       filterHotels();
