@@ -194,7 +194,7 @@ const ReservaPage = () => {
         ) : (
           <div className="container45" onLoad={Verificacion}>
             <div className="informacion">
-              <div className="cuadroImag"><img src={hotelData.images} alt={hotelData.name} className="tamanoImag" /></div>
+              <div className="cuadroImag"><img src={hotelData.images[0]} alt={hotelData.name} className="tamanoImag" /></div>
               <div className="descripcion">{hotelData.description}</div>
             </div>
             <div className="reserva-form">
