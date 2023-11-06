@@ -5,10 +5,20 @@ import './estilo/hoteles_admin.css';
 const HomePage = () => {
   const [hotels, setHotels] = useState([]);
   const { isLoggedAdmin } = useContext(AuthContext);
+  
+  function isEmpty(str) {
+    return !str.trim().length;
+  }
+
+  function isJSONEmpty(obj){
+    return Object.keys(obj).length === 0;
+  }
 
   const getHotels = async () => {
     try {
-      const request = await fetch("http://localhost:8090/admin/hoteles");
+      // const request = await fetch("http://localhost:8090/cliente/hoteles");
+      const request = await fetch("http://localhost:8090/searchAll=*:*");
+      //const request = await fetch("http://localhost:8070/hotel");
       const response = await request.json();
       setHotels(response);
     } catch (error) {
@@ -16,6 +26,9 @@ const HomePage = () => {
     }
   };
 
+  useEffect(() => {
+    getHotels();
+  }, []);
   useEffect(() => {
     getHotels();
   }, []);
@@ -33,10 +46,9 @@ const HomePage = () => {
           {hotels.length ? (
             hotels.map((hotel) => (
               <div className="hotel-cardH" key={hotel.id}>
-                <img src={hotel.image} alt={hotel.nombre} className="hotel-imageH" />
+                <img src={hotel.images[1]} alt={hotel.name} className="hotel-imageH" />
                 <div className="hotel-infoH">
-                  <h4>{hotel.nombre}</h4>
-                  <p>{hotel.email}</p>
+                  <h4>{hotel.name}</h4>
                 </div>
                 <div className="hotel-descriptionH">
                     <label htmlFor={`description-${hotel.id}`}>Descripción:</label>

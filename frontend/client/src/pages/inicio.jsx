@@ -164,7 +164,7 @@ const HomePage = () => {
 
   //console.log(Cookie.get("user_type"))
 
-  const editHotel = (id) => {
+  /*const editHotel = (id) => {
     window.location.href = `/hotel/edit/${id}`
   }
 
@@ -172,7 +172,7 @@ const HomePage = () => {
     <>
     <button onClick={ () => editHotel(id) }>Editar</button>
     </>
-  )
+  )*/
 
   const Admin = () => {
     if (isLoggedCliente){
