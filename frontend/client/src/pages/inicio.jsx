@@ -19,7 +19,7 @@ const HomePage = () => {
 
   const navigate = useNavigate();
 
-  console.log(Cookie.get("user_id"))
+  //console.log(Cookie.get("user_id"))
 
   function isEmpty(str) {
     return !str.trim().length;
@@ -32,10 +32,9 @@ const HomePage = () => {
   const getHotels = async () => {
     try {
       // const request = await fetch("http://localhost:8090/cliente/hoteles");
-       const request = await fetch("http://localhost:8090/searchAll=*:*");
-      // const request = await fetch("http://localhost:8070/hotel");
+      const request = await fetch("http://localhost:8090/searchAll=*:*");
+      //const request = await fetch("http://localhost:8070/hotel");
       const response = await request.json();
-      console.log(response)
       setHotels(response);
     } catch (error) {
       console.log("No se pudieron obtener los hoteles:", error);
@@ -47,7 +46,7 @@ const HomePage = () => {
   }, []);
 
   const Verificacion = (hotelId) => {
-    if (Cookie.get("user_id") !== -1) {
+    if (isLoggedCliente) {
       window.location.href = `/reservar/${hotelId}`;
     }
     else
@@ -122,6 +121,59 @@ const HomePage = () => {
       }
     };
 
+  /*const Admin = () => {
+    if (isLoggedCliente){
+      swal.fire ({
+        customClass: {
+          popup: 'popup-custom',
+          confirmButton: 'confButton-custom'
+        },
+        title: "Ingresa como admin",
+        //html: '<div><p class="textAlert">Los clientes no pueden acceder al area de administracion, por lo que deberas cerrar la sesion del usuario actual e ingresar como un usuario administrador. A continuacion puedes cerrar sesion y seras redirigido al login de administrador o puedes continuar como usuario regular.</p></div>',
+        text:"Los clientes no pueden acceder a el area de administracion, por lo que deberas cerrar la sesion del usuario actual e ingresar como un usuario administrador. A continuacion puedes cerrar sesion y seras redirigido al login de administrador o puedes continuar como usuario regular haciendo click por fuera del recuadro.",
+        confirmButtonText: 'Ingresar como admin',
+        icon: "warning",
+        padding: "20px",
+        timerProgressBar: "true",
+        allowOutsideClick: "true"
+      }).then(response => {
+        if(response.isConfirmed){
+          logout();
+          window.location.href = '/login-admin';
+        }
+      });
+    }
+    else if (!isLoggedAdmin) {
+      window.location.href = '/login-admin';
+    }
+    else
+    {
+      window.location.href = '/admin';
+    }
+  }*/
+
+  const Cuenta = () => {
+    if (isLoggedAdmin || isLoggedCliente) {
+      window.location.href = '/cuenta';
+    }
+    else
+    {
+      window.location.href = '/login-cliente'
+    }
+  }
+
+  //console.log(Cookie.get("user_type"))
+
+  const editHotel = (id) => {
+    window.location.href = `/hotel/edit/${id}`
+  }
+
+  const renderButton= (id) => (
+    <>
+    <button onClick={ () => editHotel(id) }>Editar</button>
+    </>
+  )
+
   const Admin = () => {
     if (isLoggedCliente){
       swal.fire ({
@@ -153,35 +205,17 @@ const HomePage = () => {
     }
   }
 
-  const Cuenta = () => {
-    if (isLoggedAdmin || isLoggedCliente) {
-      window.location.href = '/cuenta';
-    }
-    else
-    {
-      window.location.href = '/login-cliente'
-    }
-  }
-
-  console.log(Cookie.get("user_type"))
-
-  const editHotel = (id) => {
-    window.location.href = `/hotel/edit/${id}`
-  }
-
-  const renderButton= (id) => (
-    <>
-    <button onClick={ () => editHotel(id) }>Editar</button>
-    </>
-  )
-  
-
   return (
     <body className= "bodyinicio">
       <div className="header-content">
         <div className="cuenta-button-container">
           <button className="cuenta-button" onClick={Cuenta}>
             Tu Cuenta
+          </button>
+        </div>
+        <div className="admin-button-container">
+          <button className="admin-button" onClick={Admin}>
+            Admin
           </button>
         </div>
       </div>
