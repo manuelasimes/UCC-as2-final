@@ -1,11 +1,12 @@
-package service 
+package service
 
 import (
 	"fmt"
+	userClient "user-res-api/client/user"
+
 	"github.com/golang-jwt/jwt"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
-	userClient "user-res-api/client/user"
 
 	"user-res-api/dto"
 	"user-res-api/model"
@@ -19,7 +20,6 @@ type userServiceInterface interface {
 	InsertUser(userDto dto.UserDto) (dto.UserDto, e.ApiError)
 	GetUserById(id int) (dto.UserDto, e.ApiError)
 	Login(loginDto dto.LoginDto) (dto.LoginResponseDto, e.ApiError)
-	
 }
 
 var (
@@ -40,7 +40,7 @@ func (s *userService) GetUserById(id int) (dto.UserDto, e.ApiError) {
 
 	userDto.Name = user.Name
 	userDto.LastName = user.LastName
-	userDto.UserName = user.Name
+	userDto.UserName = user.UserName
 	userDto.Phone = user.Phone
 	userDto.Address = user.Address
 	userDto.Email = user.Email
@@ -136,7 +136,7 @@ func (s *userService) Login(loginDto dto.LoginDto) (dto.LoginResponseDto, e.ApiE
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"username": loginDto.Username,
-		"password":     loginDto.Password,
+		"password": loginDto.Password,
 	})
 	var jwtKey = []byte("secret_key")
 	tokenString, _ := token.SignedString(jwtKey)
@@ -151,6 +151,10 @@ func (s *userService) Login(loginDto dto.LoginDto) (dto.LoginResponseDto, e.ApiE
 
 	loginResponseDto.UserId = user.Id
 	loginResponseDto.Token = tokenString
+	loginResponseDto.Name = user.Name
+	loginResponseDto.LastName = user.LastName
+	loginResponseDto.UserName = user.UserName
+	loginResponseDto.Email = user.Email
 	loginResponseDto.Type = user.Type
 	log.Debug(loginResponseDto)
 	return loginResponseDto, nil
