@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './login/auth';
 import './estilo/cuenta.css';
+import Cookies from "universal-cookie";
+
 
 function AccountDetails() {
   const [accountDetails, setAccountDetails] = useState({
@@ -60,6 +62,9 @@ function AccountDetails() {
   }, [isLoggedAdmin, isLoggedCliente]);
 
   const cerrarSesion = () => {
+    const Cookie = new Cookies();
+    Cookie.set("user_id", -1, {path: "/"})
+    Cookie.set("user_type", false, {path:"/"})
     logout();
   };
 

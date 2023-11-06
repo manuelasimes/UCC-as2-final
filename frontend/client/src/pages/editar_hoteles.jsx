@@ -68,7 +68,8 @@ const EditarHotel = (hotel_id) => {
         const response = await fetch(postUser, {
             method: "PUT",
             headers:{"content-type":"application/json"},
-            body: JSON.stringify(jsonData)
+            body: JSON.stringify(jsonData),
+            mode: "no-cors"
         }).then(response => {
             if (response.status === 400 || response.status === 401 || response.status === 403) {
                 console.log("Error al actualizar hotel"); 
@@ -141,6 +142,8 @@ const EditarHotel = (hotel_id) => {
             type:"text",
             placeholder:"Imagenes",
             label:"Images",
+            multiple: true,
+            size:"50",
         },
         {
             id:7,
@@ -148,6 +151,8 @@ const EditarHotel = (hotel_id) => {
             type:"text",
             placeholder:"Amenidades",
             label:"Amenidades",
+            multiple: true,
+            size:"50",
         },
     ]
 
@@ -168,6 +173,16 @@ const EditarHotel = (hotel_id) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Dividir el campo 'images' en un array usando una coma como delimitador
+        const imagesArray = values.images.split(",");
+        const amenitiesArray = values.amenities.split(",");
+
+        // Actualizar el campo 'images' en el objeto 'jsonData' con el array resultante
+        jsonData.images = imagesArray;
+        jsonData.amenities = amenitiesArray;
+
+        console.log(jsonData)
 
         updateHotel(jsonData)
 

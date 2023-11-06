@@ -220,13 +220,18 @@ body.bodyinicio {
     transition-duration: 100ms;
 }
 
-.hotel-image {
+/* .hotel-image {
   max-width: 220px;
-  /* max-height: 120px; */
+  /* max-height: 120px; 
   margin-right: 20px;
   border-radius: 10px;
   aspect-ratio: 16/9;
   object-fit: cover;
+} */
+
+.hotel-image {
+    height: 100%;
+    width: auto;
 }
 
 .hotel-info {

@@ -175,7 +175,6 @@ const HomePage = () => {
     </>
   )
   
-  
 
   return (
     <body className= "bodyinicio">
@@ -206,10 +205,11 @@ const HomePage = () => {
             {hotels.length ? 
               ( hotels.map((hotel) => (
                 <div className='hotel-card' key={hotel.id}>
-                  <img src={hotel.images[1]} alt={hotel.name} className="hotel-image" />
+                  <img src={hotel.images[0]} alt={hotel.name} className="hotel-image" />
                   <div className="hotel-info">
                     <h4>{hotel.name}</h4>
                     <p>{hotel.description} </p>
+                    {console.log(hotel.images[0])}
                     { Cookie.get("user_type") === true ? renderButton(hotel.id) : null } 
                     <button onClick={() => Verificacion(hotel.id)}>
                       Reservar
