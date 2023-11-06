@@ -3,16 +3,20 @@ package service
 import (
 	
 	"fmt"
-	json "github.com/json-iterator/go"
 	bookingClient "user-res-api/client/booking"
 	userClient "user-res-api/client/user"
 	hotelClient "user-res-api/client/hotel"
 	"user-res-api/dto"
 	"user-res-api/model"
-	cache "user-res-api/cache"
-	// "time"
 	e "user-res-api/utils/errors"
+	cache "user-res-api/cache"
 	"strconv"
+	"net/url"
+	"strings"
+	"net/http"
+	"io/ioutil"
+	"encoding/json"
+	
 )
 
 type bookingService struct{}
@@ -20,10 +24,12 @@ type bookingService struct{}
 type bookingServiceInterface interface {
 	GetBookingById(id int) (dto.BookingDetailDto, e.ApiError)
 	GetBookings() (dto.BookingsDetailDto, e.ApiError)
-	InsertBooking(bookingDto dto.BookingDto) (dto.BookingDto, e.ApiError)
-	GetBookingByHotelIdAndDate(request dto.CheckRoomDto, idHotel int) (dto.Availability, e.ApiError)
+	InsertBooking(bookingPDto dto.BookingPostDto) (dto.BookingDto, e.ApiError)
 	GetBookingsByUserId(id int) (dto.BookingsDetailDto, e.ApiError)
 	GetBookingByUserId(id int) (dto.BookingDetailDto, e.ApiError)
+	GetAmadeustoken() (string)
+	GetAvailabilityByIdAndDate(idAm string, startDate int, endDate int) (dto.Availability, e.ApiError)
+	Availability(startdateconguiones string, enddateconguiones string, idAm string) (bool)
 }
 
 var (
@@ -64,7 +70,6 @@ func (s *bookingService) GetBookings() (dto.BookingsDetailDto, e.ApiError) {
 		idHotel := booking.HotelId
 		
 		var hotel model.Hotel = hotelClient.GetHotelById(idHotel)
-		// ver en el caso q el id sea cero 
 	
 
 		bookingDto, _ = s.GetBookingById(id)
@@ -79,65 +84,7 @@ func (s *bookingService) GetBookings() (dto.BookingsDetailDto, e.ApiError) {
 }
 
 
-// recibe un request del tipo CheckRoomDto que trae start date y end date y el id del hotel
-// devuelve un responseDto el cual me dice si esta okey o no (disponible o no)
-func (s *bookingService) GetBookingByHotelIdAndDate(request dto.CheckRoomDto, idHotel int) (dto.Availability, e.ApiError) {
-	
-	
 
-	var IsAvailable bool 
-	
-
-	startDate := request.StartDate //del dto de parametro saca el start y end date 
-	endDate := request.EndDate
-
-	
-	var responseDto dto.Availability // la respuesta q vamos a devolver 
-
-	var hotel model.Hotel = hotelClient.GetHotelById(idHotel)
-	if hotel.Id == 0 {
-		return responseDto, e.NewBadRequestApiError("El hotel no se encuentra en el sistema")
-	}
-
-
-	for i := startDate; i < endDate; i = i + 1 { // i va a ser cada dia de los q vamos a chequear 
-		key := strconv.Itoa(idHotel) + strconv.Itoa(startDate)
-		cacheDTO, err := cache.Get(key)
-
-		if err == nil { // does a hit 
-			fmt.Println("hit de cache!")
-			// creo q si lo encuentra ya quiere decir q no esta disponible 
-			
-			return cacheDTO, nil 
-		
-		}
-
-		// es un miss --> mem principal 
-		fmt.Println("miss de cache!")
-		IsAvailable = bookingClient.GetAvailabilityByIdAndDate(idHotel, i) // me devuelve si existe reserva en ese hotel en ese dia 
-		if IsAvailable == true {
-			responseDto.OkToBook = false 
-		} else if IsAvailable == false {
-			responseDto.OkToBook = true 
-		}
-
-
-		// save in cache 
-		availability, _ := json.Marshal(responseDto)
-		cache.Set(key, availability, 10)
-		fmt.Println("Saved in cache!")
-		return responseDto, nil
-		// mucho x ver --> como x ej si se cancela reserva! 
-		
-		
-
-	}
-
-	responseDto.OkToBook = true
-
-	return responseDto, nil
-
-}
 
 func (s *bookingService) GetBookingByUserId(id int) (dto.BookingDetailDto, e.ApiError) {
 	var booking model.Booking = bookingClient.GetBookingByUserId(id)
@@ -180,31 +127,42 @@ func (s *bookingService) GetBookingsByUserId(id int) (dto.BookingsDetailDto, e.A
 
 
 
-func (s *bookingService) InsertBooking(bookingDto dto.BookingDto) (dto.BookingDto, e.ApiError) {
+func (s *bookingService) InsertBooking(bookingPDto dto.BookingPostDto) (dto.BookingDto, e.ApiError) {
 	var booking model.Booking
-	
-	if userClient.CheckUserById(bookingDto.UserId) == false {
-		fmt.Println("El usuario no esta registrado en el sistema")
+	var bookingDto dto.BookingDto
+
+	var hotel model.Hotel = hotelClient.GetHotelByIdMongo(bookingPDto.HotelId)
+	idAm := hotel.IdAmadeus 
+	idMySQL := hotel.Id 
+
+
+	bookingDto.Id = bookingPDto.Id
+	bookingDto.UserId = bookingPDto.UserId
+	bookingDto.HotelId = idMySQL
+	bookingDto.StartDate = bookingPDto.StartDate
+	bookingDto.EndDate = bookingPDto.EndDate
+	if userClient.CheckUserById(bookingPDto.UserId) == false {
 		return bookingDto, e.NewBadRequestApiError("El usuario no esta registrado en el sistema")
 	}
 
-	// ver como checkear q exista hotel en mongo 
+	var responseDto dto.Availability
+
+
+
 	
-	var checkAvailabilityDto dto.CheckRoomDto
+	startDate := bookingPDto.StartDate
+	endDate := bookingPDto.EndDate
 
-	checkAvailabilityDto.StartDate = bookingDto.StartDate
-	checkAvailabilityDto.EndDate = bookingDto.EndDate
+	responseDto, err := s.GetAvailabilityByIdAndDate(idAm, startDate, endDate)
 
-	var responseAvailabilityDto dto.Availability
-
-	responseAvailabilityDto, _ = s.GetBookingByHotelIdAndDate(checkAvailabilityDto, bookingDto.HotelId)
-
-	if responseAvailabilityDto.OkToBook == false {
-		fmt.Println("No hay disponibilidad en esas fechas")
-		return bookingDto, e.NewBadRequestApiError("El hotel no tiene disponibilidad en esas fechas")
+	if err != nil {
+		return bookingDto, e.NewBadRequestApiError("ERROR VIENDO DISPONIBILIDAD")
 	}
 
-	// si continua quiere decir q si esta disponible...
+	
+	if responseDto.OkToBook == true {
+	
+
 
 	booking.StartDate = bookingDto.StartDate
 	booking.EndDate = bookingDto.EndDate
@@ -215,8 +173,176 @@ func (s *bookingService) InsertBooking(bookingDto dto.BookingDto) (dto.BookingDt
 	
 	bookingDto.Id = booking.Id
 
+	
+	} else if responseDto.OkToBook == false {
+		fmt.Println ("no hay disponibilidad, insert del service")
+		return bookingDto, e.NewBadRequestApiError("No hay disponibilidad")
+	}
 	return bookingDto, nil
+}
 
 
 	
+
+
+// funcion para generar un token de amadeus cada vez que voy a hacer la consulta 
+func (s *bookingService) GetAmadeustoken() (string) {
+
+	fmt.Printf("entro al f d token")
+	 // Define los datos que deseas enviar en el cuerpo de la solicitud.
+	 data := url.Values{}
+	 data.Set("grant_type", "client_credentials")
+	 data.Set("client_id", "sCkSnG1piA4ApGUWTfWsYhj1MDGQZ8Ob")
+	 data.Set("client_secret", "2Jrxf1ZBL46bfj6c")
+ 
+	 // Realiza la solicitud POST a la API externa.
+	 resp, err := http.Post("https://test.api.amadeus.com/v1/security/oauth2/token", "application/x-www-form-urlencoded", strings.NewReader(data.Encode()))
+	 if err != nil {
+		 fmt.Println("Error al hacer la solicitud:", err)
+		 return ""
+	 }
+	 defer resp.Body.Close()
+	  // Lee la respuesta de la API.
+	  body, err := ioutil.ReadAll(resp.Body)
+	  if err != nil {
+		  fmt.Println("Error al leer la respuesta:", err)
+		  return ""
+	  }
+	  // Parsea la respuesta JSON para obtener el token (asumiendo que la respuesta es JSON).
+    // Si la respuesta es en otro formato, ajusta esto en consecuencia.
+    var response map[string]interface{}
+    if err := json.Unmarshal(body, &response); err != nil {
+        return ""
+    }
+	token, ok := response["access_token"].(string)
+    if !ok {
+        return ""
+    }
+	fmt.Println("token:", token)
+    return token
+
+}
+
+
+// funcion por separado que me calcula disponibilidad 
+func (s *bookingService) Availability(startdateconguiones string, enddateconguiones string, idAm string) (bool) {
+fmt.Println("entro a availability")
+apiUrl := "https://test.api.amadeus.com/v3/shopping/hotel-offers"
+apiUrl += "?hotelIds=" + idAm
+apiUrl += "&checkInDate=" + startdateconguiones
+apiUrl += "&checkOutDate=" + enddateconguiones
+
+	fmt.Println(apiUrl)
+
+
+	 // Crear una solicitud HTTP POST
+	 solicitud, err := http.NewRequest("GET", apiUrl, nil)
+	 if err != nil {
+		fmt.Println("ERROR CREANDO SOLICITUD")
+		return false
+	 }
+	 
+	// Agregar el encabezado de autorización Bearer con tu token
+	token := s.GetAmadeustoken() // Reemplaza con tu token real
+
+	solicitud.Header.Set("Authorization", "Bearer " + token)
+	
+ 
+	fmt.Println(solicitud)
+	// Realiza la solicitud HTTP
+	cliente := &http.Client{}
+	respuesta, err := cliente.Do(solicitud)
+	if err != nil {
+		fmt.Println("Error al realizar la solicitud:", err)
+		return false
+	
+	} 
+	fmt.Println("La solicitud de la api fue exitosa ")
+	// Verifica el código de estado de la respuesta
+	if respuesta.StatusCode != http.StatusOK {
+    	fmt.Printf("La solicitud a la API de Amadeus no fue exitosa. Código de estado: %d\n", respuesta.StatusCode)
+   		return false
+	}
+		// Lee el cuerpo de la respuesta
+		responseBody, err := ioutil.ReadAll(respuesta.Body)
+		if err != nil {
+		fmt.Println("Error al leer la respuesta:", err)
+		return false
+	}
+	   // Crear una estructura para deserializar el JSON de la respuesta
+	   var responseStruct struct {
+		Data []struct {
+			Type                 string `json:"type"`
+			ID                   string `json:"id"`
+			ProviderConfirmationID string `json:"providerConfirmationId"`
+		} `json:"data"`
+    }
+
+    // Decodificar el JSON y extraer el campo "id"
+    if err := json.Unmarshal(responseBody, &responseStruct); err != nil {
+        fmt.Println("Error al decodificar el JSON de la respuesta:", err)
+        return false
+    }
+		// Obtén el ID del hotel del primer elemento en "data"
+		if len(responseStruct.Data) > 0 {
+		// si el largo de la respuesta es mayor q cero es pq hay disponibilidad --> llamo al service 
+    	fmt.Println("Amadeus nos dice que hay disponibilidad")
+		return true
+	 	
+	} 
+		fmt.Println("No hay disponibilidad en esas fechas")
+		defer respuesta.Body.Close()
+		return false 
+	
+
+	
+}
+
+func (s *bookingService) GetAvailabilityByIdAndDate(idAm string, startDate int, endDate int) (dto.Availability, e.ApiError) {
+	var responseDto dto.Availability // la respuesta q vamos a devolver 
+	
+	startdate := strconv.Itoa(startDate)
+	
+	fechaConGuiones := startdate
+	startdateconguiones := fmt.Sprintf(
+        "%s-%s-%s",
+        fechaConGuiones[:4],
+        fechaConGuiones[4:6],
+        fechaConGuiones[6:8],
+    )
+	
+	enddate := strconv.Itoa(endDate)
+	fechaConGuiones2 := enddate
+	enddateconguiones := fmt.Sprintf(
+        "%s-%s-%s",
+        fechaConGuiones2[:4],
+        fechaConGuiones2[4:6],
+        fechaConGuiones2[6:8],
+    )
+	// antes de hacer eso deberiamos ver si ya esta en la cache 
+	key := idAm + strconv.Itoa(startDate)
+	cacheDTO, err := cache.Get(key)
+
+	if err == nil { // does a hit 
+		fmt.Println("hit de cache!")
+		// creo q si lo encuentra ya quiere decir q no esta disponible ANTES 
+		
+		return cacheDTO, nil 
+	
+	}
+	// es un miss --> mem principal 
+	IsAvailable := s.Availability(startdateconguiones, enddateconguiones, idAm)
+	fmt.Println("miss de cache!")
+	if IsAvailable == true {
+		responseDto.OkToBook = true 
+	} else if IsAvailable == false {
+		responseDto.OkToBook = false 
+	}
+
+	// save in cache
+	availability, _ := json.Marshal(responseDto) 
+	cache.Set(key, availability, 10)
+	fmt.Println("Saved in cache!")
+
+	return responseDto, nil 
 }

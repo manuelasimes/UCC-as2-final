@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"fmt"
 	"encoding/json"
-	bookingController "user-res-api/controller/booking"
+	// bookingController "user-res-api/controller/booking"
 
 )
 
@@ -64,7 +64,7 @@ func InsertHotel(c *gin.Context) {
 	   return
 	}
 
-	token := bookingController.GetAmadeustoken()
+	token := service.BookingService.GetAmadeustoken()
 	solicitud.Header.Set("Authorization", "Bearer " + token)
 	// Realiza la solicitud HTTP
 	cliente := &http.Client{}
