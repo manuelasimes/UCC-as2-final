@@ -4,11 +4,11 @@ import './estilo/cuenta.css';
 
 function AccountDetails() {
   const [accountDetails, setAccountDetails] = useState({
-    nombre: '',
-    apellido: '',
+    Name: '',
+    LastName: '',
     username: '',
-    password: '*****',
-    email: ''
+    password: '*******',
+    Email: ''
   });
 
   const { isLoggedAdmin } = useContext(AuthContext);
@@ -23,11 +23,11 @@ function AccountDetails() {
           .then(response => response.json())
           .then(data => {
             setAccountDetails({
-              nombre: data.name,
-              apellido: data.last_name,
+              Name: data.name,
+              LastName: data.last_name,
               username: data.username,
-              password: '*****',
-              email: data.email
+              password: '*******',
+              Email: data.email
             });
           })
           .catch(error => {
@@ -36,15 +36,15 @@ function AccountDetails() {
       }
       else if (isLoggedAdmin) {
         const accountId = localStorage.getItem("id_admin");
-        fetch(`http://localhost:8070/admin/${accountId}`)
+        fetch(`http://localhost:8070/user/${accountId}`)
           .then(response => response.json())
           .then(data => {
             setAccountDetails({
-              nombre: data.name,
-              apellido: data.last_name,
+              Name: data.name,
+              LastName: data.last_name,
               username: data.username,
-              password: '*****',
-              email: data.email
+              password: '*******',
+              Email: data.email
             });
           })
           .catch(error => {
@@ -73,19 +73,19 @@ function AccountDetails() {
       <div className="account-form">
         <h2 className="tituloDC">Detalles de la cuenta</h2>
         <div className="account-field">
-          <p>Nombre: {accountDetails.nombre}</p>
+          <p>Nombre: {accountDetails.Name}</p>
         </div>
         <div className="account-field">
-          <p>Apellido: {accountDetails.apellido}</p>
+          <p>Apellido: {accountDetails.LastName}</p>
         </div>
         <div className="account-field">
-          <p>UserName: {accountDetails.username}</p>
+          <p>Nombre de Usuario: {accountDetails.username}</p>
         </div>
         <div className="account-field">
-          <p>Password: {accountDetails.password}</p>
+          <p>Contraseña: {accountDetails.password}</p>
         </div>
         <div className="account-field">
-          <p>Email: {accountDetails.email}</p>
+          <p>Email: {accountDetails.Email}</p>
         </div>
         <div className="account-buttons">
           <button className="logout-button" onClick={cerrarSesion}>Cerrar sesión</button>

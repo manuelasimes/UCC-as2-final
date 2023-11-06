@@ -32,7 +32,7 @@ import { ToastContainer, toast } from "react-toastify";
 function goTo(path){
   setTimeout(() => {
       window.location = window.location.origin + path;
-  }, 3000)
+  }, 50000)
 }
 
 const Cookie = new Cookies();
@@ -41,6 +41,7 @@ const ClienteLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const {loginCliente } = useContext(AuthContext);
+  const [userData, setUserData] = useState(null);
 
   const handleLoginCliente = () => {
 
@@ -55,16 +56,25 @@ const ClienteLogin = () => {
       }),
     })
     .then(response => {
-      if (response.status == 400 || response.status == 401 || response.status == 403)
+      if (response.status === 400 || response.status === 401 || response.status === 403)
       {
         return {"user_id": -1, "user_type": "false"}
       }
       return response.json()
-    }).then(response => {
-      Cookie.set("user_id", response.user_id, {path: '/'})
-      Cookie.set("username", username, {path: '/login'})
-      Cookie.set("user_type", response.type, {path: '/'})
-      goTo('/')
+    }).then(data => {
+      if (data.user_id !== -1) {
+        // Autenticación exitosa, almacenar datos del usuario y token
+        setUserData(data); // Almacena los datos del usuario
+        const token = 'TOKEN_CLIENTE';
+        loginCliente(token, data.user_id);
+
+        console.log("Data del usuario:", data);
+        // Corrige el nombre de la instancia de Cookies a "Cookie" y utiliza "Cookie" en lugar de "Cookies"
+        /*Cookie.set("user_id", data.user_id, { path: '/' });
+        Cookie.set("username", username, { path: '/login' });
+        Cookie.set("user_type", data.type, { path: '/' });*/
+        goTo('/');
+      }
     })
     /*.then(response => response.json())
     .then(data => {
@@ -81,7 +91,7 @@ const ClienteLogin = () => {
     });
   };
 
-  function logout(){
+  /*function logout(){
     Cookie.set("user_id", -1, {path: "/"})
     Cookie.set("user_type", false, {path:"/"})
     document.location.reload()
@@ -97,10 +107,10 @@ const ClienteLogin = () => {
     </div>
     <button className='buttonClient' onClick={logout}>Log Out</button>
     </body>
-  )
+  )*/
 
   return (
-  Cookie.get("user_id") > -1 ? renderGreetings : 
+  //Cookie.get("user_id") > -1 ? renderGreetings : 
     <body className="bodylogclient">
     <div className="contLogClie1">
     <div className="contLogClien2">
