@@ -16,7 +16,7 @@ var (
 )
 
 func Init_cache() {
-	cacheClient = memcache.New("cache")
+	cacheClient = memcache.New("cache:11211")
     fmt.Println("Initialized cache", cacheClient)
     log.Info("Initialized cache")
 }

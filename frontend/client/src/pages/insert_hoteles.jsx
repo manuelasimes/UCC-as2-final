@@ -125,7 +125,6 @@ return (
         />
       </label>
       <br />
-      <br />
       <label>
        Direccion:
         <input
@@ -168,8 +167,9 @@ return (
           multiple size="50"
         />
       </label>
+      <br/>
       <label>
-        Amenidades (ingresa amenidades separados por una coma):
+        Amenities (ingresa amenities separados por una coma):
         <input
           type="text"
           name="amenities"
@@ -179,7 +179,7 @@ return (
           
         />
       </label>
-      <br />
+      <br/>
       <button type="submit">Registrar Hotel</button>
     </form>
     <ToastContainer />

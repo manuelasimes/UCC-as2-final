@@ -208,7 +208,7 @@ func (s *bookingService) Availability(startdateconguiones string, enddateconguio
 
 	fmt.Println(apiUrl)
 
-	// Crear una solicitud HTTP POST
+	// Crear una solicitud HTTP
 	solicitud, err := http.NewRequest("GET", apiUrl, nil)
 	if err != nil {
 		fmt.Println("ERROR CREANDO SOLICITUD")
@@ -290,17 +290,16 @@ func (s *bookingService) GetAvailabilityByIdAndDate(idAm string, startDate int, 
 		fechaConGuiones2[6:8],
 	)
 	// antes de hacer eso deberiamos ver si ya esta en la cache
-	key := idAm + strconv.Itoa(startDate)
+	key := idAm + strconv.Itoa(startDate) + strconv.Itoa(endDate) // la key sera e id del hotel junto con las fechas que se quiere saber disponibilidad
 	cacheDTO, err := cache.Get(key)
 
 	if err == nil { // does a hit
 		fmt.Println("hit de cache!")
-		// creo q si lo encuentra ya quiere decir q no esta disponible ANTES
 
 		return cacheDTO, nil
 
 	}
-	// es un miss --> mem principal
+	// es un miss
 	IsAvailable := s.Availability(startdateconguiones, enddateconguiones, idAm)
 	fmt.Println("miss de cache!")
 	if IsAvailable == true {
