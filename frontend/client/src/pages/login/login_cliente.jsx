@@ -32,7 +32,7 @@ import { ToastContainer, toast } from "react-toastify";
 function goTo(path){
   setTimeout(() => {
       window.location = window.location.origin + path;
-  }, 400)
+  }, 100)
 }
 
 const Cookie = new Cookies();
@@ -63,7 +63,7 @@ const ClienteLogin = () => {
       }
       return response.json()
     }).then(data => {
-      if (data.user_id !== -1) {
+      if (data.type !== true) {
         // Autenticación exitosa, almacenar datos del usuario y token
         setUserData(data); // Almacena los datos del usuario
         const token = 'TOKEN_CLIENTE';
@@ -75,6 +75,8 @@ const ClienteLogin = () => {
         Cookie.set("username", username, { path: '/login' });
         Cookie.set("user_type", data.type, { path: '/' });
         goTo('/');
+      }else {
+        alert("Usted es un administrador. Para iniciar sesion como administrador, dirigase al area de admin.")
       }
     })
     /*.then(response => response.json())

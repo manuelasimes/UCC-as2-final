@@ -16,7 +16,7 @@ const HomePage = () => {
 
   const getHotels = async () => {
     try {
-      // const request = await fetch("http://localhost:8090/cliente/hoteles");
+      // const request = await fetch("http://localhost:8091/cliente/hoteles");
       const request = await fetch("http://localhost:8090/searchAll=*:*");
       //const request = await fetch("http://localhost:8070/hotel");
       const response = await request.json();
@@ -46,9 +46,11 @@ const HomePage = () => {
           {hotels.length ? (
             hotels.map((hotel) => (
               <div className="hotel-cardH" key={hotel.id}>
-                <img src={hotel.images[1]} alt={hotel.name} className="hotel-imageH" />
-                <div className="hotel-infoH">
-                  <h4>{hotel.name}</h4>
+                <div className='img-name'>
+                  <img src={hotel.images[0]} alt={hotel.name} className="hotel-imageH" />
+                  <div className="hotel-infoH">
+                    <h4>{hotel.name}</h4>
+                  </div>
                 </div>
                 <div className="hotel-descriptionH">
                     <label htmlFor={`description-${hotel.id}`}>Descripción:</label>

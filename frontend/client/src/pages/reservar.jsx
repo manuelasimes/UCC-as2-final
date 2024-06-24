@@ -110,7 +110,16 @@ const ReservaPage = () => {
       fetch(`http://localhost:8060/hotels/${idHotel}`)
       .then(response => response.json())
       .then(data => {
+        console.log(data.images[1])
+
+        if (data.images && typeof data.images === 'string') {
+          data.images = JSON.parse(data.images); // Convert the string to an array
+        }
+        console.log(data.images)
+
         setHotelData(data);
+
+        console.log(hotelData)
       })
       .catch(error => {
         console.error('Error al obtener datos del hotel: ', error)
@@ -186,6 +195,8 @@ const ReservaPage = () => {
     window.history.back();
   };
 
+  
+
   return (
     <div className="bodyReserva">
       <div>
@@ -194,12 +205,12 @@ const ReservaPage = () => {
         ) : (
           <div className="container45" onLoad={Verificacion}>
             <div className="informacion">
-              <div className="cuadroImag"><img src={hotelData.images[0]} alt={hotelData.name} className="tamanoImag" /></div>
+              <div className="cuadroImag"><img src={hotelData.images} alt={hotelData.name} className="tamanoImag" /></div>
               <div className="descripcion">{hotelData.description}</div>
             </div>
             <div className="reserva-form">
               <h6>Realice reserva del Hotel</h6>
-              <h6>{hotelData.name}</h6>
+              <h6>{hotelData["nombre"]}</h6>
               <form onSubmit={handleReserva}>
                 <div className="form-group">
                   <label htmlFor="fechaInicio">Fecha de inicio:</label>

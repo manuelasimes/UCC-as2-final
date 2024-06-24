@@ -1,12 +1,14 @@
-FROM node:16
+FROM node
 
-ENV NODE_ENV development
+WORKDIR /app
 
-ADD . /frontend
-WORKDIR /frontend
-
-COPY package.json ./
+COPY package.json .
 COPY package-lock.json ./
+
 COPY ./ ./
 RUN npm i
-CMD npm start
+COPY . .
+## EXPOSE [Port you mentioned in the vite.config file]
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]

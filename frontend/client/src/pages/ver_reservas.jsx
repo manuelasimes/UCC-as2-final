@@ -47,16 +47,16 @@ const VerReservas = () => {
   return (
   
     <div className="reservations-container1">
-      <h4>Recervas realizadas</h4>
+      <h4>Reservas realizadas</h4>
       <div className="reservations-container2">
             {reservations.length ? (
               reservations.map((reserva) => {
-                const hotel = hoteles.find((hotel) => hotel.id === reserva.hotel_id);
+                const hotel = hoteles.find((hotels) => hotels.id === reserva.booked_hotel_id);
                 const fechaInicio = `${reserva.dia_inicio}/${reserva.mes_inicio}/${reserva.anio_inicio}`;
                 const fechaFin = `${reserva.dia_final}/${reserva.mes_final}/${reserva.anio_final}`;
                 return (
                   <div className="reservation-card" key={reserva.ID}>
-                    <p>Hotel: {hotel ? hotel.nombre : 'Hotel desconocido'}</p>
+                    <p>Hotel: {hotel ? hotel.name : 'Hotel desconocido'}</p>
                     <p>Fecha de llegada: {fechaInicio}</p>
                     <p>Fecha de fin: {fechaFin}</p>
                     <p>Gracias por elegirnos!</p>
