@@ -1,10 +1,9 @@
 package db
 
 import (
-	
-	userClient "user-res-api/client/user"
 	bookingClient "user-res-api/client/booking"
 	hotelClient "user-res-api/client/hotel"
+	userClient "user-res-api/client/user"
 	"user-res-api/model"
 
 	"github.com/jinzhu/gorm"
@@ -13,7 +12,7 @@ import (
 )
 
 var (
-	db *gorm.DB
+	db  *gorm.DB
 	err error
 )
 
@@ -22,8 +21,10 @@ func init() {
 	DBName := "UCC_as2_final"
 	DBUser := "root"
 	DBPass := ""
+	// DBPass := "Manuela10Simes"
 	//DBPass := os.Getenv("MVC_DB_PASS")
 	DBHost := "mysql"
+	// DBHost := "localhost"
 	// ------------------------
 
 	db, err = gorm.Open("mysql", DBUser+":"+DBPass+"@tcp("+DBHost+":3306)/"+DBName+"?charset=utf8&parseTime=True")
@@ -38,8 +39,7 @@ func init() {
 	// We need to add all Clients that we build
 	userClient.Db = db
 	bookingClient.Db = db
-	hotelClient.Db = db 
-	
+	hotelClient.Db = db
 
 }
 
@@ -48,6 +48,6 @@ func StartDbEngine() {
 	db.AutoMigrate(&model.User{})
 	db.AutoMigrate(&model.Booking{})
 	db.AutoMigrate(&model.Hotel{})
-	
+
 	log.Info("Finishing Migration Database Tables")
 }

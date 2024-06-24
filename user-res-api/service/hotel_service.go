@@ -20,7 +20,7 @@ type hotelServiceInterface interface {
 	CheckHotelByIdAmadeus(id string) (bool, e.ApiError)
 	// UpdateHotel(updateHotelDto dto.HandleHotelDto) (dto.HotelDto, e.ApiError)
 	// DeleteHotel(idHotel int, idUser int) (dto.DeleteHotelResponseDto, e.ApiError)
-	
+
 }
 
 var (
@@ -47,10 +47,10 @@ func (s *hotelService) GetHotelById(id int) (dto.HotelDto, e.ApiError) {
 
 }
 func (s *hotelService) CheckHotelByIdAmadeus(id string) (bool, e.ApiError) {
-	
-	if hotelClient.GetHotelByIdAmadeus(id) == true  {
+
+	if hotelClient.GetHotelByIdAmadeus(id) == true {
 		return false, e.NewBadRequestApiError("Hotel ya en uso")
-	} 
+	}
 
 	return true, nil
 
@@ -80,7 +80,6 @@ func (s *hotelService) InsertHotel(hotelDto dto.HotelPostDto, idAmadeus string) 
 	hotel.HotelName = hotelDto.HotelName
 	hotel.IdAmadeus = idAmadeus
 	hotel.IdMongo = hotelDto.IdMongo
-	
 
 	hotel = hotelClient.InsertHotel(hotel)
 
@@ -92,95 +91,3 @@ func (s *hotelService) InsertHotel(hotelDto dto.HotelPostDto, idAmadeus string) 
 
 	return response, nil
 }
-
-// func (s *hotelService) UpdateHotel(updateHotelDto dto.HandleHotelDto) (dto.HotelDto, e.ApiError) {
-
-// 	var hotel model.Hotel
-// 	var savedHotel dto.HotelDto
-
-// 	savedHotel, _ = s.GetHotelById(updateHotelDto.Id)
-
-// 	hotel.HotelName = savedHotel.HotelName
-// 	hotel.HotelDescription = savedHotel.HotelDescription
-// 	hotel.Address = savedHotel.Address
-// 	hotel.Rooms = savedHotel.Rooms
-
-// 	if len(updateHotelDto.HotelName) != 0 {
-// 		log.Debug("Nombre del hotel", updateHotelDto)
-// 		hotel.HotelName = updateHotelDto.HotelName
-// 	}
-
-// 	if len(updateHotelDto.HotelDescription) != 0 {
-// 		hotel.HotelDescription = updateHotelDto.HotelDescription
-// 	}
-
-// 	if len(updateHotelDto.Address) != 0 {
-// 		hotel.Address = updateHotelDto.Address
-// 	}
-
-// 	if updateHotelDto.Rooms != 0 {
-// 		hotel.Rooms = updateHotelDto.Rooms
-// 	}
-
-	
-
-// 	hotel.Id = updateHotelDto.Id
-
-// 	var hotelDto dto.HotelDto
-// 	var user model.User
-
-// 	user = userClient.GetUserById(updateHotelDto.UserId)
-
-// 	if user.Type == false {
-// 		return hotelDto, e.NewBadRequestApiError("El usuario no es administrador")
-// 	}
-
-// 	if hotelClient.CheckHotelById(hotel.Id) == false {
-// 		return hotelDto, e.NewBadRequestApiError("El hotel no esta registrado en el sistema")
-// 	}
-
-// 	log.Debug("Id model", hotel.Id)
-// 	log.Debug("Id dto", updateHotelDto.Id)
-
-// 	hotel = hotelClient.UpdateHotelById(hotel)
-
-// 	if hotel.Id == 0 {
-// 		return hotelDto, e.NewBadRequestApiError("Error al actualizar hotel")
-// 	}
-
-// 	hotelDto, _ = s.GetHotelById(hotel.Id)
-
-// 	return hotelDto, nil
-
-// }
-
-// func (s *hotelService) DeleteHotel(idHotel int, idUser int) (dto.DeleteHotelResponseDto, e.ApiError) {
-// 	var hotel model.Hotel
-// 	var user model.User
-// 	var response dto.DeleteHotelResponseDto
-
-// 	// user = userClient.GetUserById(deleteHotelDto.UserId)
-// 	user = userClient.GetUserById(idUser)
-
-// 	// hotel.Id = deleteHotelDto.HotelId
-// 	hotel.Id = idHotel
-
-// 	if user.Type == false {
-// 		return response, e.NewBadRequestApiError("El usuario no es administrador")
-// 	}
-
-// 	if hotelClient.CheckHotelById(hotel.Id) == false {
-// 		return response, e.NewBadRequestApiError("El hotel no esta registrado en el sistema")
-// 	}
-
-// 	var err error
-
-// 	response.DeleteConfirm, err = hotelClient.DeleteHotel(hotel) // Si DeleteHotel devuelve true --> Se elimino sin problema
-
-// 	if !response.DeleteConfirm {
-// 		return response, e.NewInternalServerApiError("Error al borrar hotel de la BD", err)
-// 	}
-
-// 	return response, nil
-// }
-
