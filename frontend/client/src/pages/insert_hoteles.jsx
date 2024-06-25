@@ -71,7 +71,7 @@ function RegistrationHotel() {
     const jsonData = JSON.stringify(formData)
     console.log(jsonData)
 
-    fetch('http://localhost:8060/hotels', {
+    fetch('http://localhost/hotels-api/hotels', {
     method: 'POST',
     headers: {
     'Content-Type': 'application/json'

@@ -11,8 +11,8 @@ func mapUrls() {
 
 	// Search mappings
 
-	router.GET("/search=:searchQuery", solrController.GetQuery)
-	router.GET("/searchAll=:searchQuery", solrController.GetQueryAllFields)
+	router.GET("/search-api/search=:searchQuery", solrController.GetQuery)
+	router.GET("/search-api/searchAll=:searchQuery", solrController.GetQueryAllFields)
 
 	log.Info("Finishing mappings configurations")
 }

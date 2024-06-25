@@ -16,6 +16,7 @@ import EditarHoteles from './pages/editar_hoteles'
 import './App.css';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { AuthProvider } from './pages/login/auth';
+import AdminInfra from './pages/admin_infra'
 
 function App() {
     return (
@@ -39,6 +40,7 @@ function App() {
                         <Route path='/ver-reservas' element={<VerReservas />}></Route>
                         <Route path='/ver-clientes' element={<VerClientes />}></Route>
                         <Route path='/hotel/edit/:id' element={<EditarHoteles />}></Route>
+                        <Route path='/insfraestructura' element={<AdminInfra />}></Route>
                     </Routes>
                 </AuthProvider>
             </Router>

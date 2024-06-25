@@ -19,7 +19,7 @@ type dockerService struct{
 
 type dockerServiceInterface interface {
 	ListContainers() ([]types.Container, error)
-	CreateContainer(imageName string, containerName string) (string, error)
+	CreateContainer(imageName string, containerName string, runningContainerID string) (string, error)
 	StartContainer(containerID string) error
 	StopContainer(containerID string) error
 	RemoveContainer(containerID string) error
@@ -52,9 +52,9 @@ func (s *dockerService) ListContainers() ([]types.Container, error) {
 
 }
 
-func (s *dockerService) CreateContainer(imageName string, containerName string) (string, error) {
+func (s *dockerService) CreateContainer(imageName string, containerName string, runningContainerID string) (string, error) {
 
-	id, err := docker_client.CreateContainer(s.cli, imageName, containerName)
+	id, err := docker_client.CreateContainer(s.cli, imageName, containerName, runningContainerID)
 
 	if err != nil {
 		return "", fmt.Errorf("failed to create container: %w", err)
@@ -140,7 +140,7 @@ func (s *dockerService) AutoScale() string {
                 // Logic to scale up
                 log.Printf("Scaling up due to high CPU usage for container %s, Id: %s", container.Image, container.ID)
 
-				idScaledContainer, errCreate := s.CreateContainer(container.Image, fmt.Sprintf("%s-%d", container.Image , containerNumber+1))
+				idScaledContainer, errCreate := s.CreateContainer(container.Image, fmt.Sprintf("%s-%d", container.Image , containerNumber+1), container.ID)
 
 				if errCreate != nil {
 					log.Printf("Error scaling container: %s. Error: %s", container.Image, errCreate)

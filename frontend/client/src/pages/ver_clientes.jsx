@@ -8,7 +8,7 @@ const HomePage = () => {
 
   const getClientes = async () => {
     try {
-      const request = await fetch("http://localhost:8070/user");
+      const request = await fetch("http://localhost/user-res-api/user");
       const response = await request.json();
       setClientes(response);
     } catch (error) {

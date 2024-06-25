@@ -27,7 +27,7 @@ function RegistrationPage() {
   const Register = (event) => {
     event.preventDefault();
 
-    fetch('http://localhost:8070/user', {
+    fetch('http://localhost/user-res-api/user', {
     method: 'POST',
     headers: {
     'Content-Type': 'application/json'

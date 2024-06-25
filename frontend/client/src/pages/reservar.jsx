@@ -74,7 +74,7 @@ const ReservaPage = () => {
 
     console.log(formData)
 
-    fetch('http://localhost:8070/booking', {
+    fetch('http://localhost/user-res-api/booking', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -107,7 +107,7 @@ const ReservaPage = () => {
 
     setHotelData('');
     if (hotelId){
-      fetch(`http://localhost:8060/hotels/${idHotel}`)
+      fetch(`http://localhost/hotels-api/hotels/${idHotel}`)
       .then(response => response.json())
       .then(data => {
         console.log(data.images[1])
@@ -181,7 +181,7 @@ const ReservaPage = () => {
   };
 
   const filterHotels = async () => {
-    const request = await fetch(`http://localhost:8070/hotel/availability/${hotelId}/${startDate}/${endDate}`);
+    const request = await fetch(`http://localhost/user-res-api/hotel/availability/${hotelId}/${startDate}/${endDate}`);
     // /hotel/availability/:id/:start_date/:end_date"
 
     const response = await request.json();

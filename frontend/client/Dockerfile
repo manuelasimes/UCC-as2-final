@@ -1,14 +1,18 @@
-FROM node
+# Dockerfile for React frontend
+FROM node:14
 
+# Set working directory
 WORKDIR /app
 
-COPY package.json .
-COPY package-lock.json ./
+# Copy package.json and install dependencies
+COPY package*.json ./
+RUN npm install
 
-COPY ./ ./
-RUN npm i
+# Copy the rest of the application code
 COPY . .
-## EXPOSE [Port you mentioned in the vite.config file]
+
+# Expose the port the app runs on
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+# Start the app
+CMD ["npm", "start"]
