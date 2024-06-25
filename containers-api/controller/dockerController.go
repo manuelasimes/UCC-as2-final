@@ -28,13 +28,13 @@ func CreateContainer(c *gin.Context) {
 
 	imageName := c.Param("image")
 	containerName := c.Param("name")
+	runningContainerID := c.Param("id")
 
 	// imageUrl := "docker.io/mateonegri"
 
 	// image := fmt.Sprintf("%s%s", imageUrl, imageName)
 
-	createdContainerID, err := service.DockerService.CreateContainer(imageName, containerName)
-
+	createdContainerID, err := service.DockerService.CreateContainer(imageName, containerName, runningContainerID)
 	if err != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
         return

@@ -21,7 +21,7 @@ function AccountDetails() {
     const getUser = () => {
       if (isLoggedCliente) {
         const accountId = localStorage.getItem("id_cliente");
-        fetch(`http://localhost:8070/user/${accountId}`)
+        fetch(`http://localhost/user-res-api/user/${accountId}`)
           .then(response => response.json())
           .then(data => {
             setAccountDetails({
@@ -38,7 +38,7 @@ function AccountDetails() {
       }
       else if (isLoggedAdmin) {
         const accountId = localStorage.getItem("id_admin");
-        fetch(`http://localhost:8070/user/${accountId}`)
+        fetch(`http://localhost/user-res-api/user/${accountId}`)
           .then(response => response.json())
           .then(data => {
             setAccountDetails({

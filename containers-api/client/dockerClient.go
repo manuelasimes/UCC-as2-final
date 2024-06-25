@@ -11,7 +11,7 @@ import (
     "github.com/docker/docker/api/types/container"
     "github.com/docker/docker/api/types/network"
     "github.com/docker/docker/client"
-	"github.com/opencontainers/image-spec/specs-go/v1"
+	// "github.com/opencontainers/image-spec/specs-go/v1"
 )
 
 func CreateDockerClient() (*client.Client, error) {
@@ -58,17 +58,27 @@ func ListImages(dockerClient *client.Client) ([]types.ImageSummary, error) {
     return images, nil
 }
 
-func CreateContainer(dockerClient *client.Client, imageName string, containerName string) (string, error) {
+func CreateContainer(dockerClient *client.Client, imageName string, containerName string, runningContainerID string) (string, error) {
     ctx := context.Background()
 
-    config := &container.Config{
-        Image: imageName,
+    inspectResp, err := dockerClient.ContainerInspect(ctx, runningContainerID)
+    if err != nil {
+        panic(err)
     }
-    hostConfig := &container.HostConfig{}
-    networkingConfig := &network.NetworkingConfig{}
-    platform := &v1.Platform{} // or you can set the platform to nil if you don't need to specify it
 
-    resp, err := dockerClient.ContainerCreate(ctx, config, hostConfig, networkingConfig, platform, containerName)
+    newContainerConfig := inspectResp.Config
+    newHostConfig := inspectResp.HostConfig
+    newNetworkingConfig := &network.NetworkingConfig{
+        EndpointsConfig: inspectResp.NetworkSettings.Networks,
+    }
+
+    // Remove MAC address from the network configuration (if present)
+    for _, endpoint := range newNetworkingConfig.EndpointsConfig {
+        endpoint.MacAddress = ""
+    }
+
+
+    resp, err := dockerClient.ContainerCreate(ctx, newContainerConfig, newHostConfig, newNetworkingConfig, nil, containerName)
     if err != nil {
         return "", err
     }
@@ -80,7 +90,7 @@ func CreateContainer(dockerClient *client.Client, imageName string, containerNam
 func ListContainers(dockerClient *client.Client) ([]types.Container, error) {
     ctx := context.Background()
 
-    containers, err := dockerClient.ContainerList(ctx, types.ContainerListOptions{})
+    containers, err := dockerClient.ContainerList(ctx, types.ContainerListOptions{All: true})
     if err != nil {
         return nil, err
     }

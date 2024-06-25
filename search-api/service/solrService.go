@@ -114,7 +114,7 @@ func (s *SolrService) GetQuery(query string) (dto.HotelsDto, e.ApiError) {
 
 func (s *SolrService) GetHotelInfo(id string, startdate int, enddate int) (bool, error) {
 
-		resp, err := http.Get(fmt.Sprintf("http://%s:%d/hotel/availability/%s/%d/%d", config.USERAPIHOST, config.USERAPIPORT, id, startdate, enddate))
+		resp, err := http.Get(fmt.Sprintf("http://%s:%d/user-res-api/hotel/availability/%s/%d/%d", config.USERAPIHOST, config.USERAPIPORT, id, startdate, enddate))
 
 		if err != nil {
 			return false, e.NewBadRequestApiError("user-res-api failed")
@@ -147,7 +147,7 @@ func (s *SolrService) GetQueryAllFields(query string) (dto.HotelsDto, e.ApiError
 
 func (s *SolrService) AddFromId(id string) e.ApiError {
 	var hotelDto dto.HotelDto
-	resp, err := http.Get(fmt.Sprintf("http://%s:%d/hotels/%s", config.HOTELSHOST, config.HOTELSPORT, id))
+	resp, err := http.Get(fmt.Sprintf("http://%s:%d/hotels-api/hotels/%s", config.HOTELSHOST, config.HOTELSPORT, id))
 	// resp, err := http.Get(fmt.Sprintf("http://localhost:8070/hotel/%s", id))
 	if err != nil {
 		log.Debugf("error getting item %s", id)

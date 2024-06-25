@@ -40,6 +40,8 @@ func GetQueryAllFields(c *gin.Context) {
 	var hotelsDto dto.HotelsDto
 	// query := c.Param("searchQuery")
 
+	log.Debug("ACA ESTOY")
+
 	query := "*:*"
 
 	hotelsDto, err := Solr.GetQueryAllFields(query)

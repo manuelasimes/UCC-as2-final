@@ -12,7 +12,8 @@ const HomePage = () => {
       const hotelesArray = [];
       for (let i = 0; i < reservations.length; i++) {
         const reserva = reservations[i];
-        const request = await fetch(`http://localhost:8070/cliente/hotel/${reserva.hotel_id}`);
+        console.log(reserva.booked_hotel_id)
+        const request = await fetch(`http://localhost/user-res-api/hotel/${reserva.booked_hotel_id}`);
         const response = await request.json();
         hotelesArray.push(response);
       }
@@ -26,7 +27,7 @@ const HomePage = () => {
     if (isLoggedCliente) {
       const accountId = localStorage.getItem("id_cliente");
       try {
-        const request = await fetch(`http://localhost:8070/booking/user/${accountId}`);
+        const request = await fetch(`http://localhost/user-res-api/booking/user/${accountId}`);
         const response = await request.json();
         setReservations(response);
       } catch (error) {
@@ -51,7 +52,7 @@ const HomePage = () => {
       <div className="reservations-container2">
         {reservations.length ? (
           reservations.map((reservation) => {
-            const hotel = hoteles.find((hotel) => hotel.id === reservation.hotel_id);
+            const hotel = hoteles.find((hotel) => hotel.id === reservation.booked_hotel_id);
             const fechaInicio = `${reservation.dia_inicio}/${reservation.mes_inicio}/${reservation.anio_inicio}`;
             const fechaFin = `${reservation.dia_final}/${reservation.mes_final}/${reservation.anio_final}`;
             return (

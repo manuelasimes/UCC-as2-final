@@ -132,7 +132,7 @@ func (s *hotelService) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, e.ApiEr
     }
 
 
-	url := fmt.Sprintf("http://%s:%d/hotel", config.USERAPIHOST, config.USERAPIPORT)
+	url := fmt.Sprintf("http://%s:%d/user-res-api/hotel", config.USERAPIHOST, config.USERAPIPORT)
 
 	resp, err := http.Post(url, "application/json", &buf)
 

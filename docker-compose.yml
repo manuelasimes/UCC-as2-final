@@ -1,3 +1,4 @@
+
 version: '3'
 
 services:
@@ -16,6 +17,8 @@ services:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root" ]
       timeout: 20s
       retries: 10
+    networks:
+      - app-network
   
   mongo: 
     image: mongo
@@ -31,6 +34,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 30
+    networks:
+      - app-network
 
   memcached:
     container_name: cache
@@ -42,6 +47,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 30
+    networks:
+      - app-network
 
   rabbit:
     container_name: rabbit
@@ -58,6 +65,8 @@ services:
       interval: 1s
       timeout: 5s
       retries: 30
+    networks:
+      - app-network
 
   solr:
     container_name: solr
@@ -75,9 +84,15 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    networks:
+      - app-network
 
   user-res-api:
     build: user-res-api
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.user-res-api.rule=Host(`localhost`) && PathPrefix(`/user-res-api`)"
+      - "traefik.http.services.user-res-api.loadbalancer.server.port=8070"
     depends_on:
       memcached:
         condition: service_started
@@ -85,9 +100,15 @@ services:
         condition: service_healthy
     ports:
       - "8070"
+    networks:
+      - app-network
 
   hotels-api:
     build: hotels-api
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hotels-api.rule=Host(`localhost`) && PathPrefix(`/hotels-api`)"
+      - "traefik.http.services.hotels-api.loadbalancer.server.port=8060"
     depends_on:
       rabbit:
         condition: service_healthy
@@ -95,9 +116,15 @@ services:
         condition: service_started
     ports:
       - "8060"
+    networks:
+      - app-network
 
   search-api:
     build: search-api
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.search-api.rule=Host(`localhost`) && PathPrefix(`/search-api`)"
+      - "traefik.http.services.search-api.loadbalancer.server.port=8090"
     depends_on:
       solr:
         condition: service_started
@@ -105,47 +132,46 @@ services:
         condition: service_healthy
     ports:
       - "8090"
+    networks:
+      - app-network
 
   frontend:
     build: ./frontend/client
+    environment:
+      VIRTUAL_HOST: localhost
     depends_on:
       - search-api
       - hotels-api
       - user-res-api
     ports:
       - "3000:3000"
-
-  nginx-user-res-api:
-    image: nginx
-    container_name: nginx_user_res_api
-    volumes:
-      - ./nginx/nginx-user-res-api.conf:/etc/nginx/nginx.conf:ro
-    ports:
-      - "8070:8070"
-    depends_on:
-      - user-res-api
-
-  nginx-hotels-api:
-    image: nginx
-    container_name: nginx_hotels_api
-    volumes:
-      - ./nginx/nginx-hotels-api.conf:/etc/nginx/nginx.conf:ro
-    ports:
-      - "8060:8060"
-    depends_on:
-      - hotels-api
-
-  nginx-search-api:
-    image: nginx
-    container_name: nginx_search_api
-    volumes:
-      - ./nginx/nginx-search-api.conf:/etc/nginx/nginx.conf:ro
-    ports:
-      - "8090:8090"
-    depends_on:
-      - search-api
+    networks:
+      - app-network
 
   containers-api:
     build: containers-api
+    environment:
+      VIRTUAL_HOST: localhost
     ports:
       - "8040"
+    networks:
+      - app-network
+
+  traefik:
+    image: traefik:v2.5
+    container_name: traefik
+    command:
+      - "--api.insecure=true"  # Enable Traefik dashboard (not recommended for production)
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"  # HTTP
+      - "8080:8080"  # Traefik dashboard
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

@@ -19,7 +19,7 @@ const AdminLogin = () => {
 
   const handleLoginAdmin = () => {
 
-    fetch('http://localhost:8070/login', {
+    fetch('http://localhost/user-res-api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

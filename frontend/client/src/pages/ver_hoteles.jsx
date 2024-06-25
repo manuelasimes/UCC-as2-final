@@ -29,9 +29,6 @@ const HomePage = () => {
   useEffect(() => {
     getHotels();
   }, []);
-  useEffect(() => {
-    getHotels();
-  }, []);
 
   const Verificacion = () => {
     if (!isLoggedAdmin) {

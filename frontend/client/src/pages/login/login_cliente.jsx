@@ -46,7 +46,7 @@ const ClienteLogin = () => {
 
   const handleLoginCliente = () => {
 
-    fetch('http://localhost:8070/login', {
+    fetch('http://localhost/user-res-api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

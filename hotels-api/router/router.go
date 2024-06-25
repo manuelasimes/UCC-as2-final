@@ -11,11 +11,11 @@ func MapUrls(router *gin.Engine) {
 
 	// router.Use(corsMiddleware())
 	// Products Mapping
-	router.GET("/hotels/:id", hotelController.Get)
-	router.POST("/hotels", hotelController.Insert)
-	router.PUT("/hotels/:id", hotelController.Update)
-	router.OPTIONS("/hotels", hotelController.Insert)
-	router.OPTIONS("/hotels/:id", hotelController.Update)
+	router.GET("/hotels-api/hotels/:id", hotelController.Get)
+	router.POST("/hotels-api/hotels", hotelController.Insert)
+	router.PUT("/hotels-api/hotels/:id", hotelController.Update)
+	router.OPTIONS("/hotels-api/hotels", hotelController.Insert)
+	router.OPTIONS("/hotels-api/hotels/:id", hotelController.Update)
 
 
 	fmt.Println("Finishing mappings configurations")

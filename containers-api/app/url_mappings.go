@@ -13,7 +13,7 @@ func mapUrls() {
 
 	router.GET("/containers", dockerController.ListContainers)
 	// router.GET("/containers/:id/stats", dockerController.GetContainerStats)
-	router.POST("/containers/:image/:name", dockerController.CreateContainer)
+	router.POST("/containers/:image/:name/:id", dockerController.CreateContainer)
 	router.POST("/containers/start/:id", dockerController.StartContainer)
 	router.POST("/containers/stop/:id", dockerController.StopContainer)
 	router.POST("/containers/remove/:id", dockerController.RemoveContainer)

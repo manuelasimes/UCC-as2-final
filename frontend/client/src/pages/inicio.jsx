@@ -32,7 +32,7 @@ const HomePage = () => {
   const getHotels = async () => {
     try {
       // const request = await fetch("http://localhost:8090/cliente/hoteles");
-      const request = await fetch("http://localhost:8090/searchAll=*:*");
+      const request = await fetch("http://localhost:80/search-api/searchAll=*:*");
       //const request = await fetch("http://localhost:8070/hotel");
       const response = await request.json();
       setHotels(response);
@@ -89,7 +89,7 @@ const HomePage = () => {
         getHotels();
       } else {
         if (!endDateValue || !startDateValue ){
-          const request = await fetch(`http://localhost:8090/search=city_${city}`);
+          const request = await fetch(`http://localhost/search-api/search=city_${city}`);
           const response = await request.json();
           if (response !== null) {
             const checkResponse = JSON.stringify(response)
@@ -102,7 +102,7 @@ const HomePage = () => {
           }
           } 
         } else {
-        const request = await fetch(`http://localhost:8090/search=city_${city}_${startDate}_${endDate}`);
+        const request = await fetch(`http://localhost/search-api/search=city_${city}_${startDate}_${endDate}`);
         const response = await request.json();
         if (response !== null) {
           const checkResponse = JSON.stringify(response)

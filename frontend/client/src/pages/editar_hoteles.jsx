@@ -46,7 +46,7 @@ const EditarHotel = (hotel_id) => {
 
     // let deleteHotelURL = `http://localhost:8090/hotel/delete/${id}/${Cookie.get("user_id")}`
 
-    const postUser = `http://localhost:8060/hotels/${id}`
+    const postUser = `http://localhost/hotels-api/hotels/${id}`
 
     // console.log(deleteHotelURL)
 
