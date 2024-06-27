@@ -181,7 +181,11 @@ const ReservaPage = () => {
   };
 
   const filterHotels = async () => {
-    const request = await fetch(`http://localhost/user-res-api/hotel/availability/${hotelId}/${startDate}/${endDate}`);
+
+    const startDateParsed = convertirFecha(startDate)
+    const endDateParsed = convertirFecha(endDate)
+
+    const request = await fetch(`http://localhost/user-res-api/hotel/availability/${hotelId}/${startDateParsed}/${endDateParsed}`);
     // /hotel/availability/:id/:start_date/:end_date"
 
     const response = await request.json();
