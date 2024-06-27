@@ -7,9 +7,33 @@ import (
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"github.com/dgraph-io/ristretto"
 )
 
+var cache *ristretto.Cache
+
+func init() {
+    // Initialize Ristretto cache
+    cache, _ = ristretto.NewCache(&ristretto.Config{
+        NumCounters: 1e6,     // Number of counters (1 million)
+        MaxCost:     1 << 30, // Maximum cost of cache (1GB)
+        BufferItems: 64,      // Number of keys per Get buffer
+    })
+}
+
 func GetById(id string) model.Hotel {
+
+	fmt.Println("Inside GetById")
+
+	// Check cache first
+    if cached, found := cache.Get(id); found {
+        if hotel, ok := cached.(model.Hotel); ok {
+			fmt.Println("Hotel found in cache")
+			fmt.Println(hotel)
+            return hotel
+        }
+    }
+
 	var hotel model.Hotel
 	db := db.MongoDb
 	objID, err := primitive.ObjectIDFromHex(id)
@@ -22,11 +46,21 @@ func GetById(id string) model.Hotel {
 		fmt.Println(err)
 		return hotel
 	}
+
+	fmt.Println("got hotel from mongo")
+
+	// Add to cache
+    cache.Set(id, hotel, 1) // Assuming a constant cost of 1 for simplicity
+	fmt.Println("Hotel added to cache")
+
 	return hotel
 
 }
 
 func Insert(hotel model.Hotel) model.Hotel {
+
+	fmt.Println("inside insert")
+
 	db := db.MongoDb
 	insertHotel := hotel
 	insertHotel.Id = primitive.NewObjectID()
@@ -37,6 +71,13 @@ func Insert(hotel model.Hotel) model.Hotel {
 		return hotel
 	}
 	hotel.Id = insertHotel.Id
+
+	// Convert ObjectID to hex string
+	idHexString := hotel.Id.Hex()
+	// Update cache
+    cache.Set(idHexString, hotel, 1)
+	fmt.Println("Hotel added to cache")
+
 	return hotel
 }
 
