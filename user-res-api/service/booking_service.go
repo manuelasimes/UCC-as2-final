@@ -271,8 +271,8 @@ func (s *bookingService) Availability(startdateconguiones string, enddateconguio
 func (s *bookingService) GetAvailabilityByIdAndDate(idAm string, startDate int, endDate int) (dto.Availability, e.ApiError) {
 	var responseDto dto.Availability // la respuesta q vamos a devolver
 
-	fmt.Println("Start date before booking service: %s", startDate)
-	fmt.Println("Start date before booking service: %s", endDate)
+	fmt.Printf("Start date before booking service: %d\n", startDate)
+	fmt.Printf("Start date before booking service: %d\n", endDate)
 
 	startdate := strconv.Itoa(startDate)
 
@@ -293,8 +293,8 @@ func (s *bookingService) GetAvailabilityByIdAndDate(idAm string, startDate int, 
 		fechaConGuiones2[6:8],
 	)
 
-	fmt.Println("Start date inside booking service: %s", startdateconguiones)
-	fmt.Println("Start date inside booking service: %s", enddateconguiones)
+	fmt.Printf("Start date inside booking service: %s\n", startdateconguiones)
+	fmt.Printf("Start date inside booking service: %s\n", enddateconguiones)
 
 	// antes de hacer eso deberiamos ver si ya esta en la cache
 	key := idAm + strconv.Itoa(startDate) + strconv.Itoa(endDate) // la key sera e id del hotel junto con las fechas que se quiere saber disponibilidad
