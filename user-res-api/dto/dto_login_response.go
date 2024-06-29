@@ -1,7 +1,7 @@
 package dto
 
 type LoginResponseDto struct {
-	UserId       int    `json:"userId"`
+	UserId       int    `json:"user_id"`
 	AccessToken  string `json:"accessToken"`
 	RefreshToken string `json:"refreshToken"`
 	Name         string `json:"name"`

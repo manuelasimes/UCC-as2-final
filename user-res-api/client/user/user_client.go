@@ -28,11 +28,16 @@ func GetUserByEmail(email string) bool {
 
 	log.Debug("User: ", user)
 
-	if result.Error != nil { // si el error no es nulo 
-		return true //si no lo encuentra --> no existe
+	if result.Error != nil {
+		if result.Error == gorm.ErrRecordNotFound {
+			return false // No se encontró el usuario, el email no está registrado
+		}
+		// Manejo de otros errores, podría ser útil añadir un log aquí
+		log.Error("Error buscando usuario por email: ", result.Error)
+		return false // Asumimos que el email no está registrado si hay un error distinto
 	}
 
-	return false
+	return true // El usuario existe, el email está registrado
 }
 
 func GetUserById(id int) model.User {
@@ -47,7 +52,7 @@ func GetUserById(id int) model.User {
 //Checkear si existe un usuario en el sistema
 
 func CheckUserById(id int) bool {
-	var user model.User 
+	var user model.User
 
 	// realza consulta a la base de datos: (con el id proporcionado como parametro)
 	result := Db.Where("id = ?", id).First(&user)
