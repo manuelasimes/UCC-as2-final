@@ -52,6 +52,10 @@ func (s *bookingService) GetBookingById(id int) (dto.BookingDetailDto, e.ApiErro
 	bookingDto.Username = booking.User.UserName
 	bookingDto.HotelId = booking.HotelId
 
+	// Obtener y asignar el nombre del hotel
+	var hotel model.Hotel = hotelClient.GetHotelById(booking.HotelId)
+	bookingDto.HotelName = hotel.HotelName
+
 	return bookingDto, nil
 }
 
@@ -92,22 +96,21 @@ func (s *bookingService) GetBookingByUserId(id int) (dto.BookingDetailDto, e.Api
 	bookingDto.Username = booking.User.UserName
 	bookingDto.HotelId = booking.HotelId
 
+	// Obtener y asignar el nombre del hotel
+	var hotel model.Hotel = hotelClient.GetHotelById(booking.HotelId)
+	bookingDto.HotelName = hotel.HotelName
+
 	return bookingDto, nil
 }
 
 func (s *bookingService) GetBookingsByUserId(id int) (dto.BookingsDetailDto, e.ApiError) {
-
-	var bookings model.Bookings = bookingClient.GetBookings()
+	var bookings model.Bookings = bookingClient.GetBookings() // Puedes mejorar esto si tienes un método más específico
 	var bookingsDto dto.BookingsDetailDto
 
 	for _, booking := range bookings {
-		var bookingDto dto.BookingDetailDto
-
 		if booking.UserId == id {
-
-			bookingDto, _ = s.GetBookingById(booking.Id)
+			bookingDto, _ := s.GetBookingById(booking.Id)
 			bookingsDto = append(bookingsDto, bookingDto)
-
 		}
 	}
 

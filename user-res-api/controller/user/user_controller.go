@@ -1,24 +1,31 @@
 package user
 
 import (
-	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
-	"user-res-api/dto"
-	service "user-res-api/service"
 	"net/http"
 	"strconv"
+	"user-res-api/dto"
+	"user-res-api/service"
+	e "user-res-api/utils/errors"
+
+	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 func GetUserById(c *gin.Context) {
 	log.Debug("User id to load: " + c.Param("id"))
 
 	id, _ := strconv.Atoi(c.Param("id"))
-	var userDto dto.UserDto
+	var userDto *dto.UserDto
 
 	userDto, err := service.UserService.GetUserById(id)
 
 	if err != nil {
-		c.JSON(err.Status(), err)
+		apiErr, ok := err.(e.ApiError)
+		if !ok {
+			c.JSON(http.StatusInternalServerError, err.Error())
+			return
+		}
+		c.JSON(apiErr.Status(), apiErr)
 		return
 	}
 	c.JSON(http.StatusOK, userDto)
@@ -29,7 +36,12 @@ func GetUsers(c *gin.Context) {
 	usersDto, err := service.UserService.GetUsers()
 
 	if err != nil {
-		c.JSON(err.Status(), err)
+		apiErr, ok := err.(e.ApiError)
+		if !ok {
+			c.JSON(http.StatusInternalServerError, err.Error())
+			return
+		}
+		c.JSON(apiErr.Status(), apiErr)
 		return
 	}
 
@@ -47,14 +59,19 @@ func UserInsert(c *gin.Context) {
 		return
 	}
 
-	userDto, er := service.UserService.InsertUser(userDto)
+	userDtoPtr, er := service.UserService.InsertUser(&userDto)
 	// Error del Insert
 	if er != nil {
-		c.JSON(er.Status(), er)
+		apiErr, ok := er.(e.ApiError)
+		if !ok {
+			c.JSON(http.StatusInternalServerError, er.Error())
+			return
+		}
+		c.JSON(apiErr.Status(), apiErr)
 		return
 	}
 
-	c.JSON(http.StatusCreated, userDto)
+	c.JSON(http.StatusCreated, userDtoPtr)
 }
 
 func Login(c *gin.Context) {
@@ -68,16 +85,45 @@ func Login(c *gin.Context) {
 	}
 	log.Debug(loginDto)
 
-	var loginResponseDto dto.LoginResponseDto
-	loginResponseDto, err := service.UserService.Login(loginDto)
+	var loginResponseDto *dto.LoginResponseDto
+	loginResponseDto, err := service.UserService.Login(&loginDto)
 	if err != nil {
-		if err.Status() == 400 {
-			c.JSON(http.StatusBadRequest, err.Error())
+		apiErr, ok := err.(e.ApiError)
+		if !ok {
+			c.JSON(http.StatusInternalServerError, err.Error())
 			return
 		}
-		c.JSON(http.StatusForbidden, err.Error())
+		if apiErr.Status() == 400 {
+			c.JSON(http.StatusBadRequest, apiErr.Error())
+			return
+		}
+		c.JSON(http.StatusForbidden, apiErr.Error())
 		return
 	}
 
 	c.JSON(http.StatusOK, loginResponseDto)
+}
+
+func Refresh(c *gin.Context) {
+	var refreshTokenDto dto.RefreshTokenDto
+	err := c.BindJSON(&refreshTokenDto)
+
+	if err != nil {
+		log.Error(err.Error())
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	response, err := service.UserService.Refresh(&refreshTokenDto)
+	if err != nil {
+		apiErr, ok := err.(e.ApiError)
+		if !ok {
+			c.JSON(http.StatusInternalServerError, err.Error())
+			return
+		}
+		c.JSON(apiErr.Status(), apiErr)
+		return
+	}
+
+	c.JSON(http.StatusOK, response)
 }

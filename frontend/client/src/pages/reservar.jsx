@@ -72,7 +72,7 @@ const ReservaPage = () => {
       // dias: Dias
     };
 
-    console.log(formData)
+    console.log("formData", formData)
 
     fetch('http://localhost/user-res-api/booking', {
       method: 'POST',

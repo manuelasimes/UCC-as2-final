@@ -3,7 +3,7 @@ package controller_test
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -21,12 +21,12 @@ type MockUserService struct {
 	mock.Mock
 }
 
-func (m *MockUserService) GetUserById(id int) (dto.UserDto, errors.ApiError) {
+func (m *MockUserService) GetUserById(id int) (*dto.UserDto, errors.ApiError) {
 	args := m.Called(id)
-	userDto := args.Get(0).(dto.UserDto)
+	userDto := args.Get(0).(*dto.UserDto)
 	var apiErr errors.ApiError
 	if args.Get(1) != nil {
-		apiErr = args.Error(1).(errors.ApiError)
+		apiErr = args.Get(1).(errors.ApiError)
 	}
 	return userDto, apiErr
 }
@@ -36,29 +36,39 @@ func (m *MockUserService) GetUsers() (dto.UsersDto, errors.ApiError) {
 	usersDto := args.Get(0).(dto.UsersDto)
 	var apiErr errors.ApiError
 	if args.Get(1) != nil {
-		apiErr = args.Error(1).(errors.ApiError)
+		apiErr = args.Get(1).(errors.ApiError)
 	}
 	return usersDto, apiErr
 }
 
-func (m *MockUserService) InsertUser(userDto dto.UserDto) (dto.UserDto, errors.ApiError) {
+func (m *MockUserService) InsertUser(userDto *dto.UserDto) (*dto.UserDto, errors.ApiError) {
 	args := m.Called(userDto)
-	newUserDto := args.Get(0).(dto.UserDto)
+	newUserDto := args.Get(0).(*dto.UserDto)
 	var apiErr errors.ApiError
 	if args.Get(1) != nil {
-		apiErr = args.Error(1).(errors.ApiError)
+		apiErr = args.Get(1).(errors.ApiError)
 	}
 	return newUserDto, apiErr
 }
 
-func (m *MockUserService) Login(loginDto dto.LoginDto) (dto.LoginResponseDto, errors.ApiError) {
+func (m *MockUserService) Login(loginDto *dto.LoginDto) (*dto.LoginResponseDto, errors.ApiError) {
 	args := m.Called(loginDto)
-	loginResponseDto := args.Get(0).(dto.LoginResponseDto)
+	loginResponseDto := args.Get(0).(*dto.LoginResponseDto)
 	var apiErr errors.ApiError
 	if args.Get(1) != nil {
-		apiErr = args.Error(1).(errors.ApiError)
+		apiErr = args.Get(1).(errors.ApiError)
 	}
 	return loginResponseDto, apiErr
+}
+
+func (m *MockUserService) Refresh(refreshTokenDto *dto.RefreshTokenDto) (*dto.LoginResponseDto, errors.ApiError) {
+	args := m.Called(refreshTokenDto)
+	refreshResponseDto := args.Get(0).(*dto.LoginResponseDto)
+	var apiErr errors.ApiError
+	if args.Get(1) != nil {
+		apiErr = args.Get(1).(errors.ApiError)
+	}
+	return refreshResponseDto, apiErr
 }
 
 func TestGetUserById(t *testing.T) {
@@ -69,7 +79,7 @@ func TestGetUserById(t *testing.T) {
 	mockService := new(MockUserService)
 	service.UserService = mockService
 
-	expectedUser := dto.UserDto{
+	expectedUser := &dto.UserDto{
 		Id:       1,
 		Name:     "test",
 		LastName: "test",
@@ -85,7 +95,7 @@ func TestGetUserById(t *testing.T) {
 	var actualUser dto.UserDto
 	err := json.Unmarshal(w.Body.Bytes(), &actualUser)
 	assert.NoError(t, err)
-	assert.Equal(t, expectedUser, actualUser)
+	assert.Equal(t, *expectedUser, actualUser)
 
 	mockService.AssertExpectations(t)
 }
@@ -125,7 +135,7 @@ func TestUserInsert(t *testing.T) {
 	mockService := new(MockUserService)
 	service.UserService = mockService
 
-	newUser := dto.UserDto{
+	newUser := &dto.UserDto{
 		Id:       1,
 		UserName: "newuser",
 	}
@@ -134,14 +144,14 @@ func TestUserInsert(t *testing.T) {
 	w := httptest.NewRecorder()
 	body, _ := json.Marshal(newUser)
 	req, _ := http.NewRequest("POST", "/user", nil)
-	req.Body = ioutil.NopCloser(bytes.NewBuffer(body))
+	req.Body = io.NopCloser(bytes.NewBuffer(body))
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusCreated, w.Code)
 	var actualUser dto.UserDto
 	err := json.Unmarshal(w.Body.Bytes(), &actualUser)
 	assert.NoError(t, err)
-	assert.Equal(t, newUser, actualUser)
+	assert.Equal(t, *newUser, actualUser)
 
 	mockService.AssertExpectations(t)
 }
@@ -154,26 +164,71 @@ func TestLogin(t *testing.T) {
 	mockService := new(MockUserService)
 	service.UserService = mockService
 
-	loginDto := dto.LoginDto{
+	loginDto := &dto.LoginDto{
 		Username: "testuser",
 		Password: "password",
 	}
-	loginResponse := dto.LoginResponseDto{
-		Token: "testtoken",
+	loginResponse := &dto.LoginResponseDto{
+		UserId:       1,
+		AccessToken:  "testaccesstoken",
+		RefreshToken: "testrefreshtoken",
+		Name:         "Test",
+		LastName:     "User",
+		UserName:     "testuser",
+		Email:        "testuser@example.com",
+		Type:         true,
 	}
 	mockService.On("Login", loginDto).Return(loginResponse, nil)
 
 	w := httptest.NewRecorder()
 	body, _ := json.Marshal(loginDto)
 	req, _ := http.NewRequest("POST", "/login", nil)
-	req.Body = ioutil.NopCloser(bytes.NewBuffer(body))
+	req.Body = io.NopCloser(bytes.NewBuffer(body))
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
 	var actualLoginResponse dto.LoginResponseDto
 	err := json.Unmarshal(w.Body.Bytes(), &actualLoginResponse)
 	assert.NoError(t, err)
-	assert.Equal(t, loginResponse, actualLoginResponse)
+	assert.Equal(t, *loginResponse, actualLoginResponse)
+
+	mockService.AssertExpectations(t)
+}
+
+func TestRefresh(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	router := gin.Default()
+	router.POST("/refresh", user.Refresh)
+
+	mockService := new(MockUserService)
+	service.UserService = mockService
+
+	refreshTokenDto := &dto.RefreshTokenDto{
+		RefreshToken: "testrefresh",
+	}
+	refreshResponse := &dto.LoginResponseDto{
+		UserId:       1,
+		AccessToken:  "newaccesstoken",
+		RefreshToken: "newrefreshtoken",
+		Name:         "Test",
+		LastName:     "User",
+		UserName:     "testuser",
+		Email:        "testuser@example.com",
+		Type:         true,
+	}
+	mockService.On("Refresh", refreshTokenDto).Return(refreshResponse, nil)
+
+	w := httptest.NewRecorder()
+	body, _ := json.Marshal(refreshTokenDto)
+	req, _ := http.NewRequest("POST", "/refresh", nil)
+	req.Body = io.NopCloser(bytes.NewBuffer(body))
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	var actualRefreshResponse dto.LoginResponseDto
+	err := json.Unmarshal(w.Body.Bytes(), &actualRefreshResponse)
+	assert.NoError(t, err)
+	assert.Equal(t, *refreshResponse, actualRefreshResponse)
 
 	mockService.AssertExpectations(t)
 }
