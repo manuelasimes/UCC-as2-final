@@ -1,13 +1,11 @@
 package app
 
 import (
-
 	log "github.com/sirupsen/logrus"
-	
-	userController "user-res-api/controller/user"
+
 	bookingController "user-res-api/controller/booking"
 	hotelController "user-res-api/controller/hotel"
-	
+	userController "user-res-api/controller/user"
 )
 
 func mapUrls() {
@@ -17,7 +15,6 @@ func mapUrls() {
 	router.GET("/user-res-api/user", userController.GetUsers)
 	router.POST("/user-res-api/user", userController.UserInsert) // Sign In
 
-	
 	// Bookings Mapping
 	router.GET("/user-res-api/booking/:id", bookingController.GetBookingById)
 	router.GET("/user-res-api/booking", bookingController.GetBookings)
@@ -32,9 +29,11 @@ func mapUrls() {
 	//router.PUT("/hotel/update", hotelController.UpdateHotel)
 	//router.DELETE("/hotel/delete/:hotel_id/:user_id", hotelController.DeleteHotel)
 
-	
 	// Login
 	router.POST("/user-res-api/login", userController.Login)
+
+	// Refresh Token
+	router.POST("/user-res-api/refresh", userController.Refresh)
 
 	log.Info("Finishing mappings configurations")
 }

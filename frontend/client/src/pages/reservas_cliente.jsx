@@ -4,24 +4,7 @@ import './estilo/reservas_cliente.css';
 
 const HomePage = () => {
   const [reservations, setReservations] = useState([]);
-  const [hoteles, setHoteles] = useState([]);
   const { isLoggedCliente } = useContext(AuthContext);
-
-  const getHoteles = useCallback(async () => {
-    try {
-      const hotelesArray = [];
-      for (let i = 0; i < reservations.length; i++) {
-        const reserva = reservations[i];
-        console.log(reserva.booked_hotel_id)
-        const request = await fetch(`http://localhost/user-res-api/hotel/${reserva.booked_hotel_id}`);
-        const response = await request.json();
-        hotelesArray.push(response);
-      }
-      setHoteles(hotelesArray);
-    } catch (error) {
-      console.log("No se pudieron obtener los hoteles:", error);
-    }
-  }, [reservations]);
 
   const getReservations = useCallback(async () => {
     if (isLoggedCliente) {
@@ -40,11 +23,7 @@ const HomePage = () => {
 
   useEffect(() => {
     getReservations();
-  }, [getReservations]); // Se elimina la dependencia de getReservations
-
-  useEffect(() => {
-    getHoteles();
-  }, [getHoteles]); // Se agrega getHoteles como dependencia separada
+  }, [getReservations]);
 
   return (
     <div className="reservations-container1">
@@ -52,12 +31,11 @@ const HomePage = () => {
       <div className="reservations-container2">
         {reservations.length ? (
           reservations.map((reservation) => {
-            const hotel = hoteles.find((hotel) => hotel.id === reservation.booked_hotel_id);
-            const fechaInicio = `${reservation.dia_inicio}/${reservation.mes_inicio}/${reservation.anio_inicio}`;
-            const fechaFin = `${reservation.dia_final}/${reservation.mes_final}/${reservation.anio_final}`;
+            const fechaInicio = `${String(reservation.start_date).slice(6, 8)}/${String(reservation.start_date).slice(4, 6)}/${String(reservation.start_date).slice(0, 4)}`;
+            const fechaFin = `${String(reservation.end_date).slice(6, 8)}/${String(reservation.end_date).slice(4, 6)}/${String(reservation.end_date).slice(0, 4)}`;
             return (
-              <div className="reservation-card" key={reservation.ID}>
-                <p>Hotel: {hotel ? hotel.nombre : 'Hotel desconocido'}</p>
+              <div className="reservation-card" key={reservation.booking_id}>
+                <p>Hotel: {reservation.hotel_name}</p>
                 <p>Fecha de llegada: {fechaInicio}</p>
                 <p>Fecha de fin: {fechaFin}</p>
                 <p>Gracias por elegirnos!</p>
