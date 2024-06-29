@@ -1,2 +1,5 @@
 # Ignore the db_data directory
 db_data/
+
+# Dependencias de Node.js
+frontend/client/node_modules/
