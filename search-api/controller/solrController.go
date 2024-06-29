@@ -31,7 +31,6 @@ func GetQuery(c *gin.Context) {
 	}
 
 	log.Debug(hotelsDto)
-	log.Debug("HOLA ACA")
 
 	c.JSON(http.StatusOK, hotelsDto)
 }

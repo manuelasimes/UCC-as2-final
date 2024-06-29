@@ -232,7 +232,7 @@ func (s *bookingService) Availability(startdateconguiones string, enddateconguio
 		return false
 
 	}
-	fmt.Println("La solicitud de la api fue exitosa ")
+
 	// Verifica el código de estado de la respuesta
 	if respuesta.StatusCode != http.StatusOK {
 		fmt.Printf("La solicitud a la API de Amadeus no fue exitosa. Código de estado: %d\n", respuesta.StatusCode)
@@ -274,6 +274,9 @@ func (s *bookingService) Availability(startdateconguiones string, enddateconguio
 func (s *bookingService) GetAvailabilityByIdAndDate(idAm string, startDate int, endDate int) (dto.Availability, e.ApiError) {
 	var responseDto dto.Availability // la respuesta q vamos a devolver
 
+	fmt.Printf("Start date before booking service: %d\n", startDate)
+	fmt.Printf("Start date before booking service: %d\n", endDate)
+
 	startdate := strconv.Itoa(startDate)
 
 	fechaConGuiones := startdate
@@ -292,6 +295,10 @@ func (s *bookingService) GetAvailabilityByIdAndDate(idAm string, startDate int, 
 		fechaConGuiones2[4:6],
 		fechaConGuiones2[6:8],
 	)
+
+	fmt.Printf("Start date inside booking service: %s\n", startdateconguiones)
+	fmt.Printf("Start date inside booking service: %s\n", enddateconguiones)
+
 	// antes de hacer eso deberiamos ver si ya esta en la cache
 	key := idAm + strconv.Itoa(startDate) + strconv.Itoa(endDate) // la key sera e id del hotel junto con las fechas que se quiere saber disponibilidad
 	cacheDTO, err := cache.Get(key)
@@ -305,6 +312,7 @@ func (s *bookingService) GetAvailabilityByIdAndDate(idAm string, startDate int, 
 	// es un miss
 	IsAvailable := s.Availability(startdateconguiones, enddateconguiones, idAm)
 	fmt.Println("miss de cache!")
+
 	if IsAvailable == true {
 		responseDto.OkToBook = true
 	} else if IsAvailable == false {
@@ -312,7 +320,13 @@ func (s *bookingService) GetAvailabilityByIdAndDate(idAm string, startDate int, 
 	}
 
 	// save in cache
-	availability, _ := json.Marshal(responseDto)
+	availability, errorMarshal := json.Marshal(responseDto)
+
+	if errorMarshal != nil {
+		fmt.Printf("Error marshalling response to JSON: %v\n", errorMarshal)
+		return dto.Availability{}, e.NewBadRequestApiError("Error marshalling")
+	}
+
 	cache.Set(key, availability, 10)
 	fmt.Println("Saved in cache!")
 

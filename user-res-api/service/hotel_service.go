@@ -53,8 +53,8 @@ func (s *hotelService) CheckHotelByIdAmadeus(id string) (bool, e.ApiError) {
 	}
 
 	return true, nil
-
 }
+
 func (s *hotelService) GetHotels() (dto.HotelsDto, e.ApiError) {
 
 	var hotels model.Hotels = hotelClient.GetHotels()

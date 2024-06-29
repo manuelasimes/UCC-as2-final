@@ -92,10 +92,12 @@ func InsertHotel(c *gin.Context) {
 	}
 
 	for _, hotel := range response.Data {
+		fmt.Printf("Id amadeus: %s\n", hotel.HotelID)
 		CanIUseID, err := service.HotelService.CheckHotelByIdAmadeus(hotel.HotelID)
 		if err != nil {
 			// manejo error
 			fmt.Println("Ocurrio un error al verificar el uso de un id amadeus")
+			fmt.Println(err)
 		}
 		if CanIUseID == true {
 			hotelDto, er := service.HotelService.InsertHotel(insertHotelDto, hotel.HotelID)

@@ -103,6 +103,6 @@ func GetContainerStats(c *gin.Context) {
         return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"CPU Usage": cpuUsage })
+	c.JSON(http.StatusOK, gin.H{"CPU_Usage": cpuUsage })
 
 }

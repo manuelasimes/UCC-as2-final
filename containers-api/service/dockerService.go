@@ -136,7 +136,7 @@ func (s *dockerService) AutoScale() string {
 			containerNumber, _ := strconv.Atoi(container.Labels["com.docker.compose.container-number"])
 
             // Example condition: CPU usage threshold
-            if cpuUsage > 20 {
+            if cpuUsage > 15 {
                 // Logic to scale up
                 log.Printf("Scaling up due to high CPU usage for container %s, Id: %s", container.Image, container.ID)
 
