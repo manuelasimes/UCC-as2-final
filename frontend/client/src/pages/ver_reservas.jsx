@@ -27,7 +27,17 @@ const VerReservas = () => {
       try {
         const request = await fetch(`http://localhost/user-res-api/booking`);
         const response = await request.json();
-        setReservations(response);
+
+        if (response === null) {
+
+          setReservations({})
+
+        } else {
+
+          setReservations(response);
+
+        }
+
       } catch (error) {
         console.log("No se pudieron obtener las reservas:", error);
       }
