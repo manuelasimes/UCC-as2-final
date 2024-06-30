@@ -170,8 +170,8 @@ func (s *bookingService) GetAmadeustoken() string {
 	// Define los datos que deseas enviar en el cuerpo de la solicitud.
 	data := url.Values{}
 	data.Set("grant_type", "client_credentials")
-	data.Set("client_id", "sCkSnG1piA4ApGUWTfWsYhj1MDGQZ8Ob")
-	data.Set("client_secret", "2Jrxf1ZBL46bfj6c")
+	data.Set("client_id", "4Hf8uIpYK1zVNrP2Oqn4ZkrWGJWZVAdy")
+	data.Set("client_secret", "yOUDUQulGLlzuvsg")
 
 	// Realiza la solicitud POST a la API externa.
 	resp, err := http.Post("https://test.api.amadeus.com/v1/security/oauth2/token", "application/x-www-form-urlencoded", strings.NewReader(data.Encode()))
