@@ -9,25 +9,25 @@ const Cookie = new Cookies()
 
 const notifyBooked = () => {
   toast.success("Reservado!", {
-      pauseOnHover: false,
-      autoClose: 2000,
+    pauseOnHover: false,
+    autoClose: 2000,
   })
 }
 
 const notifyError = () => {
   toast.error("Hotel no disponible para reserva en fecha seleccionada!", {
-      pauseOnHover: false,
-      autoClose: 2000,
+    pauseOnHover: false,
+    autoClose: 2000,
   })
 }
 
 function convertirFecha(fecha) {
   let fechaString = fecha.toString()
-  let year = fechaString.substring(0,4)
-  let month = fechaString.substring(5,7)
-  let day = fechaString.substring(8,10)
-  let yearPlusMonth = year.concat("",month)
-  let fechaStringFinal = yearPlusMonth.concat("",day)
+  let year = fechaString.substring(0, 4)
+  let month = fechaString.substring(5, 7)
+  let day = fechaString.substring(8, 10)
+  let yearPlusMonth = year.concat("", month)
+  let fechaStringFinal = yearPlusMonth.concat("", day)
   var fechaEntero = Number(fechaStringFinal)
 
   console.log(fechaEntero)
@@ -35,14 +35,12 @@ function convertirFecha(fecha) {
   return fechaEntero
 }
 
-
 const ReservaPage = () => {
   const { hotelId } = useParams();
   const [hotelData, setHotelData] = useState('');
   const { isLoggedCliente } = useContext(AuthContext);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  // const accountId = localStorage.getItem("id_cliente");
   const accountId = Cookie.get("user_id");
 
   const Verificacion = () => {
@@ -54,22 +52,11 @@ const ReservaPage = () => {
   const handleReserva = async (e) => {
     e.preventDefault();
 
-    // const startDateObj = new Date(startDate);
-    // const endDateObj = new Date(endDate);
-    // const Dias = Math.round((endDateObj - startDateObj) / (1000 * 60 * 60 * 24));
     const formData = {
-      //booked_hotel_id: parseInt(hotelId),
       booked_hotel_id: hotelId,
       user_booked_id: parseInt(accountId),
       start_date: convertirFecha(startDate),
       end_date: convertirFecha(endDate)
-      // anio_inicio: startDateObj.getFullYear(),
-      // anio_final: endDateObj.getFullYear(),
-      // mes_inicio: startDateObj.getMonth() + 1, 
-      // mes_final: endDateObj.getMonth() + 1, 
-      // dia_inicio: startDateObj.getDate() + 1,
-      // dia_final: endDateObj.getDate() + 1,
-      // dias: Dias
     };
 
     console.log("formData", formData)
@@ -85,82 +72,44 @@ const ReservaPage = () => {
       if (response.status === 400 || response.status === 401 || response.status === 403) {
         console.log("Error al reservar");
 
-            notifyError();
+        notifyError();
 
         return response.json();
 
-    } else {
+      } else {
         console.log("Booking added");
 
         notifyBooked();
 
         return response.json();
-    }
-
-
-
-      });
+      }
+    });
   }
-  const idHotel = hotelId;
 
   useEffect(() => {
-
     setHotelData('');
-    if (hotelId){
-      fetch(`http://localhost/hotels-api/hotels/${idHotel}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data.images[1])
-
-        if (data.images && typeof data.images === 'string') {
-          data.images = JSON.parse(data.images); // Convert the string to an array
-        }
-        console.log(data.images)
-
-        setHotelData(data);
-
-        console.log(hotelData)
-      })
-      .catch(error => {
-        console.error('Error al obtener datos del hotel: ', error)
-      })
-
+    if (hotelId) {
+      fetch(`http://localhost/hotels-api/hotels/${hotelId}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.images && typeof data.images === 'string') {
+            data.images = JSON.parse(data.images); // Convert the string to an array
+          }
+          setHotelData(data);
+        })
+        .catch(error => {
+          console.error('Error al obtener datos del hotel: ', error)
+        })
     }
-
-  }, []);
-
- /*  const getHotel = async () => {
-    try {
-      const request = await fetch(`http://localhost:8060/hotels/${id}`);  // Traigo el hotel de mongo
-      const response = await request.json();
-      setHotelData(response);
-    } catch (error) {
-      console.log("No se pudieron obtener los hoteles:", error);
-    }
-  }; */
-
-  // useEffect(() => {
-  //   setHotelData('');
-  //   if (hotelId) {
-  //     fetch(`http://localhost:8090/cliente/hotel/${hotelId}`)
-  //       .then(response => response.json())
-  //       .then(data => {
-  //         setHotelData(data);
-  //       })
-  //       .catch(error => {
-  //         console.error('Error al obtener los datos del cliente:', error);
-  //       });
-  //   }
- // }, [hotelId]);
+  }, [hotelId]);
 
   const handleStartDateChange = (event) => {
-    setStartDate(event.target.value);
-    const startDateObj = new Date(event.target.value);
+    const selectedStartDate = event.target.value;
+    setStartDate(selectedStartDate);
+    const startDateObj = new Date(selectedStartDate);
     const endDateObj = new Date(endDate);
-    if (startDateObj > endDateObj) {
+    if (endDate && startDateObj > endDateObj) {
       setEndDate('');
-      alert("Fechas no válidas");
-      notifyError();
     }
     if (startDate && endDate) {
       filterHotels();
@@ -168,12 +117,12 @@ const ReservaPage = () => {
   };
 
   const handleEndDateChange = (event) => {
-    setEndDate(event.target.value);
+    const selectedEndDate = event.target.value;
+    setEndDate(selectedEndDate);
     const startDateObj = new Date(startDate);
-    const endDateObj = new Date(event.target.value);
-    if (startDateObj > endDateObj) {
-      setEndDate('');
-      alert("Fechas no válidas");
+    const endDateObj = new Date(selectedEndDate);
+    if (startDate && startDateObj > endDateObj) {
+      setStartDate('');
     }
     if (startDate && endDate) {
       filterHotels();
@@ -181,17 +130,15 @@ const ReservaPage = () => {
   };
 
   const filterHotels = async () => {
-
     const startDateParsed = convertirFecha(startDate)
     const endDateParsed = convertirFecha(endDate)
 
     const request = await fetch(`http://localhost/user-res-api/hotel/availability/${hotelId}/${startDateParsed}/${endDateParsed}`);
-    // /hotel/availability/:id/:start_date/:end_date"
 
     const response = await request.json();
     if (response === 0) {
       setEndDate('');
-      alert("No hay habitaciones disponibles para esas fechas");
+      notifyError();
     }
   };
 
@@ -199,7 +146,7 @@ const ReservaPage = () => {
     window.history.back();
   };
 
-  
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <div className="bodyReserva">
@@ -221,6 +168,7 @@ const ReservaPage = () => {
                   <input
                     type="date"
                     id="fechaInicio"
+                    min={today}
                     value={startDate}
                     onChange={handleStartDateChange}
                     required
@@ -231,6 +179,7 @@ const ReservaPage = () => {
                   <input
                     type="date"
                     id="fechaFin"
+                    min={today}
                     value={endDate}
                     onChange={handleEndDateChange}
                     required
@@ -245,10 +194,9 @@ const ReservaPage = () => {
           </div>
         )}
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }
-
 
 export default ReservaPage;
