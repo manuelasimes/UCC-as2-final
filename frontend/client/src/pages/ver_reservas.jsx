@@ -4,21 +4,17 @@ import './estilo/ver_reservas.css';
 
 const VerReservas = () => {
   const [reservations, setReservations] = useState([]);
-  const { isLoggedAdmin } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
 
   const getReservations = useCallback(async () => {
-    if (isLoggedAdmin) {
-      try {
-        const request = await fetch(`http://localhost/user-res-api/booking`);
-        const response = await request.json();
-        setReservations(response);
-      } catch (error) {
-        console.log("No se pudieron obtener las reservas:", error);
-      }
-    } else {
-      window.location.href = '/';
+    try {
+      const request = await fetch(`http://localhost/user-res-api/booking`);
+      const response = await request.json();
+      setReservations(response);
+    } catch (error) {
+      console.log("No se pudieron obtener las reservas:", error);
     }
-  }, [isLoggedAdmin]);
+  });
 
   useEffect(() => {
     getReservations();

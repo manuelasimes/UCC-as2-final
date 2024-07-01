@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './login/auth';
 import './estilo/cuenta.css';
 import Cookies from "universal-cookie";
-
+import { useNavigate } from 'react-router-dom';
 
 function AccountDetails() {
   const [accountDetails, setAccountDetails] = useState({
@@ -13,91 +13,78 @@ function AccountDetails() {
     Email: ''
   });
 
-  const { isLoggedAdmin } = useContext(AuthContext);
-  const { isLoggedCliente } = useContext(AuthContext);
-  const { logout } = useContext(AuthContext);
+  const { auth, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const getUser = () => {
-      if (isLoggedCliente) {
-        const accountId = localStorage.getItem("id_cliente");
-        fetch(`http://localhost/user-res-api/user/${accountId}`)
-          .then(response => response.json())
-          .then(data => {
-            setAccountDetails({
-              Name: data.name,
-              LastName: data.last_name,
-              username: data.username,
-              password: '*******',
-              Email: data.email
-            });
-          })
-          .catch(error => {
-            console.error('Error al obtener los datos del cliente:', error);
+    const getUser = async () => {
+      if (auth.accessToken) {
+        try {
+          const accountId = localStorage.getItem("user_id");
+          const request = await fetch(`http://localhost/user-res-api/user/${accountId}`);
+          const response = await request.json();
+          setAccountDetails({
+            Name: response.name,
+            LastName: response.last_name,
+            username: response.username,
+            password: '*******',
+            Email: response.email
           });
-      }
-      else if (isLoggedAdmin) {
-        const accountId = localStorage.getItem("id_admin");
-        fetch(`http://localhost/user-res-api/user/${accountId}`)
-          .then(response => response.json())
-          .then(data => {
-            setAccountDetails({
-              Name: data.name,
-              LastName: data.last_name,
-              username: data.username,
-              password: '*******',
-              Email: data.email
-            });
-          })
-          .catch(error => {
-            console.error('Error al obtener los datos del administrador:', error);
-          });
-      }
-      else {
-        window.location.href = '/login-cliente';
+        } catch (error) {
+          console.error('Error al obtener los datos del cliente:', error);
+        }
+      } else {
+        navigate('/login-cliente');
       }
     };
 
     getUser();
-  }, [isLoggedAdmin, isLoggedCliente]);
+  }, [auth, navigate]);
+
+  console.log("log de token", auth.accessToken);
+  console.log("log de type", auth.userType);
 
   const cerrarSesion = () => {
-    const Cookie = new Cookies();
-    Cookie.set("user_id", -1, {path: "/"})
-    Cookie.set("user_type", false, {path:"/"})
+    const cookies = new Cookies();
+    cookies.remove("user_id", { path: "/" });
+    cookies.remove("user_type", { path: "/" });
     logout();
   };
 
   const reservas = () => {
-    window.location.href = '/reservas-cliente';
+    if (auth.userType === false) {
+      navigate('/reservas-cliente');
+    } else {
+      navigate('/login-cliente');
+    }
   };
 
   return (
     <body className="bodyCuenta">
-    <div className="containerCU">
-      <div className="account-form">
-        <h2 className="tituloDC">Detalles de la cuenta</h2>
-        <div className="account-field">
-          <p>Nombre: {accountDetails.Name}</p>
-        </div>
-        <div className="account-field">
-          <p>Apellido: {accountDetails.LastName}</p>
-        </div>
-        <div className="account-field">
-          <p>Nombre de Usuario: {accountDetails.username}</p>
-        </div>
-        <div className="account-field">
-          <p>Contraseña: {accountDetails.password}</p>
-        </div>
-        <div className="account-field">
-          <p>Email: {accountDetails.Email}</p>
-        </div>
-        <div className="account-buttons">
-          <button className="logout-button" onClick={cerrarSesion}>Cerrar sesión</button>
-          <button className="reservations-button" onClick={reservas}>Reservas</button>
+      <div className="containerCU">
+        <div className="account-form">
+          <h2 className="tituloDC">Detalles de la cuenta</h2>
+          <div className="account-field">
+            <p>Nombre: {accountDetails.Name}</p>
+          </div>
+          <div className="account-field">
+            <p>Apellido: {accountDetails.LastName}</p>
+          </div>
+          <div className="account-field">
+            <p>Nombre de Usuario: {accountDetails.username}</p>
+          </div>
+          <div className="account-field">
+            <p>Contraseña: {accountDetails.password}</p>
+          </div>
+          <div className="account-field">
+            <p>Email: {accountDetails.Email}</p>
+          </div>
+          <div className="account-buttons">
+            <button className="logout-button" onClick={cerrarSesion}>Cerrar sesión</button>
+            <button className="reservations-button" onClick={reservas}>Reservas</button>
+          </div>
         </div>
       </div>
-    </div>
     </body>
   );
 }

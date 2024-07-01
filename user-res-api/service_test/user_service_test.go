@@ -100,12 +100,12 @@ func (s *MockUserService) Login(loginDto *dto.LoginDto) (*dto.LoginResponseDto, 
 		return nil, errors.NewUnauthorizedApiError("Contraseña incorrecta")
 	}
 
-	accessToken, err := service.GenerateAccessToken(loginDto.Username)
+	accessToken, err := service.GenerateAccessToken(user)
 	if err != nil {
 		return nil, errors.NewInternalServerApiError("Error al generar el access token", err)
 	}
 
-	refreshToken, err := service.GenerateRefreshToken(loginDto.Username)
+	refreshToken, err := service.GenerateRefreshToken(user)
 	if err != nil {
 		return nil, errors.NewInternalServerApiError("Error al generar el refresh token", err)
 	}
@@ -188,19 +188,19 @@ func (s *MockUserService) Refresh(refreshTokenDto *dto.RefreshTokenDto) (*dto.Lo
 		return nil, err.(errors.ApiError)
 	}
 
-	accessToken, err := service.GenerateAccessToken(claims.Username)
+	user, apiErr := s.UserClient.GetUserByUsername(claims.Username)
+	if apiErr != nil {
+		return nil, errors.NewInternalServerApiError("Error al obtener el usuario", apiErr)
+	}
+
+	accessToken, err := service.GenerateAccessToken(user)
 	if err != nil {
 		return nil, errors.NewInternalServerApiError("Error al generar el access token", err)
 	}
 
-	refreshToken, err := service.GenerateRefreshToken(claims.Username)
+	refreshToken, err := service.GenerateRefreshToken(user)
 	if err != nil {
 		return nil, errors.NewInternalServerApiError("Error al generar el refresh token", err)
-	}
-
-	user, apiErr := s.UserClient.GetUserByUsername(claims.Username)
-	if apiErr != nil {
-		return nil, errors.NewInternalServerApiError("Error al obtener el usuario", apiErr)
 	}
 
 	loginResponseDto := &dto.LoginResponseDto{
@@ -216,7 +216,8 @@ func (s *MockUserService) Refresh(refreshTokenDto *dto.RefreshTokenDto) (*dto.Lo
 	return loginResponseDto, nil
 }
 
-// TestInsertUser test del método InsertUser
+// Tests de los métodos del servicio
+
 func TestInsertUser(t *testing.T) {
 	mockService := NewMockUserService()
 
@@ -260,7 +261,6 @@ func TestInsertUser(t *testing.T) {
 	mockService.UserClient.AssertExpectations(t)
 }
 
-// TestLogin test del método Login
 func TestLogin(t *testing.T) {
 	mockService := NewMockUserService()
 
@@ -273,12 +273,12 @@ func TestLogin(t *testing.T) {
 	}
 	mockService.UserClient.On("GetUserByUsername", "testuser").Return(expectedUser, nil)
 
-	loginDto := dto.LoginDto{
+	loginDto := &dto.LoginDto{
 		Username: "testuser",
 		Password: password,
 	}
 
-	result, err := mockService.Login(&loginDto)
+	result, err := mockService.Login(loginDto)
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedUser.Id, result.UserId)
@@ -288,7 +288,6 @@ func TestLogin(t *testing.T) {
 	mockService.UserClient.AssertExpectations(t)
 }
 
-// TestGetUserById test del método GetUserById
 func TestGetUserById(t *testing.T) {
 	mockService := NewMockUserService()
 
@@ -319,7 +318,6 @@ func TestGetUserById(t *testing.T) {
 	mockService.UserClient.AssertExpectations(t)
 }
 
-// TestGetUsers test del método GetUsers
 func TestGetUsers(t *testing.T) {
 	mockService := NewMockUserService()
 
@@ -366,7 +364,6 @@ func TestGetUsers(t *testing.T) {
 	mockService.UserClient.AssertExpectations(t)
 }
 
-// TestRefresh test del método Refresh
 func TestRefresh(t *testing.T) {
 	mockService := NewMockUserService()
 

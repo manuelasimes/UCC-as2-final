@@ -1,4 +1,4 @@
-body.bodyAdmin {
+.bodyAdmin {
   background-image: url(./imagenes/fondLogClien.jpg);
   background-size: cover;
   background-attachment: fixed;
@@ -47,7 +47,7 @@ body.bodyAdmin {
    
   }
   
-  #inputAD {
+  #username, #password {
     margin-bottom: 15px;
     width: 70%;
     font-size: 16px;

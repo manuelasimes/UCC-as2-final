@@ -1,21 +1,12 @@
-import React, { useContext } from 'react';
-import { AuthContext } from './login/auth';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './estilo/opciones_admin.css';
 
 const OpcionesAdminPage = () => {
-  const { isLoggedAdmin } = useContext(AuthContext);
-  
-  const Verificacion = () => {
-    if (!isLoggedAdmin) {
-      window.location.href = '/login-admin';
-    }
-  };
-
   return (
     <body className= "bodyinicioADM">
      
-    <div className="container" onLoad={Verificacion}>
+    <div className="container">
     <div className= "cuadradointerno">
        <h1 className="titulo">Opciones</h1>
         <div className="botones-container">
@@ -25,7 +16,7 @@ const OpcionesAdminPage = () => {
         <Link to="/administrar-clientes" className="botonAD">
           Administrar Clientes
         </Link>
-        <Link to="/insfraestructura" className="botonAD">
+        <Link to="/infraestructura" className="botonAD">
           Administrar Infraestructura
         </Link>
         </div>

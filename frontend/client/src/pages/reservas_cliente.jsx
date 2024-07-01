@@ -1,14 +1,16 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { AuthContext } from './login/auth';
 import './estilo/reservas_cliente.css';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
   const [reservations, setReservations] = useState([]);
-  const { isLoggedCliente } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const getReservations = useCallback(async () => {
-    if (isLoggedCliente) {
-      const accountId = localStorage.getItem("id_cliente");
+    if (auth.accessToken && auth.userType === false) { // userType === false significa que es un cliente
+      const accountId = localStorage.getItem("user_id");
       try {
         const request = await fetch(`http://localhost/user-res-api/booking/user/${accountId}`);
         const response = await request.json();
@@ -17,9 +19,9 @@ const HomePage = () => {
         console.log("No se pudieron obtener las reservas:", error);
       }
     } else {
-      window.location.href = '/';
+      navigate('/');
     }
-  }, [isLoggedCliente]);
+  }, [auth, navigate]);
 
   useEffect(() => {
     getReservations();

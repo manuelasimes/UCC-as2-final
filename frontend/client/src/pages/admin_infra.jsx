@@ -1,11 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from './login/auth';
+import React, { useEffect, useState } from 'react';
 import './estilo/hoteles_admin.css';
 
 const AdminInfra = () => {
   const [contenedores, setContenedores] = useState([]);
-  const { isLoggedAdmin } = useContext(AuthContext);
-  const { isLoggedCliente } = useContext(AuthContext);
   
   function isEmpty(str) {
     return !str.trim().length;
@@ -31,26 +28,12 @@ const AdminInfra = () => {
     getContenedores();
   }, []);
 
-  const Verificacion = () => {
-    if (!isLoggedAdmin) {
-      window.location.href = '/login-admin';
-    }
-  };
-
   const Cuenta = () => {
-    if (isLoggedAdmin || isLoggedCliente) {
-      window.location.href = '/cuenta';
-    }
-    else
-    {
-      window.location.href = '/login-cliente'
-    }
+    window.location.href = '/cuenta';
   }
 
   const Home = () => {
-
-    window.location.href = '/'
-
+    window.location.href = '/';
   }
 
   const handleVolver = () => {
@@ -156,7 +139,7 @@ const AdminInfra = () => {
   };
 
   return (
-    <body className="bodyinicioH" onLoad={Verificacion}>
+    <body className="bodyinicioH">
      <div className="header-content">
         <div className="admin-button-container">
             <button className="admin-button" onClick={Home}>

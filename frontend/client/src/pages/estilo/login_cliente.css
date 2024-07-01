@@ -1,4 +1,4 @@
-body.bodylogclient {
+.bodylogclient {
  
   background-image: url(./imagenes/fondLogClien.jpg);
   background-size: cover;
@@ -47,7 +47,7 @@ body.bodylogclient {
   align-items: center;
 }
 
-#inputLcli {
+#username, #password{
   margin-bottom: 15px;
   width: 70%;
   font-size: 16px;

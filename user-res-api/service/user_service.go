@@ -35,14 +35,18 @@ func init() {
 }
 
 type Claims struct {
+	UserId   int    `json:"user_id"`
 	Username string `json:"username"`
+	Type     bool   `json:"type"` // Suponiendo que Type es un booleano en el modelo
 	jwt.StandardClaims
 }
 
-func GenerateAccessToken(username string) (string, error) {
-	expirationTime := time.Now().Add(15 * time.Minute)
+func GenerateAccessToken(user model.User) (string, error) {
+	expirationTime := time.Now().Add(1 * time.Minute)
 	claims := &Claims{
-		Username: username,
+		UserId:   user.Id,
+		Username: user.UserName,
+		Type:     user.Type,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
 		},
@@ -51,10 +55,12 @@ func GenerateAccessToken(username string) (string, error) {
 	return token.SignedString(jwtKey)
 }
 
-func GenerateRefreshToken(username string) (string, error) {
-	expirationTime := time.Now().Add(7 * 24 * time.Hour)
+func GenerateRefreshToken(user model.User) (string, error) {
+	expirationTime := time.Now().Add(5 * time.Minute)
 	claims := &Claims{
-		Username: username,
+		UserId:   user.Id,
+		Username: user.UserName,
+		Type:     user.Type,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
 		},
@@ -157,12 +163,12 @@ func (s *userService) Login(loginDto *dto.LoginDto) (*dto.LoginResponseDto, e.Ap
 		return nil, e.NewUnauthorizedApiError("Contraseña incorrecta")
 	}
 
-	accessToken, err := GenerateAccessToken(loginDto.Username)
+	accessToken, err := GenerateAccessToken(user)
 	if err != nil {
 		return nil, e.NewInternalServerApiError("Error al generar el access token", err)
 	}
 
-	refreshToken, err := GenerateRefreshToken(loginDto.Username)
+	refreshToken, err := GenerateRefreshToken(user)
 	if err != nil {
 		return nil, e.NewInternalServerApiError("Error al generar el refresh token", err)
 	}
@@ -187,20 +193,20 @@ func (s *userService) Refresh(refreshTokenDto *dto.RefreshTokenDto) (*dto.LoginR
 		return nil, err.(e.ApiError) // Convertir el error a ApiError
 	}
 
-	accessToken, err := GenerateAccessToken(claims.Username)
+	// Obtener el usuario usando el user_id del claim
+	user := userClient.GetUserById(claims.UserId)
+	if user.Id == 0 {
+		return nil, e.NewBadRequestApiError("Usuario no encontrado")
+	}
+
+	accessToken, err := GenerateAccessToken(user)
 	if err != nil {
 		return nil, e.NewInternalServerApiError("Error al generar el access token", err)
 	}
 
-	refreshToken, err := GenerateRefreshToken(claims.Username)
+	refreshToken, err := GenerateRefreshToken(user)
 	if err != nil {
 		return nil, e.NewInternalServerApiError("Error al generar el refresh token", err)
-	}
-
-	// Obtener el user_id asociado al username en el claim
-	user, apiErr := userClient.GetUserByUsername(claims.Username)
-	if apiErr != nil {
-		return nil, e.NewInternalServerApiError("Error al obtener el usuario", apiErr)
 	}
 
 	loginResponseDto := &dto.LoginResponseDto{
