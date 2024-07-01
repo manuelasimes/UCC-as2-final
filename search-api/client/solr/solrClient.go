@@ -5,14 +5,15 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	logger "github.com/sirupsen/logrus"
-	"github.com/stevenferrer/solr-go"
 	"io"
+	"log"
 	"net/http"
 	"search-api/config"
 	"search-api/dto"
 	e "search-api/utils/errors"
-	"log"
+
+	logger "github.com/sirupsen/logrus"
+	"github.com/stevenferrer/solr-go"
 )
 
 type SolrClient struct {
@@ -38,7 +39,7 @@ func (sc *SolrClient) GetQuery(query string, field string) (dto.HotelsDto, e.Api
 	}
 	hotelsDto = response.Response.Docs
 
-	log.Printf("hotels:", hotelsDto)
+	log.Println("hotels:", hotelsDto)
 
 	return hotelsDto, nil
 }
@@ -48,7 +49,7 @@ func (sc *SolrClient) GetQueryAllFields(query string) (dto.HotelsDto, e.ApiError
 	var hotelsDto dto.HotelsDto
 
 	q, err := http.Get(
-		fmt.Sprintf("http://%s:%d/solr/hotelSearch/select?q=*:*", config.SOLRHOST, config.SOLRPORT) )
+		fmt.Sprintf("http://%s:%d/solr/hotelSearch/select?q=*:*", config.SOLRHOST, config.SOLRPORT))
 	if err != nil {
 		return hotelsDto, e.NewBadRequestApiError("error getting from solr")
 	}
