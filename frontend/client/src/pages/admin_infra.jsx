@@ -1,5 +1,63 @@
 import React, { useEffect, useState } from 'react';
 import './estilo/hoteles_admin.css';
+import { ToastContainer, toast } from "react-toastify";
+
+const notifyCreated = () => {
+  toast.success("Contenedor creado!", {
+      pauseOnHover: false,
+      autoClose: 2000,
+  })
+}
+
+const notifyCreationError = () => {
+  toast.error("Hubo un error al crear el contenedor!", {
+      pauseOnHover: false,
+      autoClose: 2000,
+  })
+}
+
+const notifyStopped = () => {
+  toast.success("Contenedor parado!", {
+      pauseOnHover: false,
+      autoClose: 2000,
+  })
+}
+
+const notifyStoppingError = () => {
+  toast.error("Hubo un error al parar el contenedor!", {
+      pauseOnHover: false,
+      autoClose: 2000,
+  })
+}
+
+const notifyRemove = () => {
+  toast.success("Contenedor elimnado!", {
+      pauseOnHover: false,
+      autoClose: 2000,
+  })
+}
+
+const notifyRemotionError = () => {
+  toast.error("Hubo un error al eleimar el contenedor!", {
+      pauseOnHover: false,
+      autoClose: 2000,
+  })
+}
+
+const notifyStarted = () => {
+  toast.success("Contenedor iniciado!", {
+      pauseOnHover: false,
+      autoClose: 2000,
+  })
+}
+
+const notifyStartError = () => {
+  toast.error("Hubo un error al iniciar el contenedor!", {
+      pauseOnHover: false,
+      autoClose: 2000,
+  })
+}
+
 
 const AdminInfra = () => {
   const [contenedores, setContenedores] = useState([]);
@@ -60,11 +118,13 @@ const AdminInfra = () => {
       return response.json();
     }).then(data => {
       console.log("Created container ID:", data.containerId);
+      notifyCreated();
       // Start the container using the retrieved container ID
       handleStartContainer(data.container_id);
     }).catch(error => {
       console.error("Error creating container:", error);
-      alert("Error al crear el contenedor");
+      notifyCreationError();
+      // alert("Error al crear el contenedor");
     });
     }
 
@@ -79,6 +139,7 @@ const AdminInfra = () => {
         throw new Error('Failed to start container');
       }
       console.log("Started container:", containerId);
+      getContenedores()
     }).catch(error => {
       console.error("Error starting container:", error);
       alert("Error al iniciar el contenedor");
@@ -96,11 +157,18 @@ const AdminInfra = () => {
       }
     }).then(response => {
       if (response.status === 400 || response.status === 401 || response.status === 403 || response.status === 500) {
-        alert("Error al parar el contenedor");
+        notifyStoppingError();
+        // alert("Error al parar el contenedor");
       }
+
+      notifyStopped();
+
+      getContenedores();
+
     }).catch(error => {
       console.error("Error stopping container:", error);
-      alert("Error al parar el contenedor");
+      notifyStoppingError();
+      // alert("Error al parar el contenedor");
     });
   };
 
@@ -113,11 +181,18 @@ const AdminInfra = () => {
       }
     }).then(response => {
       if (response.status === 400 || response.status === 401 || response.status === 403 || response.status === 500) {
-        alert("Error al iniciar el contenedor");
+        // alert("Error al iniciar el contenedor");
+        notifyStartError();
       }
+
+      notifyStarted();
+
+      getContenedores();
+
     }).catch(error => {
       console.error("Error stopping container:", error);
-      alert("Error al iniciar el contenedor");
+      notifyStartError();
+      // alert("Error al iniciar el contenedor");
     });
   };
 
@@ -130,11 +205,18 @@ const AdminInfra = () => {
       }
     }).then(response => {
       if (response.status === 400 || response.status === 401 || response.status === 403 || response.status === 500) {
-        alert("Error al iniciar el contenedor");
+        notifyRemotionError();
+        // alert("Error al iniciar el contenedor");
       }
+
+      notifyRemove();
+
+      getContenedores();
+
     }).catch(error => {
       console.error("Error stopping container:", error);
-      alert("Error al iniciar el contenedor");
+     // alert("Error al iniciar el contenedor");
+      notifyRemotionError();
     });
   };
 
@@ -188,6 +270,7 @@ const AdminInfra = () => {
           )}
         </div>
       </div>
+      <ToastContainer/>
     </body>
   );
 };
