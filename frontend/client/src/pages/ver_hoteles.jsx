@@ -1,24 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from './login/auth';
 import './estilo/hoteles_admin.css';
 
 const HomePage = () => {
   const [hotels, setHotels] = useState([]);
-  const { isLoggedAdmin } = useContext(AuthContext);
-  
-  function isEmpty(str) {
-    return !str.trim().length;
-  }
-
-  function isJSONEmpty(obj){
-    return Object.keys(obj).length === 0;
-  }
 
   const getHotels = async () => {
     try {
-      // const request = await fetch("http://localhost:8091/cliente/hoteles");
       const request = await fetch("http://localhost:80/search-api/searchAll=*:*");
-      //const request = await fetch("http://localhost:8070/hotel");
       const response = await request.json();
       setHotels(response);
     } catch (error) {
@@ -28,16 +16,10 @@ const HomePage = () => {
 
   useEffect(() => {
     getHotels();
-  }, []);
-
-  const Verificacion = () => {
-    if (!isLoggedAdmin) {
-      window.location.href = '/login-admin';
-    }
-  };
+  });
 
   return (
-    <body className="bodyinicioH" onLoad={Verificacion}>
+    <div className="bodyinicioH">
       <div className="containerIniH">
         <div className="hotels-containerH">
           {hotels.length ? (
@@ -50,8 +32,8 @@ const HomePage = () => {
                   </div>
                 </div>
                 <div className="hotel-descriptionH">
-                    <label htmlFor={`description-${hotel.id}`}>Descripción:</label>
-                    <p id={`description-${hotel.id}`}>{hotel.description}</p>
+                  <label htmlFor={`description-${hotel.id}`}>Descripción:</label>
+                  <p id={`description-${hotel.id}`}>{hotel.description}</p>
                 </div>
               </div>
             ))
@@ -60,7 +42,7 @@ const HomePage = () => {
           )}
         </div>
       </div>
-    </body>
+    </div>
   );
 };
 

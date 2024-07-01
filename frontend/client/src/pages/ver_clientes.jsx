@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from './login/auth';
 import './estilo/ver_clientes.css';
 
 const HomePage = () => {
   const [clientes, setClientes] = useState([]);
-  const { isLoggedAdmin } = useContext(AuthContext);
 
   const getClientes = async () => {
     try {
@@ -12,22 +10,16 @@ const HomePage = () => {
       const response = await request.json();
       setClientes(response);
     } catch (error) {
-      console.log("No se pudieron obtener los hoteles:", error);
+      console.log("No se pudieron obtener los clientes:", error);
     }
   };
 
   useEffect(() => {
-    getClientes();
-  }, []);
-
-  const Verificacion = () => {
-    if (!isLoggedAdmin) {
-      window.location.href = '/login-admin';
-    }
-  };
+      getClientes();
+  });
 
   return (
-    <body className="bodyinicioC" onLoad={Verificacion}>
+    <div className="bodyinicioC">
       <div className="containerIniC">
         <div className="hotels-containerC">
           {clientes.length ? (
@@ -48,7 +40,7 @@ const HomePage = () => {
           )}
         </div>
       </div>
-    </body>
+    </div>
   );
 };
 

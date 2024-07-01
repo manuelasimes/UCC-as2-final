@@ -1,46 +1,46 @@
-import React, { createContext, useState } from 'react';
+// auth.js
+import React, { createContext, useState, useEffect } from 'react';
+import Cookies from 'universal-cookie';
+import { jwtDecode } from 'jwt-decode';
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedCliente, setIsLoggedCliente] = useState(localStorage.getItem('authC') === 'true');
-  const [isLoggedAdmin, setIsLoggedAdmin] = useState(localStorage.getItem('authA') === 'true');
+    const [auth, setAuth] = useState({ accessToken: null, refreshToken: null, userType: null });
 
-  const loginAdmin = (newToken, id) => {
-    setIsLoggedAdmin(true);
-    localStorage.setItem('token', newToken);
-    localStorage.setItem('id_admin', id);
-    localStorage.setItem('authA', true);
-  };
+    useEffect(() => {
+        const accessToken = new Cookies().get('accessToken');
+        const refreshToken = new Cookies().get('refreshToken');
+        if (accessToken && refreshToken) {
+            setAuth({ accessToken, refreshToken, userType: jwtDecode(accessToken).type });
+        }
+    }, []);
 
-  const loginCliente = (newToken, id) => {
-    setIsLoggedCliente(true);
-    localStorage.setItem('token', newToken);
-    localStorage.setItem('id_cliente', id);
-    localStorage.setItem('authC', true);
-  };
+    const login = (accessToken, refreshToken, userType) => {
+        const cookies = new Cookies();
+        cookies.set('accessToken', accessToken, { path: '/' });
+        cookies.set('refreshToken', refreshToken, { path: '/' });
+        setAuth({ accessToken, refreshToken, userType });
+        
+        // Almacenar el ID del cliente o administrador en localStorage
+        localStorage.setItem('user_id', jwtDecode(accessToken).user_id);
+    };
 
-  const logout = () => {
-    setIsLoggedCliente(false);
-    setIsLoggedAdmin(false);
-    localStorage.removeItem('token');
-    localStorage.removeItem('id_admin');
-    localStorage.removeItem('id_cliente');
-    localStorage.setItem('authA', false);
-    localStorage.setItem('authC', false);
-  };
+    const logout = () => {
+        const cookies = new Cookies();
+        cookies.remove('accessToken', { path: '/' });
+        cookies.remove('refreshToken', { path: '/' });
+        setAuth({ accessToken: null, refreshToken: null, userType: null });
 
-  const propiedades = {
-    isLoggedCliente,
-    isLoggedAdmin,
-    loginCliente,
-    loginAdmin,
-    logout,
-  };
+        // Limpiar el localStorage al cerrar sesión
+        localStorage.removeItem('user_id');
+    };
 
-  return (
-    <AuthContext.Provider value={propiedades}>
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={{ auth, login, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
+
+export { AuthContext };
