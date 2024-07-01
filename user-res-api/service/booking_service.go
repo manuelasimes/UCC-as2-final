@@ -15,6 +15,7 @@ import (
 	"user-res-api/dto"
 	"user-res-api/model"
 	e "user-res-api/utils/errors"
+	"crypto/tls"
 )
 
 type bookingService struct{}
@@ -173,19 +174,46 @@ func (s *bookingService) GetAmadeustoken() string {
 	data.Set("client_id", "4Hf8uIpYK1zVNrP2Oqn4ZkrWGJWZVAdy")
 	data.Set("client_secret", "yOUDUQulGLlzuvsg")
 
-	// Realiza la solicitud POST a la API externa.
+	/* // Realiza la solicitud POST a la API externa.
 	resp, err := http.Post("https://test.api.amadeus.com/v1/security/oauth2/token", "application/x-www-form-urlencoded", strings.NewReader(data.Encode()))
 	if err != nil {
 		fmt.Println("Error al hacer la solicitud:", err)
 		return ""
 	}
-	defer resp.Body.Close()
+	defer resp.Body.Close() */
+
+	 // Custom HTTP client with TLS configuration to skip certificate verification.
+	customTransport := &http.Transport{
+        TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+    }
+
+    client := &http.Client{
+        Transport: customTransport,
+    }
+
+	   // Create a new request.
+	req, err := http.NewRequest("POST", "https://test.api.amadeus.com/v1/security/oauth2/token", strings.NewReader(data.Encode()))
+	   if err != nil {
+		   fmt.Println("Error al crear la solicitud:", err)
+		   return ""
+	   }
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	// Perform the request.
+    resp, err := client.Do(req)
+	if err != nil {
+        fmt.Println("Error al hacer la solicitud:", err)
+        return ""
+    }
+    defer resp.Body.Close()
+
 	// Lee la respuesta de la API.
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println("Error al leer la respuesta:", err)
 		return ""
 	}
+
 	// Parsea la respuesta JSON para obtener el token (asumiendo que la respuesta es JSON).
 	// Si la respuesta es en otro formato, ajusta esto en consecuencia.
 	var response map[string]interface{}
@@ -224,8 +252,22 @@ func (s *bookingService) Availability(startdateconguiones string, enddateconguio
 	solicitud.Header.Set("Authorization", "Bearer "+token)
 
 	fmt.Println(solicitud)
+	
 	// Realiza la solicitud HTTP
+	customTransport := &http.Transport{
+        TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+    }
+
+    cliente := &http.Client{
+        Transport: customTransport,
+    }
+
+	/* 
+	
 	cliente := &http.Client{}
+	
+	*/
+
 	respuesta, err := cliente.Do(solicitud)
 	if err != nil {
 		fmt.Println("Error al realizar la solicitud:", err)

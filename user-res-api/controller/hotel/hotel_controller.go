@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"user-res-api/dto"
 	service "user-res-api/service"
+	"crypto/tls"
 
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
@@ -58,7 +59,7 @@ func InsertHotel(c *gin.Context) {
 	// Crear una solicitud HTTP GET
 	solicitud, err := http.NewRequest("GET", apiUrl, nil)
 	if err != nil {
-		fmt.Println("Error al crear la solicitud:", err)
+		fmt.Println("Error al crear la solicitud dentro de insert hotel:", err)
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -66,7 +67,17 @@ func InsertHotel(c *gin.Context) {
 	token := service.BookingService.GetAmadeustoken()
 	solicitud.Header.Set("Authorization", "Bearer "+token)
 	// Realiza la solicitud HTTP
-	cliente := &http.Client{}
+	// cliente := &http.Client{}
+
+	 // Custom HTTP client with TLS configuration to skip certificate verification.
+	 customTransport := &http.Transport{
+        TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+    }
+
+    cliente := &http.Client{
+        Transport: customTransport,
+    }
+
 	respuesta, err := cliente.Do(solicitud)
 	if err != nil {
 		fmt.Println("Error al realizar la solicitud:", err)
