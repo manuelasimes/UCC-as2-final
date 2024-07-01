@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
         
         // Almacenar el ID del cliente o administrador en localStorage
         localStorage.setItem('user_id', jwtDecode(accessToken).user_id);
+        console.log("token user", jwtDecode(accessToken));
     };
 
     const logout = () => {

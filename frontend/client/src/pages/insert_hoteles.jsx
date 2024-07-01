@@ -29,13 +29,13 @@ const RegistrationHotel = () => {
     amenities: []
   });
 
-  const { token } = auth;
+  const { accessToken } = auth;
 
   useEffect(() => {
-    if (!token) {
-      window.location.href = '/login-admin'; // Redirigir si no hay token de autenticación
+    if (!accessToken) {
+      window.location.href = '/login-admin'; // Redirigir si no hay accessToken de autenticación
     }
-  }, [token]);
+  }, [accessToken]);
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -63,7 +63,7 @@ const RegistrationHotel = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          // 'Authorization': `Bearer ${accessToken}`
         },
         body: JSON.stringify(formData),
       });
