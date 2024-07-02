@@ -1,4 +1,3 @@
-// auth.js
 import React, { createContext, useState, useEffect } from 'react';
 import Cookies from 'universal-cookie';
 import { jwtDecode } from 'jwt-decode';
@@ -9,10 +8,20 @@ export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState({ accessToken: null, refreshToken: null, userType: null });
 
     useEffect(() => {
-        const accessToken = new Cookies().get('accessToken');
-        const refreshToken = new Cookies().get('refreshToken');
+        const cookies = new Cookies();
+        const accessToken = cookies.get('accessToken');
+        const refreshToken = cookies.get('refreshToken');
         if (accessToken && refreshToken) {
-            setAuth({ accessToken, refreshToken, userType: jwtDecode(accessToken).type });
+            try {
+                const decoded = jwtDecode(accessToken);
+                setAuth({ accessToken, refreshToken, userType: decoded.type });
+                localStorage.setItem('user_id', decoded.user_id);
+            } catch (error) {
+                console.error('Error al decodificar el token:', error);
+                cookies.remove('accessToken', { path: '/' });
+                cookies.remove('refreshToken', { path: '/' });
+                setAuth({ accessToken: null, refreshToken: null, userType: null });
+            }
         }
     }, []);
 
@@ -22,9 +31,9 @@ export const AuthProvider = ({ children }) => {
         cookies.set('refreshToken', refreshToken, { path: '/' });
         setAuth({ accessToken, refreshToken, userType });
         
-        // Almacenar el ID del cliente o administrador en localStorage
-        localStorage.setItem('user_id', jwtDecode(accessToken).user_id);
-        console.log("token user", jwtDecode(accessToken));
+        const decoded = jwtDecode(accessToken);
+        localStorage.setItem('user_id', decoded.user_id);
+        console.log("token user", decoded);
     };
 
     const logout = () => {
@@ -32,8 +41,6 @@ export const AuthProvider = ({ children }) => {
         cookies.remove('accessToken', { path: '/' });
         cookies.remove('refreshToken', { path: '/' });
         setAuth({ accessToken: null, refreshToken: null, userType: null });
-
-        // Limpiar el localStorage al cerrar sesión
         localStorage.removeItem('user_id');
     };
 

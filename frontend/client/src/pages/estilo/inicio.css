@@ -120,8 +120,7 @@
   background-color: rgb(43, 143, 87);
   box-shadow: 0px 0px 10px;
 }
-
-body.bodyinicio {
+.bodyinicio {
   position: fixed;
     top: 0;
     left: 0;
