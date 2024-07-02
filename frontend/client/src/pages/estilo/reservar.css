@@ -139,3 +139,22 @@ textarea {
   background-color: #013a94;
 }
   
+/* Sobrescribir el estilo del contenedor principal */
+.image-gallery {
+  background-color: transparent; /* Cambia el color de fondo */
+}
+
+.image-gallery-slides {
+  border-radius: 20px;
+}
+
+/* Sobrescribir el estilo de las flechas */
+.image-gallery-icon:focus {
+  background-color: transparent; /* Cambia el color de las flechas */
+}
+
+.image-gallery-thumbnails .image-gallery-thumbnails-container {
+  background-color: transparent;
+  box-shadow: none;
+  height: auto;
+}

@@ -14,7 +14,7 @@ const VerReservas = () => {
     } catch (error) {
       console.log("No se pudieron obtener las reservas:", error);
     }
-  });
+  },[]);
 
   useEffect(() => {
     getReservations();

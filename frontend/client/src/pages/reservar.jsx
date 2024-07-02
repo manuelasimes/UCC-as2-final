@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState, useCallback } from 'react';
-import { AuthContext } from './login/auth';
-import { useParams, useNavigate } from 'react-router-dom';
-import './estilo/reservar.css';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
-import Cookies from "universal-cookie";
-
-const Cookie = new Cookies();
+import 'react-toastify/dist/ReactToastify.css';
+import ImageGallery from 'react-image-gallery';
+import 'react-image-gallery/styles/css/image-gallery.css';
+import './estilo/reservar.css';
 
 const notifyBooked = () => {
   toast.success("Reservado!", {
@@ -30,14 +29,12 @@ function convertirFecha(fecha) {
   let fechaStringFinal = yearPlusMonth.concat("", day);
   var fechaEntero = Number(fechaStringFinal);
 
-  console.log(fechaEntero);
-
   return fechaEntero;
 }
 
 const ReservaPage = () => {
   const { hotelId } = useParams();
-  const [hotelData, setHotelData] = useState('');
+  const [hotelData, setHotelData] = useState({});
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const accountId = localStorage.getItem("user_id");
@@ -52,8 +49,6 @@ const ReservaPage = () => {
       end_date: convertirFecha(endDate),
     };
 
-    console.log("formData", formData);
-
     fetch('http://localhost/user-res-api/booking', {
       method: 'POST',
       headers: {
@@ -62,33 +57,21 @@ const ReservaPage = () => {
       body: JSON.stringify(formData),
     }).then((response) => {
       if (response.status === 400 || response.status === 401 || response.status === 403) {
-        console.log("Error al reservar");
-
         notifyError();
-
-        return response.json();
       } else {
-        console.log("Booking added");
-
         notifyBooked();
-
-        return response.json();
       }
     });
   };
 
   useEffect(() => {
-
-    setHotelData('');
     if (hotelId) {
       fetch(`http://localhost/hotels-api/hotels/${hotelId}`)
         .then(response => response.json())
         .then(data => {
           if (data.images && typeof data.images === 'string') {
-            data.images = JSON.parse(data.images); // Convert the string to an array
+            data.images = data.images.split(','); // Separar las imágenes en un array
           }
-          console.log("Todos los datos del hotel", data);
-          console.log("imagenes del hotel", data.images);
           setHotelData(data);
         })
         .catch(error => {
@@ -128,8 +111,8 @@ const ReservaPage = () => {
     const endDateParsed = convertirFecha(endDate);
 
     const request = await fetch(`http://localhost/user-res-api/hotel/availability/${hotelId}/${startDateParsed}/${endDateParsed}`);
-
     const response = await request.json();
+
     if (response === 0) {
       setEndDate('');
       notifyError();
@@ -142,6 +125,11 @@ const ReservaPage = () => {
 
   const today = new Date().toISOString().split('T')[0];
 
+  const images = hotelData.images ? hotelData.images.map(image => ({
+    original: image,
+    thumbnail: image,
+  })) : [];
+
   return (
     <div className="bodyReserva">
       <div>
@@ -150,12 +138,18 @@ const ReservaPage = () => {
         ) : (
           <div className="container45">
             <div className="informacion">
-              <div className="cuadroImag"><img src={hotelData.images} alt={hotelData.name} className="tamanoImag" /></div>
+              <div className="cuadroImag">
+                {images.length > 0 ? (
+                  <ImageGallery items={images} showPlayButton={false} showThumbnails={true} additionalClass="custom"/>
+                ) : (
+                  <p>No hay imágenes disponibles</p>
+                )}
+              </div>
               <div className="descripcion">{hotelData.description}</div>
             </div>
             <div className="reserva-form">
               <h6>Realice reserva del Hotel</h6>
-              <h6>{hotelData["nombre"]}</h6>
+              <h6>{hotelData.nombre}</h6>
               <form onSubmit={handleReserva}>
                 <div className="form-group">
                   <label htmlFor="fechaInicio">Fecha de inicio:</label>
