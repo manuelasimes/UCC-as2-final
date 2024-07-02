@@ -28,7 +28,7 @@ func GetHotelByIdMongo(id string) model.Hotel {
 	return hotel
 }
 
-// creo funcio que me permita ver si hay algun hotel en la bd con ese id de amadeus 
+// creo funcio que me permita ver si hay algun hotel en la bd con ese id de amadeus
 func GetHotelByIdAmadeus(idam string) bool {
 	var hotel model.Hotel
 
@@ -38,7 +38,7 @@ func GetHotelByIdAmadeus(idam string) bool {
 		return false
 	}
 
-	return true // si devuelve true quiere decir q ya existe un hotel con ese id de amadeus 
+	return true // si devuelve true quiere decir q ya existe un hotel con ese id de amadeus
 }
 
 func CheckHotelById(id int) bool {
@@ -74,6 +74,17 @@ func InsertHotel(hotel model.Hotel) model.Hotel {
 	return hotel
 }
 
+// implementando el delete todo con el id de mongo que desde hotels api nos mandan
+func DeleteHotel(idmongo string) error {
+	result := Db.Where("id_mongo = ?", idmongo).Delete(&model.Hotel{})
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	return nil
+}
+
 // func UpdateHotelById(hotel model.Hotel) model.Hotel {
 
 // 	result := Db.Model(&hotel).Where("id = ? ", hotel.Id).Updates(map[string]interface{}{"hotel_name": hotel.HotelName, "hotel_description": hotel.HotelDescription, "rooms": hotel.Rooms, "address": hotel.Address})
@@ -98,7 +109,6 @@ func InsertHotel(hotel model.Hotel) model.Hotel {
 
 // 	return true, nil
 // }
-
 
 // func UpdateHotel(hotel model.Hotel) {
 // 	Db.Save(&hotel)

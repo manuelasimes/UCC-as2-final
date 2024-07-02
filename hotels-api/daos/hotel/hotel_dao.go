@@ -106,3 +106,25 @@ func Update(id string, updatedHotel model.Hotel) error {
 	_, err = db.Collection("hotels").UpdateOne(context.TODO(), bson.D{{Key: "_id", Value: objID}}, update)
 	return err
 }
+func Delete(id string) error {
+	db := db.MongoDb
+	objID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return err
+	}
+
+	// Define el filtro para eliminar el documento basado en el ID
+	filter := bson.D{{Key: "_id", Value: objID}}
+
+	// Elimina el documento de la colección "hotels"
+	_, err = db.Collection("hotels").DeleteOne(context.TODO(), filter)
+	if err != nil {
+		return err
+	}
+
+	// Elimina el hotel del cache (si está en cache)
+	cache.Del(id)
+	fmt.Println("Hotel deleted from cache")
+
+	return nil
+}

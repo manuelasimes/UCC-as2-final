@@ -19,8 +19,7 @@ type hotelServiceInterface interface {
 	GetHotelById(id int) (dto.HotelDto, e.ApiError)
 	CheckHotelByIdAmadeus(id string) (bool, e.ApiError)
 	// UpdateHotel(updateHotelDto dto.HandleHotelDto) (dto.HotelDto, e.ApiError)
-	// DeleteHotel(idHotel int, idUser int) (dto.DeleteHotelResponseDto, e.ApiError)
-
+	DeleteHotel(idmongo string) e.ApiError
 }
 
 var (
@@ -90,4 +89,15 @@ func (s *hotelService) InsertHotel(hotelDto dto.HotelPostDto, idAmadeus string) 
 	hotelDto.Id = hotel.Id
 
 	return response, nil
+}
+
+func (s *hotelService) DeleteHotel(idmongo string) e.ApiError {
+	// Llama al cliente de hotel para realizar la eliminación
+	err := hotelClient.DeleteHotel(idmongo)
+
+	if err != nil {
+		return e.NewBadRequestApiError("Error al eliminar hotel")
+	}
+
+	return nil
 }

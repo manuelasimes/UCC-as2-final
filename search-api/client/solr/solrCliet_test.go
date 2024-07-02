@@ -1,5 +1,3 @@
-//
-
 package repositories
 
 // import (
@@ -23,7 +21,6 @@ package repositories
 // 	Update(ctx context.Context, collection string, contentType string, body io.Reader) (solr.UpdateResponse, error)
 // 	Commit(ctx context.Context, collection string) error
 // 	Add(hotel dto.HotelDto) error
-
 // 	// Otros métodos necesarios para tu aplicación
 // }
 

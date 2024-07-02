@@ -1,13 +1,13 @@
 package hotel
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
 	"user-res-api/dto"
 	service "user-res-api/service"
-	"crypto/tls"
 
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
@@ -69,14 +69,14 @@ func InsertHotel(c *gin.Context) {
 	// Realiza la solicitud HTTP
 	// cliente := &http.Client{}
 
-	 // Custom HTTP client with TLS configuration to skip certificate verification.
-	 customTransport := &http.Transport{
-        TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-    }
+	// Custom HTTP client with TLS configuration to skip certificate verification.
+	customTransport := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
 
-    cliente := &http.Client{
-        Transport: customTransport,
-    }
+	cliente := &http.Client{
+		Transport: customTransport,
+	}
 
 	respuesta, err := cliente.Do(solicitud)
 	if err != nil {
@@ -123,4 +123,17 @@ func InsertHotel(c *gin.Context) {
 		}
 	}
 
+}
+func DeleteHotel(c *gin.Context) {
+	fmt.Printf("entro l controller")
+
+	idMongo := c.Param("idMongo")
+
+	err := service.HotelService.DeleteHotel(idMongo)
+	if err != nil {
+		c.JSON(err.Status(), err)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Hotel deleted successfully"})
 }
