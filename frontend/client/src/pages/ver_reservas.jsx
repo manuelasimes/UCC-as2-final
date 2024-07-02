@@ -18,7 +18,7 @@ const VerReservas = () => {
 
   useEffect(() => {
     getReservations();
-  }, [getReservations]);
+  }, []);
 
   return (
     <div className="reservations-container1">

@@ -74,3 +74,19 @@ func GetBookingByUserId(id int) model.Booking {
 	return booking
 
 }
+
+func DeleteBooking(id int) error {
+
+	var booking model.Booking
+	
+	result := Db.Delete(&booking, id)
+
+	if result.Error != nil {
+
+		return result.Error
+
+	}
+
+	return nil
+
+}

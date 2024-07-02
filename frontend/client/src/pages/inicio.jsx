@@ -69,6 +69,8 @@ const HomePage = () => {
   const filterHotels = async () => {
     var endDateValue = document.getElementById('end-date').value;
     var startDateValue = document.getElementById('start-date').value;
+    
+    var cityInLowerCase = city.toLowerCase();
 
     if (isEmpty(city)) {
       alert("No está permitido buscar solo por fecha, debe ingresar un destino!");
@@ -76,9 +78,9 @@ const HomePage = () => {
     } else {
       let request;
       if (!endDateValue || !startDateValue) {
-        request = await fetch(`http://localhost/search-api/search=city_${city}`);
+        request = await fetch(`http://localhost/search-api/search=city_${cityInLowerCase}`);
       } else {
-        request = await fetch(`http://localhost/search-api/search=city_${city}_${startDate}_${endDate}`);
+        request = await fetch(`http://localhost/search-api/search=city_${cityInLowerCase}_${startDate}_${endDate}`);
       }
       const response = await request.json();
       if (response !== null) {

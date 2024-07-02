@@ -21,13 +21,14 @@ func mapUrls() {
 	router.POST("/user-res-api/booking", bookingController.InsertBooking)
 	router.GET("/user-res-api/booking/user/:user_id", bookingController.GetBookingsByUserId)
 	router.GET("/user-res-api/hotel/availability/:id/:start_date/:end_date", bookingController.GetAvailabilityByIdAndDate)
+	router.DELETE("/user-res-api/booking/:booking_id", bookingController.DeleteBooking)
 
 	// Hotels Mapping
 	router.GET("/user-res-api/hotel/:id", hotelController.GetHotelById)
 	router.GET("/user-res-api/hotel", hotelController.GetHotels)
 	router.POST("/user-res-api/hotel", hotelController.InsertHotel)
 	//router.PUT("/hotel/update", hotelController.UpdateHotel)
-	//router.DELETE("/hotel/delete/:hotel_id/:user_id", hotelController.DeleteHotel)
+	router.DELETE("/user-res-api/hotel/delete/:idMongo", hotelController.DeleteHotel)
 
 	// Login
 	router.POST("/user-res-api/login", userController.Login)

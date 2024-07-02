@@ -1,2 +1,5 @@
 # Ignore the db_data directory
 db_data/
+
+# Ignorar directorio node_modules
+frontend/client/node_modules

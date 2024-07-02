@@ -2,16 +2,18 @@ package services
 
 import (
 	hotelDao "hotels-api/daos/hotel"
-	"hotels-api/dtos"
-	queue "hotels-api/utils/queue"
+	dto "hotels-api/dtos"
 	model "hotels-api/models"
 	e "hotels-api/utils/errors"
+	queue "hotels-api/utils/queue"
+
 	// "strconv"
-	"fmt"
-	"net/http"
-	"hotels-api/config"
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"hotels-api/config"
+	"net/http"
+
 	log "github.com/sirupsen/logrus"
 )
 
@@ -21,7 +23,7 @@ type hotelServiceInterface interface {
 	GetHotel(id string) (dto.HotelDto, e.ApiError)
 	InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, e.ApiError)
 	UpdateHotel(id string, updatedHotelDto dto.HotelDto) (dto.HotelDto, e.ApiError)
-
+	DeleteHotel(id string) e.ApiError
 }
 
 var (
@@ -98,9 +100,8 @@ func (s *hotelService) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, e.ApiEr
 		hotel.Amenities[i] = model.Amenitie{
 			Description: amenityDto.Description,
 			Image:      amenityDto.Image,
-		} 
+		}
 	} */
-
 
 	hotel = hotelDao.Insert(hotel)
 
@@ -111,8 +112,8 @@ func (s *hotelService) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, e.ApiEr
 
 	// Assuming hotel.Id is of type primitive.ObjectID
 	idHexString := hotel.Id.Hex()
-    // Now you can pass idInt to the SendMessage function
-	
+	// Now you can pass idInt to the SendMessage function
+
 	var postIdDto dto.PostID
 
 	postIdDto.IdMongo = idHexString
@@ -121,16 +122,15 @@ func (s *hotelService) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, e.ApiEr
 	// jsonData, err := json.Marshal(postIdDto)
 
 	// if err != nil {
-		// log.Debug(err)
-		// return hotelDto, e.NewBadRequestApiError("Marshal failed")
+	// log.Debug(err)
+	// return hotelDto, e.NewBadRequestApiError("Marshal failed")
 	// }
 
 	var buf bytes.Buffer
-    err := json.NewEncoder(&buf).Encode(postIdDto)
-    if err != nil {
-        log.Fatal(err)
-    }
-
+	err := json.NewEncoder(&buf).Encode(postIdDto)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	url := fmt.Sprintf("http://%s:%d/user-res-api/hotel", config.USERAPIHOST, config.USERAPIPORT)
 
@@ -153,7 +153,6 @@ func (s *hotelService) InsertHotel(hotelDto dto.HotelDto) (dto.HotelDto, e.ApiEr
 	return hotelDto, nil
 }
 
-
 func (s *hotelService) UpdateHotel(id string, updatedHotelDto dto.HotelDto) (dto.HotelDto, e.ApiError) {
 	// Obtén el hotel existente por ID
 	existingHotel := hotelDao.GetById(id)
@@ -172,7 +171,7 @@ func (s *hotelService) UpdateHotel(id string, updatedHotelDto dto.HotelDto) (dto
 
 	existingHotel.Images = updatedHotelDto.Images
 	existingHotel.Amenities = updatedHotelDto.Amenities
-	
+
 	/* existingHotel.Images = make([]model.Image, len(updatedHotelDto.Images))
 	existingHotel.Amenities = make([]model.Amenitie, len(updatedHotelDto.Amenities))
 
@@ -188,16 +187,16 @@ func (s *hotelService) UpdateHotel(id string, updatedHotelDto dto.HotelDto) (dto
 			Image:      amenityDto.Image,
 		}
 	} */
-	
+
 	// Realiza la actualización en la base de datos
 	err := hotelDao.Update(id, existingHotel)
 
 	if err != nil {
-    return dto.HotelDto{}, e.NewBadRequestApiError("Error in update")
+		return dto.HotelDto{}, e.NewBadRequestApiError("Error in update")
 	}
 
 	// Construye un HotelDto actualizado para la respuesta
-	updatedHotelDto.Name = existingHotel.Name 
+	updatedHotelDto.Name = existingHotel.Name
 	updatedHotelDto.Description = existingHotel.Description
 	updatedHotelDto.Country = existingHotel.Country
 	updatedHotelDto.City = existingHotel.City
@@ -206,11 +205,44 @@ func (s *hotelService) UpdateHotel(id string, updatedHotelDto dto.HotelDto) (dto
 	// Assuming hotel.Id is of type primitive.ObjectID
 	idHexString := existingHotel.Id.Hex()
 
-    // Now you can pass idInt to the SendMessage function
-    queue.SendMessage(idHexString, "UPDATE")
-	
+	// Now you can pass idInt to the SendMessage function
+	queue.SendMessage(idHexString, "UPDATE")
+
 	return updatedHotelDto, nil
 
 }
 
+func (s *hotelService) DeleteHotel(id string) e.ApiError {
+	// Construye la URL completa para la solicitud DELETE a user-res-api
+	url := fmt.Sprintf("http://%s:%d/user-res-api/hotel/delete/%s", config.USERAPIHOST, config.USERAPIPORT, id)
 
+	// Crea una nueva solicitud HTTP DELETE
+	req, err := http.NewRequest("DELETE", url, nil)
+	if err != nil {
+		return e.NewInternalServerApiError("Failed to create request", err)
+	}
+	// Realiza la solicitud HTTP DELETE
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return e.NewInternalServerApiError("Failed to send request", err)
+	}
+	defer resp.Body.Close()
+
+	// Verifica el código de estado de la respuesta
+	if resp.StatusCode != http.StatusOK {
+		return e.NewInternalServerApiError("Failed to delete hotel", fmt.Errorf("unexpected status: %d", resp.StatusCode))
+	}
+
+	// Llama a la función Delete del DAO para eliminar el hotel por ID
+	errorClient := hotelDao.Delete(id)
+
+	if errorClient != nil {
+		// Maneja el error si ocurre algún problema al eliminar el hotel
+		return e.NewInternalServerApiError("Error deleting hotel", err)
+	}
+
+	queue.SendMessage(id, "DELETE")
+
+	return nil
+}
