@@ -4,14 +4,14 @@ import './estilo/insert_hoteles.css';
 import { ToastContainer, toast } from "react-toastify";
 
 const notifyRegistered = () => {
-  toast.success("Actualizado!", {
+  toast.success("Hotel insertado correctamente!", {
     pauseOnHover: false,
     autoClose: 2000,
   });
 };
 
 const notifyError = () => {
-  toast.error("Error al actualizar!", {
+  toast.error("Error al insertar hotel!", {
     pauseOnHover: false,
     autoClose: 2000,
   });

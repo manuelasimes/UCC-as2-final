@@ -22,7 +22,7 @@ const ClienteLogin = () => {
         })
         .then(response => {
             if (response.status === 400 || response.status === 401 || response.status === 403) {
-                throw new Error('Invalid credentials');
+                throw new Error('Credenciales invalidas');
             }
             return response.json();
         })

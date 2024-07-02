@@ -125,3 +125,25 @@ func GetBookingsByUserId(c *gin.Context) {
 
 	c.JSON(http.StatusOK, bookingsDto)
 }
+
+func DeleteBooking(c *gin.Context) {
+
+	bookingIdStr := c.Param("booking_id")
+    bookingId, err := strconv.Atoi(bookingIdStr)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid booking ID"})
+        return
+    }
+
+	err = service.BookingService.DeleteBooking(bookingId)
+	
+	if err != nil {
+
+		c.JSON(http.StatusBadRequest, err)
+		return
+
+	}
+
+	c.JSON(http.StatusOK, gin.H{"delete_confirmation": true})
+
+}

@@ -21,6 +21,7 @@ func mapUrls() {
 	router.POST("/user-res-api/booking", bookingController.InsertBooking)
 	router.GET("/user-res-api/booking/user/:user_id", bookingController.GetBookingsByUserId)
 	router.GET("/user-res-api/hotel/availability/:id/:start_date/:end_date", bookingController.GetAvailabilityByIdAndDate)
+	router.DELETE("/user-res-api/booking/:booking_id", bookingController.DeleteBooking)
 
 	// Hotels Mapping
 	router.GET("/user-res-api/hotel/:id", hotelController.GetHotelById)

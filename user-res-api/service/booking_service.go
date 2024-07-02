@@ -15,7 +15,7 @@ import (
 	"user-res-api/dto"
 	"user-res-api/model"
 	e "user-res-api/utils/errors"
-	"crypto/tls"
+	// "crypto/tls"
 )
 
 type bookingService struct{}
@@ -29,6 +29,7 @@ type bookingServiceInterface interface {
 	GetAmadeustoken() string
 	GetAvailabilityByIdAndDate(idAm string, startDate int, endDate int) (dto.Availability, e.ApiError)
 	Availability(startdateconguiones string, enddateconguiones string, idAm string) bool
+	DeleteBooking(id int) error
 }
 
 var (
@@ -174,24 +175,24 @@ func (s *bookingService) GetAmadeustoken() string {
 	data.Set("client_id", "4Hf8uIpYK1zVNrP2Oqn4ZkrWGJWZVAdy")
 	data.Set("client_secret", "yOUDUQulGLlzuvsg")
 
-	/* // Realiza la solicitud POST a la API externa.
+	// Realiza la solicitud POST a la API externa.
 	resp, err := http.Post("https://test.api.amadeus.com/v1/security/oauth2/token", "application/x-www-form-urlencoded", strings.NewReader(data.Encode()))
 	if err != nil {
 		fmt.Println("Error al hacer la solicitud:", err)
 		return ""
 	}
-	defer resp.Body.Close() */
+	defer resp.Body.Close() 
 
-	 // Custom HTTP client with TLS configuration to skip certificate verification.
+	 /* // Custom HTTP client with TLS configuration to skip certificate verification.
 	customTransport := &http.Transport{
         TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
     }
 
     client := &http.Client{
         Transport: customTransport,
-    }
+    } */
 
-	   // Create a new request.
+	/*    // Create a new request.
 	req, err := http.NewRequest("POST", "https://test.api.amadeus.com/v1/security/oauth2/token", strings.NewReader(data.Encode()))
 	   if err != nil {
 		   fmt.Println("Error al crear la solicitud:", err)
@@ -200,12 +201,12 @@ func (s *bookingService) GetAmadeustoken() string {
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	// Perform the request.
-    resp, err := client.Do(req)
+    resp, err := client.Do(req) */
+
 	if err != nil {
         fmt.Println("Error al hacer la solicitud:", err)
         return ""
     }
-    defer resp.Body.Close()
 
 	// Lee la respuesta de la API.
 	body, err := ioutil.ReadAll(resp.Body)
@@ -253,20 +254,20 @@ func (s *bookingService) Availability(startdateconguiones string, enddateconguio
 
 	fmt.Println(solicitud)
 	
-	// Realiza la solicitud HTTP
+	/* // Realiza la solicitud HTTP
 	customTransport := &http.Transport{
         TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
     }
 
     cliente := &http.Client{
         Transport: customTransport,
-    }
+    } */
 
-	/* 
+	
 	
 	cliente := &http.Client{}
 	
-	*/
+	
 
 	respuesta, err := cliente.Do(solicitud)
 	if err != nil {
@@ -373,4 +374,19 @@ func (s *bookingService) GetAvailabilityByIdAndDate(idAm string, startDate int, 
 	fmt.Println("Saved in cache!")
 
 	return responseDto, nil
+}
+
+func (s *bookingService) DeleteBooking(id int) error {
+
+	err := bookingClient.DeleteBooking(id)
+
+	if err != nil {
+
+		return err
+
+	}
+
+	return nil
+
+
 }
