@@ -18,6 +18,12 @@ const HomePage = () => {
     getHotels();
   }, []);;
 
+  const handleUpdate = (id) => {
+
+    window.location.href = `/hotel/edit/${id}`;
+
+  }
+
   return (
     <div className="bodyinicioH">
       <div className="containerIniH">
@@ -35,6 +41,7 @@ const HomePage = () => {
                   <label htmlFor={`description-${hotel.id}`}>Descripción:</label>
                   <p id={`description-${hotel.id}`}>{hotel.description}</p>
                 </div>
+                <button className='admin-button' onClick={() => handleUpdate(hotel.id)}>Editar hotel</button>
               </div>
             ))
           ) : (

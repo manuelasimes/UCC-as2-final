@@ -20,23 +20,23 @@ const ClienteLogin = () => {
             },
             body: JSON.stringify({ username, password }),
         })
-        .then(response => {
-            if (response.status === 400 || response.status === 401 || response.status === 403) {
-                throw new Error('Credenciales invalidas');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.type === false) {
-                login(data.accessToken, data.refreshToken, data.type);
-                navigate('/');
-            } else {
-                alert("Usted es un administrador. Para iniciar sesión como administrador, diríjase al área de admin.");
-            }
-        })
-        .catch(error => {
-            toast.error('Error al iniciar sesión: ' + error.message);
-        });
+            .then(response => {
+                if (response.status === 400 || response.status === 401 || response.status === 403) {
+                    throw new Error('Invalid credentials');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.type === false) {
+                    login(data.accessToken, data.refreshToken, data.type);
+                    navigate('/');
+                } else {
+                    alert("Usted es un administrador. Para iniciar sesión como administrador, diríjase al área de admin.");
+                }
+            })
+            .catch(error => {
+                toast.error('Error al iniciar sesión: ' + error.message);
+            });
     };
 
     return (
@@ -67,7 +67,14 @@ const ClienteLogin = () => {
                                 <Link to="/register" className="buttonClient">
                                     Registrarse
                                 </Link>
+
                             </div>
+                            <div className="button-container">
+                                <Link to="/" className="botonAtras">
+                                    Volver a Home
+                                </Link>
+                            </div>
+
                         </div>
                     </div>
                 </div>

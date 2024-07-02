@@ -76,6 +76,8 @@ func Update(c *gin.Context) {
 		return
 	}
 
+	fmt.Println("Hotel en controller: ", updatedHotelDto)
+
 	c.JSON(http.StatusOK, updatedHotelDto)
 }
 

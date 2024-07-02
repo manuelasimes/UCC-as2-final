@@ -15,7 +15,7 @@ import InsertHoteles from './pages/insert_hoteles';
 import VerHoteles from './pages/ver_hoteles';
 import VerReservas from './pages/ver_reservas';
 import VerClientes from './pages/ver_clientes';
-import EditarHoteles from './pages/editar_hoteles';
+import UpdateHotel from './pages/editar_hoteles';
 import AdminInfra from './pages/admin_infra';
 import { AuthProvider } from './pages/login/auth';
 import ProtectedRoute from './ProtectedRoute';
@@ -84,7 +84,7 @@ function App() {
                         }></Route>
                         <Route path='/hotel/edit/:id' element={
                             <ProtectedRoute adminOnly={true}>
-                                <EditarHoteles />
+                                <UpdateHotel />
                             </ProtectedRoute>
                         }></Route>
                         <Route path='/infraestructura' element={

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from './auth';
 import { useNavigate } from 'react-router-dom';
 import '../estilo/login_admin.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
@@ -18,25 +18,23 @@ const AdminLogin = () => {
             },
             body: JSON.stringify({ username, password }),
         })
-        .then(response => {
-            if (response.status === 400 || response.status === 401 || response.status === 403) {
-                throw new Error('Credenciales invalidas');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.type === true) {
-                login(data.accessToken, data.refreshToken, data.type);
-                navigate('/admin');
-            } else {
-                // alert("No eres un administrador."); 
-                toast.error('No eres un administrador!');
-            }
-        })
-        .catch(error => {
-            console.error('Error al iniciar sesión:', error);
-            toast.error('Error al iniciar sesión: ' + error.message);
-        });
+            .then(response => {
+                if (response.status === 400 || response.status === 401 || response.status === 403) {
+                    throw new Error('Invalid credentials');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.type === true) {
+                    login(data.accessToken, data.refreshToken, data.type);
+                    navigate('/admin');
+                } else {
+                    alert("No eres un administrador.");
+                }
+            })
+            .catch(error => {
+                console.error('Error al iniciar sesión:', error);
+            });
     };
 
     return (
@@ -63,6 +61,9 @@ const AdminLogin = () => {
                             <button className="button" onClick={handleLoginAdmin}>
                                 Iniciar Sesión
                             </button>
+                            <Link to="/" className="botonAtras">
+                                Volver a Home
+                            </Link>
                         </div>
                     </div>
                 </div>

@@ -104,6 +104,11 @@ func Update(id string, updatedHotel model.Hotel) error {
 	}
 
 	_, err = db.Collection("hotels").UpdateOne(context.TODO(), bson.D{{Key: "_id", Value: objID}}, update)
+
+	// Elimina el hotel del cache (si está en cache)
+	cache.Del(id)
+	fmt.Println("Hotel deleted from cache")
+
 	return err
 }
 func Delete(id string) error {

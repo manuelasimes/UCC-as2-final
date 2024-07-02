@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './login/auth';
 import './estilo/cuenta.css';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 
 function AccountDetails() {
   const [accountDetails, setAccountDetails] = useState({
@@ -81,6 +83,11 @@ function AccountDetails() {
           </div>
         </div>
       </div>
+      <div className="boton-atras-container">
+            <Link to="/" className="botonAtras">
+              Volver a Home
+            </Link>
+          </div>
     </div>
   );
 }
