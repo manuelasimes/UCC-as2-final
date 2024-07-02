@@ -168,25 +168,10 @@ func (s *hotelService) UpdateHotel(id string, updatedHotelDto dto.HotelDto) (dto
 	existingHotel.Country = updatedHotelDto.Country
 	existingHotel.City = updatedHotelDto.City
 	existingHotel.Adress = updatedHotelDto.Adress
-
 	existingHotel.Images = updatedHotelDto.Images
 	existingHotel.Amenities = updatedHotelDto.Amenities
 
-	/* existingHotel.Images = make([]model.Image, len(updatedHotelDto.Images))
-	existingHotel.Amenities = make([]model.Amenitie, len(updatedHotelDto.Amenities))
-
-	for i, imgDto := range updatedHotelDto.Images {
-		existingHotel.Images[i] = model.Image{
-			Url: imgDto.Url,
-		}
-	}
-
-	for i, amenityDto := range updatedHotelDto.Amenities {
-		existingHotel.Amenities[i] = model.Amenitie{
-			Description: amenityDto.Description,
-			Image:      amenityDto.Image,
-		}
-	} */
+	fmt.Println("Inside Update. Hotel: ", existingHotel)
 
 	// Realiza la actualización en la base de datos
 	err := hotelDao.Update(id, existingHotel)
@@ -201,6 +186,8 @@ func (s *hotelService) UpdateHotel(id string, updatedHotelDto dto.HotelDto) (dto
 	updatedHotelDto.Country = existingHotel.Country
 	updatedHotelDto.City = existingHotel.City
 	updatedHotelDto.Adress = existingHotel.Adress
+
+	fmt.Println("After update. Hotel: ", updatedHotelDto)
 
 	// Assuming hotel.Id is of type primitive.ObjectID
 	idHexString := existingHotel.Id.Hex()
