@@ -1,0 +1,12 @@
+.header-content-infra {
+    display: flex;
+    position: relative;
+    justify-content: right;
+    align-items: center;
+    background-color: #003c94;
+    height: 10vh;
+    padding: 10px;
+    box-shadow: 0px 3px 20px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }

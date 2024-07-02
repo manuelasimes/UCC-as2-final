@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './estilo/hoteles_admin.css';
+import './estilo/admin_infra.css';
+import './estilo/inicio.css'
 import { ToastContainer, toast } from "react-toastify";
 
 const notifyCreated = () => {
@@ -221,8 +223,8 @@ const AdminInfra = () => {
   };
 
   return (
-    <body className="bodyinicioH">
-     <div className="header-content">
+    <body className="bodyinicio">
+     <div className="header-content-infra">
         <div className="admin-button-container">
             <button className="admin-button" onClick={Home}>
                 Inicio
@@ -239,7 +241,7 @@ const AdminInfra = () => {
             </button>
         </div>
       </div>
-      <div className="containerIniH">
+      <div className="containerIni">
         <div className="hotels-containerH">
           {contenedores.length ? (
             contenedores.map((contenedor) => (
@@ -260,7 +262,7 @@ const AdminInfra = () => {
                     {contenedor.Names && contenedor.Names[0].slice(-1) !== "1" && (
                       <button className="botonAC" onClick={() => handleBorrar(contenedor.Id)}>Borrar</button>
                     )}
-                    <button className="botonAC" onClick={() => handleCrear(contenedor.Image, contenedor.Names, contenedor.Labels["com.docker.compose.container-number"], contenedor.Id)}> Crear nuevo contenedor </button>
+                    <button className="botonAC" onClick={() => handleCrear(contenedor.Image, contenedor.Names, contenedor.Labels["com.docker.compose.container-number"], contenedor.Id)}> Crear nueva instancia </button>
                   </div>
                 </div> 
             </div>

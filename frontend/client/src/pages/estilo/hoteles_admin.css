@@ -9,6 +9,7 @@ body.bodyinicioH {
     background-repeat: no-repeat;
     background-size: cover;
     z-index: -1;
+    overflow: hidden;
     }
     
     :root {
@@ -26,6 +27,7 @@ body.bodyinicioH {
     
     .containerIniH::-webkit-scrollbar {
       display: none; /* Ocultar la barra de desplazamiento */
+      
     }
     
     .hotels-containerH {
@@ -33,6 +35,7 @@ body.bodyinicioH {
       grid-template-columns: repeat(1, 1fr);
       grid-gap: 0;
       justify-items: left;
+      overflow-y: auto; /* Enable vertical scrolling */
     }
     
     .hotel-cardH {

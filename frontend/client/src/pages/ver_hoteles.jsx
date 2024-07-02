@@ -16,7 +16,7 @@ const HomePage = () => {
 
   useEffect(() => {
     getHotels();
-  });
+  }, []);;
 
   return (
     <div className="bodyinicioH">

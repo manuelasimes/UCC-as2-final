@@ -16,7 +16,7 @@ const HomePage = () => {
 
   useEffect(() => {
       getClientes();
-  });
+  }, []);
 
   return (
     <div className="bodyinicioC">

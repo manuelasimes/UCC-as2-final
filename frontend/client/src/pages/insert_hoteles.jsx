@@ -41,13 +41,27 @@ const RegistrationHotel = () => {
     event.preventDefault();
     const { name, value } = event.target;
 
+    var flag = false;
+
+    if (name === 'city' || name === 'country') {
+
+      flag = true;
+
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value.toLowerCase(),
+      }));
+
+   } 
+
     if (name === 'images' || name === 'amenities') {
       const valueArray = value.split(',');
+      flag = true;
       setFormData((prevFormData) => ({
         ...prevFormData,
         [name]: valueArray,
       }));
-    } else {
+    } else if (!flag) {
       setFormData((prevFormData) => ({
         ...prevFormData,
         [name]: value,
@@ -57,6 +71,8 @@ const RegistrationHotel = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+
 
     try {
       const response = await fetch('http://localhost/hotels-api/hotels', {

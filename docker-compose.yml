@@ -153,7 +153,9 @@ services:
     environment:
       VIRTUAL_HOST: localhost
     ports:
-      - "8040"
+      - "8040:8040"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
     networks:
       - app-network
 

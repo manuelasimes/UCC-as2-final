@@ -11,10 +11,14 @@ import (
     "github.com/docker/docker/api/types/container"
     "github.com/docker/docker/api/types/network"
     "github.com/docker/docker/client"
+    "os"
 	// "github.com/opencontainers/image-spec/specs-go/v1"
 )
 
 func CreateDockerClient() (*client.Client, error) {
+
+    // Set the Docker API version
+    os.Setenv("DOCKER_API_VERSION", "1.43")
     // Create a new Docker client with default configuration
     var err error
     dockerClient, err := client.NewClientWithOpts(client.FromEnv)
