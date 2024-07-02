@@ -28,7 +28,7 @@ func mapUrls() {
 	router.GET("/user-res-api/hotel", hotelController.GetHotels)
 	router.POST("/user-res-api/hotel", hotelController.InsertHotel)
 	//router.PUT("/hotel/update", hotelController.UpdateHotel)
-	//router.DELETE("/hotel/delete/:hotel_id/:user_id", hotelController.DeleteHotel)
+	router.DELETE("/user-res-api/hotel/delete/:idMongo", hotelController.DeleteHotel)
 
 	// Login
 	router.POST("/user-res-api/login", userController.Login)

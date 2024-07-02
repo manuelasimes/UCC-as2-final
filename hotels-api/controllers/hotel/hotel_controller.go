@@ -1,35 +1,33 @@
 package controller
 
 import (
-	"hotels-api/dtos"
+	dto "hotels-api/dtos"
 	service "hotels-api/services"
+
 	//"hotels-api/utils/errors"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
-
-
 
 func Get(c *gin.Context) {
 
 	id := c.Param("id")
 
-	
 	hotelDto, err := service.HotelService.GetHotel(id)
-	
 
 	// Error del Insert
 	if err != nil {
 		c.JSON(err.Status(), err)
 		return
 	}
-/* 
-	origin := c.Request.Header.Get("Origin")
+	/*
+		origin := c.Request.Header.Get("Origin")
 
-	if origin == "http://localhost:3000" {
-		c.Header("Access-Control-Allow-Origin", "http://localhost:3000")
-	} */
+		if origin == "http://localhost:3000" {
+			c.Header("Access-Control-Allow-Origin", "http://localhost:3000")
+		} */
 	c.JSON(http.StatusOK, hotelDto)
 }
 
@@ -59,25 +57,41 @@ func Insert(c *gin.Context) {
 }
 
 func Update(c *gin.Context) {
-    // Obtener el ID del hotel a actualizar desde los parámetros de la URL
-    id := c.Param("id")
+	// Obtener el ID del hotel a actualizar desde los parámetros de la URL
+	id := c.Param("id")
 
-    // Parsear el objeto JSON del cuerpo de la solicitud
-    var hotelDto dto.HotelDto
+	// Parsear el objeto JSON del cuerpo de la solicitud
+	var hotelDto dto.HotelDto
 
-    if err := c.BindJSON(&hotelDto); err != nil {
-        c.JSON(http.StatusBadRequest, err.Error())
-        return
-    }
+	if err := c.BindJSON(&hotelDto); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
 
-    // Llamar al servicio para actualizar el hotel
-    updatedHotelDto, err := service.HotelService.UpdateHotel(id, hotelDto) // error
+	// Llamar al servicio para actualizar el hotel
+	updatedHotelDto, err := service.HotelService.UpdateHotel(id, hotelDto) // error
 
-    if err != nil {
-        c.JSON(err.Status(), err)
-        return
-    }
+	if err != nil {
+		c.JSON(err.Status(), err)
+		return
+	}
 
-	
-    c.JSON(http.StatusOK, updatedHotelDto)
+	c.JSON(http.StatusOK, updatedHotelDto)
+}
+
+func Delete(c *gin.Context) {
+	// Obtener el ID del hotel a eliminar desde los parámetros de la URL
+	id := c.Param("id")
+
+	// Llamar al servicio para eliminar el hotel por ID
+	err := service.HotelService.DeleteHotel(id)
+
+	if err != nil {
+		c.JSON(err.Status(), err)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Hotel deleted successfully",
+	})
 }

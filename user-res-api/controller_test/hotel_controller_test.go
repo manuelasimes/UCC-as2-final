@@ -39,6 +39,9 @@ func (m *MockHotelService) GetHotels() (dto.HotelsDto, errors.ApiError) {
 func (m *MockHotelService) InsertHotel(hotelDto dto.HotelPostDto, idAmadeus string) (dto.HotelDto, errors.ApiError) {
 	panic("unimplemented")
 }
+func (m *MockHotelService) DeleteHotel(idmongo string) errors.ApiError {
+	panic("unimplemented")
+}
 
 func (m *MockHotelService) GetHotelById(id int) (dto.HotelDto, errors.ApiError) {
 	args := m.Called(id)

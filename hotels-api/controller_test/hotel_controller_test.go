@@ -45,6 +45,19 @@ func (m *MockHotelService) UpdateHotel(id string, hotel dto.HotelDto) (dto.Hotel
 	}
 	return args.Get(0).(dto.HotelDto), nil
 }
+func (m *MockHotelService) DeleteHotel(id string) errors.ApiError {
+	args := m.Called(id)
+	errArg := args.Get(0)
+	if errArg != nil {
+		if apiErr, ok := errArg.(errors.ApiError); ok {
+			return apiErr
+		} else {
+			// Aquí puedes manejar la conversión de tipos si es necesario
+			return errors.NewInternalServerApiError("Error casting to ApiError", nil)
+		}
+	}
+	return nil
+}
 
 func TestGet(t *testing.T) {
 	mockService := new(MockHotelService)
