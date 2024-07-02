@@ -1,62 +1,82 @@
 .bodyinicioADM {
- /* background-image: url();*/
-  background-color: #f8f8f8;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .cuadradointerno {
-    background-color: rgb(255 255 255);
-    border-radius: 15px;
-    height: 200px;
-    display: flex;
-    width: 30vw;
-    border: 8px solid #006ce4bf;
-    box-shadow: 0px 4px 5px 0px #b2b2b2, inset 0 0 10px 0 #b2b2b2;
-    align-content: center;
-    flex-wrap: wrap;
-    justify-content: center;
-    /* object-fit: contain; */
-    flex-direction: column;
-    padding: 0 30px;
-  }
-
-  .titulo {
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 20px;
-  }
-  
-  .botones-container {
-    display: flex;
-    justify-content: center;
-    border-radius: 3%;
-  }
-  
-  .botonAD {
-    background-color: #013877bf;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    margin: 0 10px;
-    text-decoration: none;
-    font-weight: bold;
-    font-family: sans-serif;
-    text-align: center;
-    transition-property: scale, background-color;
-    transition-duration: 200ms;
-  }
-  
-  .botonAD:hover {
-    background-color: #334c70;
-    scale: 1.02;
-  }
-  
+  /* background-image: url();*/
+   background-color: #f8f8f8;
+   background-repeat: no-repeat;
+   background-size: cover;
+ }
+ 
+ .container {
+     max-width: 800px;
+     margin: 0 auto;
+     padding: 20px;
+   }
+   
+   .cuadradointerno {
+     background-color: rgb(255 255 255);
+     border-radius: 15px;
+     height: 200px;
+     display: flex;
+     width: 30vw;
+     border: 8px solid #006ce4bf;
+     box-shadow: 0px 4px 5px 0px #b2b2b2, inset 0 0 10px 0 #b2b2b2;
+     align-content: center;
+     flex-wrap: wrap;
+     justify-content: center;
+     /* object-fit: contain; */
+     flex-direction: column;
+     padding: 0 30px;
+   }
+ 
+   .titulo {
+     text-align: center;
+     font-size: 32px;
+     margin-bottom: 20px;
+   }
+   
+   .botones-container {
+     display: flex;
+     justify-content: center;
+     border-radius: 3%;
+   }
+ 
+   .boton-atras-container {
+     position: absolute;
+     bottom: 180px; /* Ajuste la posición hacia arriba según su preferencia */
+     left: 50%;
+     transform: translateX(-50%);
+   }
+   
+   .botonAtras {
+     text-decoration: none;
+     padding: 10px;
+     background-color: #6c757d;
+     color: white;
+     text-align: center;
+     border-radius: 5px;
+     transition: background-color 0.3s ease;
+   }
+   
+   .botonAtras:hover {
+     background-color: #5a6268;
+   }
+   .botonAD {
+     background-color: #013877bf;
+     color: white;
+     border: none;
+     border-radius: 10px;
+     padding: 10px 20px;
+     font-size: 16px;
+     margin: 0 10px;
+     text-decoration: none;
+     font-weight: bold;
+     font-family: sans-serif;
+     text-align: center;
+     transition-property: scale, background-color;
+     transition-duration: 200ms;
+   }
+   
+   .botonAD:hover {
+     background-color: #334c70;
+     scale: 1.02;
+   }
+   

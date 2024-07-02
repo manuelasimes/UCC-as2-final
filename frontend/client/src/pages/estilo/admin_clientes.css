@@ -28,7 +28,30 @@
     display: flex;
     justify-content: center;
   }
+
+  .boton-atras-container {
+    position: absolute;
+    bottom: 80px; /* Ajuste la posición hacia arriba según su preferencia */
+    left: 50%;
+    transform: translateX(-50%);
+  }
   
+  .botonAtras {
+    text-decoration: none;
+    padding: 10px;
+    margin: 0 10px;
+    background-color: #6c757d;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-weight: bold; /* Añadido para hacer el texto en negrita */
+  }
+  
+  
+  .botonAtras:hover {
+    background-color: #5a6268;
+  }
 
   .botonAC {
     background-color: #4c90af00;

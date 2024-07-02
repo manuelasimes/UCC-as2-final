@@ -12,8 +12,8 @@ const HomePage = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [city, setCity] = useState('');
-  const { auth, logout } = useContext(AuthContext);
-
+  const [idHotelEdit, setIdHotelEdit] = useState('1');
+  const { isLoggedCliente, isLoggedAdmin, logout, auth } = useContext(AuthContext);
   const navigate = useNavigate();
 
   function isEmpty(str) {
@@ -39,16 +39,20 @@ const HomePage = () => {
   }, []);
 
   const Verificacion = (hotelId) => {
-      navigate(`/reservar/${hotelId}`);
+    navigate(`/reservar/${hotelId}`);
   };
 
   const handleStartDateChange = (event) => {
-    setStartDate(event.target.value);
     const selectedStartDateObj = new Date(event.target.value);
     const endDateObj = new Date(endDate);
+    if (selectedStartDateObj < new Date()) {
+      alert("No puedes seleccionar una fecha anterior a hoy");
+    } else {
+      setStartDate(event.target.value);
+    }
     if (selectedStartDateObj > endDateObj) {
       setEndDate('');
-      alert("Fechas no válidas");
+      alert("Fechas no validas");
     }
   };
 
@@ -56,9 +60,9 @@ const HomePage = () => {
     setEndDate(event.target.value);
     const selectedStartDateObj = new Date(startDate);
     const endDateObj = new Date(event.target.value);
-    if (selectedStartDateObj > endDateObj) {
+    if (selectedStartDateObj >= endDateObj) {
       setEndDate('');
-      alert("Fechas no válidas");
+      alert("Fechas no validas. La fecha de egreso debe ser posterior a ala de ingreso.");
     }
   };
 
@@ -117,6 +121,7 @@ const HomePage = () => {
         title: "Ingresa como admin",
         text: "Los clientes no pueden acceder al área de administración, por lo que deberás cerrar la sesión del usuario actual e ingresar como un usuario administrador. A continuación, puedes cerrar sesión y serás redirigido al login de administrador o puedes continuar como usuario regular haciendo click por fuera del recuadro.",
         confirmButtonText: 'Ingresar como admin',
+        cancelButtonText: 'Volver', // Aquí agregamos el botón de cancelar
         icon: "warning",
         padding: "20px",
         timerProgressBar: "true",

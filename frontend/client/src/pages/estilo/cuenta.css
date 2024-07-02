@@ -78,3 +78,24 @@
 .password-toggle i:hover {
   color: #333;
 }
+
+.boton-atras-container {
+  position: absolute;
+  bottom: 80px; /* Ajuste la posición hacia arriba según su preferencia */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.botonAtras {
+  text-decoration: bold;
+  padding: 10px;
+  background-color: #6c757d;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.botonAtras:hover {
+  background-color: #5a6268;
+}
