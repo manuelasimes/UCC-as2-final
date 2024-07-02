@@ -235,9 +235,9 @@ func (s *hotelService) DeleteHotel(id string) e.ApiError {
 	}
 
 	// Llama a la función Delete del DAO para eliminar el hotel por ID
-	error := hotelDao.Delete(id)
+	errorClient := hotelDao.Delete(id)
 
-	if error != nil {
+	if errorClient != nil {
 		// Maneja el error si ocurre algún problema al eliminar el hotel
 		return e.NewInternalServerApiError("Error deleting hotel", err)
 	}

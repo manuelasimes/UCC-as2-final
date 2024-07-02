@@ -8,10 +8,7 @@ import (
 	"strconv"
 	"user-res-api/dto"
 	service "user-res-api/service"
-<<<<<<< HEAD
 	// "crypto/tls"
-=======
->>>>>>> f5286e6b75c1beba37ee17036baf519360344e4a
 
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
@@ -129,7 +126,7 @@ func InsertHotel(c *gin.Context) {
 
 }
 func DeleteHotel(c *gin.Context) {
-	fmt.Printf("entro l controller")
+	fmt.Printf("entro al controller")
 
 	idMongo := c.Param("idMongo")
 
