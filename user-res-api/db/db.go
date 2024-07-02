@@ -21,10 +21,10 @@ func init() {
 	DBName := "UCC_as2_final"
 	DBUser := "root"
 	DBPass := ""
-	// DBPass := "Manuela10Simes"
+	//DBPass := "Manuela10Simes"
 	//DBPass := os.Getenv("MVC_DB_PASS")
 	DBHost := "mysql"
-	// DBHost := "localhost"
+	//DBHost := "localhost"
 	// ------------------------
 
 	db, err = gorm.Open("mysql", DBUser+":"+DBPass+"@tcp("+DBHost+":3306)/"+DBName+"?charset=utf8&parseTime=True")

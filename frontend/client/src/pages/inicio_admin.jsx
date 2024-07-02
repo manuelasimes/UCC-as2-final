@@ -4,7 +4,7 @@ import './estilo/opciones_admin.css';
 
 const OpcionesAdminPage = () => {
   return (
-    <body className= "bodyinicioADM">
+    <div className= "bodyinicioADM">
      
     <div className="container">
     <div className= "cuadradointerno">
@@ -22,7 +22,7 @@ const OpcionesAdminPage = () => {
         </div>
       </div>
       </div>
-    </body>
+    </div>
   );
 };
 

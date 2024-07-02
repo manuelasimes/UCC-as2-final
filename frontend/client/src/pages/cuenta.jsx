@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './login/auth';
 import './estilo/cuenta.css';
-import Cookies from "universal-cookie";
 import { useNavigate } from 'react-router-dom';
 
 function AccountDetails() {
@@ -45,9 +44,6 @@ function AccountDetails() {
   console.log("log de type", auth.userType);
 
   const cerrarSesion = () => {
-    const cookies = new Cookies();
-    cookies.remove("user_id", { path: "/" });
-    cookies.remove("user_type", { path: "/" });
     logout();
   };
 
@@ -60,7 +56,7 @@ function AccountDetails() {
   };
 
   return (
-    <body className="bodyCuenta">
+    <div className="bodyCuenta">
       <div className="containerCU">
         <div className="account-form">
           <h2 className="tituloDC">Detalles de la cuenta</h2>
@@ -85,7 +81,7 @@ function AccountDetails() {
           </div>
         </div>
       </div>
-    </body>
+    </div>
   );
 }
 

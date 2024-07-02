@@ -11,7 +11,7 @@ const RoleSelection = () => {
   };
 
   return (
-  <body className= "bodyopciones">
+  <div className= "bodyopciones">
     <div className="selection">
       
       <div className="contOPcio">
@@ -26,7 +26,7 @@ const RoleSelection = () => {
         </div>
       </div>
       </div>
-   </body>
+   </div>
     
   );
 };

@@ -135,7 +135,7 @@ const HomePage = () => {
   };
 
   return (
-    <body className="bodyinicio">
+    <div className="bodyinicio">
       <div className="header-content">
         <div className="cuenta-button-container">
           <button className="cuenta-button" onClick={Cuenta}>
@@ -184,7 +184,7 @@ const HomePage = () => {
           )}
         </div>
       </div>
-    </body>
+    </div>
   );
 };
 
