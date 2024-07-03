@@ -101,7 +101,7 @@
     }
 
     .button-container2 {
-      position: absolute;
+      position: relative;
       top: 10px;
       left: 10px;
     }
@@ -113,6 +113,9 @@
       color: white;
       border: none;
       cursor: pointer;
+      transition: all 200ms;
+      border-radius: 5px;
+      font-weight: bold;
     }
     
     .button-container2 button:hover {

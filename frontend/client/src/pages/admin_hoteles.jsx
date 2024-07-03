@@ -23,7 +23,7 @@ const handleGoBack = () => {
   return (
     <div className="containerHotel">
       <div className="rectangulo">
-        <h1 className="titulo">Hoteles🏨</h1>
+        <div className="tituloAD">Hoteles🏨</div>
         <div className="botones-container">
           <Link to="/agregar-hoteles" className="botonAH">
             Agregar Hoteles

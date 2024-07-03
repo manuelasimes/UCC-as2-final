@@ -7,7 +7,7 @@ const OpcionesAdminPage = () => {
     <div className="bodyinicioADM">
       <div className="container">
         <div className="cuadradointerno">
-          <h1 className="titulo">Opciones</h1>
+          <div className="tituloAD">Opciones</div>
           <div className="botones-container">
             <Link to="/administrar-hoteles" className="botonAD">
               Administrar Hoteles

@@ -21,7 +21,7 @@ const AdminClientesPage = () => {
   return (
     <div className="container">
       <div className="rectangulo1">
-        <h1 className="titulo">Clientes👥</h1>
+        <div className="tituloAD">Clientes👥</div>
         <div className="botones-container">
           <Link to="/ver-reservas" className="botonAC">
             Ver Reservas

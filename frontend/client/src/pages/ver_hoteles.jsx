@@ -41,8 +41,8 @@ const HomePage = () => {
   return (
     <div className="bodyinicioH">
       <div className="button-container2">
-          <button onClick={handleHomeClick}>Home</button>
-          <button onClick={handleBackClick}>Atrás</button>
+          <button className="botonHome" onClick={handleHomeClick}>Home</button>
+          <button className="botonAtras" onClick={handleBackClick}>Atrás</button>
       </div>
       <div className="containerIniH">
         <div className="hotels-containerH">

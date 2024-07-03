@@ -22,6 +22,8 @@
         overflow-x: hidden;
         scrollbar-width: none;
         width: 630px;
+        display: flex;
+        justify-content: center;
     }
     
     .containerIniC::-webkit-scrollbar {

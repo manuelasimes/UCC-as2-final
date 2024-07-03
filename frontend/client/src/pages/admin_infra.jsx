@@ -236,7 +236,7 @@ const AdminInfra = () => {
   };
 
   return (
-    <body className="bodyinicio">
+    <div className="bodyinicio">
      <div className="header-content-infra">
         <div className="admin-button-container">
             <button className="admin-button" onClick={Home}>
@@ -286,7 +286,7 @@ const AdminInfra = () => {
         </div>
       </div>
       <ToastContainer/>
-    </body>
+    </div>
   );
 };
 
