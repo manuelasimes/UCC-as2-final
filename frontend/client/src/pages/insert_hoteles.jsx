@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from './login/auth';
 import './estilo/insert_hoteles.css';
 import { ToastContainer, toast } from "react-toastify";
+import { Link} from 'react-router-dom';
 
 const notifyRegistered = () => {
   toast.success("Hotel insertado correctamente!", {
@@ -15,6 +16,18 @@ const notifyError = () => {
     pauseOnHover: false,
     autoClose: 2000,
   });
+};
+
+const handleHomeClick = () => {
+  // Lógica para el botón "Home"
+  window.location.href = '/';
+
+};
+
+const handleBackClick = () => {
+  // Lógica para el botón "Atrás"
+  window.history.back();
+
 };
 
 const RegistrationHotel = () => {
@@ -100,6 +113,10 @@ const RegistrationHotel = () => {
 
   return (
     <div className="registration-container">
+        <div className="button-container1">
+          <button onClick={handleHomeClick}>Home</button>
+          <button onClick={handleBackClick}>Atrás</button>
+        </div>
       <h2>Registro De Hoteles</h2>
       <form onSubmit={handleSubmit} className="registration-form">
         <label>

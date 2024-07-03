@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { AuthContext } from './login/auth';
 import './estilo/ver_reservas.css';
+import { Link} from 'react-router-dom';
 
 const VerReservas = () => {
   const [reservations, setReservations] = useState([]);
@@ -19,6 +20,11 @@ const VerReservas = () => {
   useEffect(() => {
     getReservations();
   }, []);
+
+  const handleGoBack = () => {
+    // Función para ir atrás en la historia del navegador
+    window.history.back();
+  };
 
   return (
     <div className="reservations-container1">
@@ -40,6 +46,14 @@ const VerReservas = () => {
         ) : (
           <p>No hay reservas</p>
         )}
+      </div>
+      <div className="boton-atras-container">
+            <Link to="/" className="botonAtras">
+              Volver a Home
+            </Link>
+            <button onClick={handleGoBack} className="botonAtras">
+            Volver Atrás
+            </button>
       </div>
     </div>
   );

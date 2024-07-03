@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './estilo/ver_clientes.css';
+import { Link} from 'react-router-dom';
 
 const HomePage = () => {
   const [clientes, setClientes] = useState([]);
@@ -17,6 +18,11 @@ const HomePage = () => {
   useEffect(() => {
       getClientes();
   }, []);
+
+  const handleGoBack = () => {
+    // Función para ir atrás en la historia del navegador
+    window.history.back();
+  };
 
   return (
     <div className="bodyinicioC">
@@ -39,6 +45,14 @@ const HomePage = () => {
             <p>No hay clientes</p>
           )}
         </div>
+      </div>
+      <div className="boton-atras-container">
+            <Link to="/" className="botonAtras">
+              Volver a Home
+            </Link>
+            <button onClick={handleGoBack} className="botonAtras">
+            Volver Atrás
+            </button>
       </div>
     </div>
   );

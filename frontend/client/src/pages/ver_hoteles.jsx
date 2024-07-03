@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './estilo/hoteles_admin.css';
+import { Link} from 'react-router-dom';
 
 const HomePage = () => {
   const [hotels, setHotels] = useState([]);
@@ -24,8 +25,25 @@ const HomePage = () => {
 
   }
 
+  const handleHomeClick = () => {
+    // Lógica para el botón "Home"
+    window.location.href = '/';
+  
+  };
+  
+  const handleBackClick = () => {
+    // Lógica para el botón "Atrás"
+    window.history.back();
+  
+  };
+  
+
   return (
     <div className="bodyinicioH">
+      <div className="button-container2">
+          <button onClick={handleHomeClick}>Home</button>
+          <button onClick={handleBackClick}>Atrás</button>
+      </div>
       <div className="containerIniH">
         <div className="hotels-containerH">
           {hotels.length ? (

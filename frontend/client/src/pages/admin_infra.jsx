@@ -101,7 +101,20 @@ const AdminInfra = () => {
   };
 
   const handleCrear = (imageName, containerName, containerNumber, runningContainerId) => {
-    const newContainerName = `${imageName}-${Number(containerNumber)+1}`;
+
+    var newContainerName = ''
+
+    if (Number(containerNumber) === 1 &&  containerName[0].slice(-1) !== "1") {
+
+      newContainerName = `${imageName}-${Number(containerName[0].slice(-1))+1}`;
+      console.log(newContainerName)
+
+    } else {
+
+      newContainerName = `${imageName}-${Number(containerNumber)+1}`;
+      console.log(newContainerName)
+
+    }
 
     fetch(`http://localhost:8040/containers/${imageName}/${newContainerName}/${runningContainerId}`, {
       method: 'POST',
