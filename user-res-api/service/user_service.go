@@ -213,6 +213,8 @@ func (s *userService) Refresh(refreshTokenDto *dto.RefreshTokenDto) (*dto.LoginR
 		UserId:       user.Id,
 		AccessToken:  accessToken,
 		RefreshToken: refreshToken,
+		UserName:     user.UserName,
+		Type:         user.Type,
 	}
 
 	return loginResponseDto, nil

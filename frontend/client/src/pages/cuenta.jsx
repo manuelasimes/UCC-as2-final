@@ -3,6 +3,14 @@ import { AuthContext } from './login/auth';
 import './estilo/cuenta.css';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+
+const errorNotAClient = () => {
+  toast.error("Debes ser un cliente para ver y realizar reservas", {
+    pauseOnHover: false,
+    autoClose: 2000,
+  });
+};
 
 
 function AccountDetails() {
@@ -53,7 +61,7 @@ function AccountDetails() {
     if (auth.userType === false) {
       navigate('/reservas-cliente');
     } else {
-      navigate('/login-cliente');
+      errorNotAClient();
     }
   };
 
@@ -84,10 +92,11 @@ function AccountDetails() {
         </div>
       </div>
       <div className="boton-atras-container">
-            <Link to="/" className="botonAtras">
-              Volver a Home
-            </Link>
-          </div>
+        <Link to="/" className="botonAtras">
+          Volver a Home
+        </Link>
+      </div>
+      <ToastContainer/>
     </div>
   );
 }

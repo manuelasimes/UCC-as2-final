@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import './estilo/reservar.css';
+import { AuthContext } from './login/auth';
 
 const notifyBooked = () => {
   toast.success("Reservado!", {
@@ -15,6 +17,13 @@ const notifyBooked = () => {
 
 const notifyError = () => {
   toast.error("Hotel no disponible para reserva en fecha seleccionada!", {
+    pauseOnHover: false,
+    autoClose: 2000,
+  });
+};
+
+const errorNotAClient = () => {
+  toast.error("Los administradores no pueden realizar reservas.", {
     pauseOnHover: false,
     autoClose: 2000,
   });
@@ -38,30 +47,36 @@ const ReservaPage = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const accountId = localStorage.getItem("user_id");
+  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleReserva = async (e) => {
     e.preventDefault();
+    if (auth.userType === false) {
 
-    const formData = {
-      booked_hotel_id: hotelId,
-      user_booked_id: parseInt(accountId),
-      start_date: convertirFecha(startDate),
-      end_date: convertirFecha(endDate),
-    };
+      const formData = {
+        booked_hotel_id: hotelId,
+        user_booked_id: parseInt(accountId),
+        start_date: convertirFecha(startDate),
+        end_date: convertirFecha(endDate),
+      };
 
-    fetch('http://localhost/user-res-api/booking', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    }).then((response) => {
-      if (response.status === 400 || response.status === 401 || response.status === 403) {
-        notifyError();
-      } else {
-        notifyBooked();
-      }
-    });
+      fetch('http://localhost/user-res-api/booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      }).then((response) => {
+        if (response.status === 400 || response.status === 401 || response.status === 403) {
+          notifyError();
+        } else {
+          notifyBooked();
+        }
+      });
+    } else {
+      errorNotAClient();
+    }
   };
 
   useEffect(() => {
@@ -106,6 +121,8 @@ const ReservaPage = () => {
     }
   };
 
+  console.log(hotelData);
+
   const filterHotels = async () => {
     const startDateParsed = convertirFecha(startDate);
     const endDateParsed = convertirFecha(endDate);
@@ -120,7 +137,7 @@ const ReservaPage = () => {
   };
 
   const handleVolver = () => {
-    window.history.back();
+    navigate('/');
   };
 
   const today = new Date().toISOString().split('T')[0];
@@ -129,6 +146,11 @@ const ReservaPage = () => {
     original: image,
     thumbnail: image,
   })) : [];
+
+  function capitalizeWords(str) {
+    if (!str) return ''; // Si str es undefined o null, retorna una cadena vacía
+    return str.replace(/\b\w/g, char => char.toUpperCase());
+  }
 
   return (
     <div className="bodyReserva">
@@ -140,12 +162,27 @@ const ReservaPage = () => {
             <div className="informacion">
               <div className="cuadroImag">
                 {images.length > 0 ? (
-                  <ImageGallery items={images} showPlayButton={false} showThumbnails={true} additionalClass="custom"/>
+                  <ImageGallery items={images} showPlayButton={false} showThumbnails={true} additionalClass="custom" />
                 ) : (
                   <p>No hay imágenes disponibles</p>
                 )}
               </div>
-              <div className="descripcion">{hotelData.description}</div>
+              <div className="descripcion">
+                <p className="titulo">Descripción:</p>
+                <p>{hotelData.description}</p>
+              </div>
+              <div className="direccion">
+                <p className="titulo">Dirección:</p>
+                <p>{capitalizeWords(hotelData.address)}, {capitalizeWords(hotelData.city)}, {capitalizeWords(hotelData.country)}</p>
+              </div>
+              <div className="amenities">
+                <p className="titulo">Amenities:</p>
+                <ul>
+                  {hotelData.amenities && hotelData.amenities.map((amenity, index) => (
+                    <li key={index}>{capitalizeWords(amenity.trim())}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
             <div className="reserva-form">
               <h6>Realice reserva del Hotel</h6>

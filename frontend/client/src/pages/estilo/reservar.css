@@ -158,3 +158,71 @@ textarea {
   box-shadow: none;
   height: auto;
 }
+
+/* Estilos para la descripción */
+.descripcion, .amenities, .direccion{
+  padding: 20px;
+  width: 100%;
+  margin: 15px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.descripcion, .amenities, .direccion{
+  background-color: #f9f9f9;
+}
+
+.descripcion p {
+  margin: 0 0 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Estilos para la dirección */
+.direccion {
+  background-color: #e9f7ff;
+}
+
+.direccion p {
+  margin: 0 0 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Estilos para las amenities */
+.amenities {
+  background-color: #fff8e1;
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.amenities ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.amenities ul li {
+  font-size: 14px;
+  color: #666;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 5px 10px;
+  margin: 5px 0;
+  display: inline-block;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos comunes */
+.titulo {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #555;
+  text-align: left;
+}
